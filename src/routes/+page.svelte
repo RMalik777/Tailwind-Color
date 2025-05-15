@@ -1,0 +1,58 @@
+<script lang="ts">
+	import { browser } from "$app/environment";
+
+	import { color } from "$lib/data/color";
+
+	import Copy from "@lucide/svelte/icons/copy";
+	import { toast } from "svelte-sonner";
+
+	type Color = "oklch" | "hex" | "hsl" | "rgb";
+	const storedView = browser ? (localStorage.getItem("view") as Color | null) : null;
+	let view: Color = $state(storedView ?? "hex");
+</script>
+
+<main class="mx-auto flex flex-col gap-4 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
+	<select
+		class="rounded border border-neutral-500/50 bg-white p-1"
+		name="view"
+		id="view"
+		bind:value={view}
+		onchange={() => {
+			localStorage.setItem("view", view);
+		}}
+	>
+		<option value="oklch">OKLCH</option>
+		<option value="hex">HEX</option>
+		<option value="hsl">HSL</option>
+		<option value="rgb">RGB</option>
+	</select>
+	{#each color as color (color.color)}
+		<section class="space-y-1 rounded border border-neutral-500/50 p-2">
+			<h2 class="text-xl font-semibold tracking-tight capitalize">{color.color}</h2>
+			<div class="flex flex-col gap-2 md:flex-row">
+				{#each color.range as shade (shade.name)}
+					<div class="group w-full overflow-hidden rounded border border-neutral-500/50">
+						<div class="aspect-square h-auto w-full" style="background-color: {shade.oklch.long}">
+							<button
+								class="float-right m-1 h-fit w-fit rounded p-1 opacity-50 duration-200 group-hover:opacity-100 focus-visible:opacity-100
+                {shade.shade > 300
+									? 'text-white hover:bg-white/10 focus-visible:bg-white/10'
+									: 'text-black hover:bg-black/10 focus-visible:bg-black/10'}"
+								onclick={() => {
+									navigator.clipboard.writeText(shade[view].long ?? "");
+									toast(`Copied ${shade[view].long}`);
+								}}
+							>
+								<Copy class="w-4" />
+							</button>
+						</div>
+						<section class="px-1 py-px font-mono text-sm">
+							<h3 class="font-semibold text-nowrap">{shade.name}</h3>
+							<p>{shade[view].short}</p>
+						</section>
+					</div>
+				{/each}
+			</div>
+		</section>
+	{/each}
+</main>
