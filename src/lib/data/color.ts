@@ -1,9 +1,14 @@
-import { formatHex, formatHsl, formatRgb } from "culori";
+import { formatHex, formatHsl, formatRgb, converter } from "culori";
 import { tailwindColors } from "./color-tailwind";
+
+const toHsl = converter("hsl");
 
 export const color = tailwindColors.map((colorObj) => {
 	const { name, shades } = colorObj;
 	const range = Object.entries(shades).map(([shade, oklchValue]) => {
+		const hex = formatHex(oklchValue);
+		const rgb = formatRgb(hex);
+		const hsl = formatHsl(hex);
 		return {
 			name: `${name}-${shade}`,
 			shade: Number(shade),
@@ -12,16 +17,16 @@ export const color = tailwindColors.map((colorObj) => {
 				short: oklchValue.replace(/oklch\(/, "").replace(/\)$/, ""),
 			},
 			hex: {
-				long: formatHex(oklchValue)?.toLocaleUpperCase(),
-				short: formatHex(oklchValue)?.replace(/#/, "").toLocaleUpperCase(),
+				long: hex,
+				short: hex?.replace(/#/, "").toLocaleUpperCase(),
 			},
 			hsl: {
-				long: formatHsl(oklchValue),
-				short: formatHsl(oklchValue)?.replace(/hsl\(/, "").replace(/\)$/, ""),
+				long: hsl,
+				short: hsl?.replace(/hsl\(/, "").replace(/\)$/, ""),
 			},
 			rgb: {
-				long: formatRgb(oklchValue),
-				short: formatRgb(oklchValue)?.replace(/rgb\(/, "").replace(/\)$/, ""),
+				long: rgb,
+				short: rgb?.replace(/rgb\(/, "").replace(/\)$/, ""),
 			},
 		};
 	});
