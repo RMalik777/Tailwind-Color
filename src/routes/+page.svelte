@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 
-	import { color } from "$lib/data/color";
+	import { colorV4, colorV3 } from "$lib/data/color";
 
 	import Copy from "@lucide/svelte/icons/copy";
 	import { toast } from "svelte-sonner";
@@ -9,23 +9,51 @@
 	type Color = "oklch" | "hex" | "hsl" | "rgb";
 	const storedView = browser ? (localStorage.getItem("view") as Color | null) : null;
 	let view: Color = $state(storedView ?? "hex");
+
+	const storedVersion = browser ? localStorage.getItem("version") : null;
+	let version = $state(storedVersion ?? "V4");
+	const color = $derived.by(() => {
+		if (version === "V4") {
+			return colorV4;
+		} else {
+			return colorV3;
+		}
+	});
 </script>
 
 <main class="mx-auto flex flex-col gap-4 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
-	<select
-		class="rounded border border-neutral-500/50 bg-white p-1"
-		name="view"
-		id="view"
-		bind:value={view}
-		onchange={() => {
-			localStorage.setItem("view", view);
-		}}
-	>
-		<option value="oklch">OKLCH</option>
-		<option value="hex">HEX</option>
-		<option value="hsl">HSL</option>
-		<option value="rgb">RGB</option>
-	</select>
+	<div class="flex flex-col gap-2">
+		<div>
+			<label for="version">TailwindCSS Version</label>
+			<select
+				name="version"
+				id="version"
+				class="rounded border border-neutral-500/50 bg-white p-1"
+				bind:value={version}
+				onchange={() => localStorage.setItem("version", version)}
+			>
+				<option value="V4">Version 4</option>
+				<option value="V3">Version 3</option>
+			</select>
+		</div>
+
+		<div>
+			<label for="view">Color View</label>
+			<select
+				name="view"
+				id="view"
+				class="rounded border border-neutral-500/50 bg-white p-1"
+				bind:value={view}
+				onchange={() => localStorage.setItem("view", view)}
+			>
+				<option value="oklch">OKLCH</option>
+				<option value="hex">HEX</option>
+				<option value="hsl">HSL</option>
+				<option value="rgb">RGB</option>
+			</select>
+		</div>
+	</div>
+
 	{#each color as color (color.color)}
 		<section class="space-y-1 rounded border border-neutral-500/50 p-2">
 			<h2 class="text-xl font-semibold tracking-tight capitalize">{color.color}</h2>
