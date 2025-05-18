@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/environment";
 
-	import { colorV4, colorV3 } from "$lib/data/color";
+	import { colorV4, colorV3, colorV2, colorV1, colorV0 } from "$lib/data/color";
 
 	import Copy from "@lucide/svelte/icons/copy";
 	import { toast } from "svelte-sonner";
@@ -10,13 +10,42 @@
 	const storedView = browser ? (localStorage.getItem("view") as Color | null) : null;
 	let view: Color = $state(storedView ?? "hex");
 
+	const versionOptions = [
+		{
+			name: "Version 4",
+			value: "V4",
+		},
+		{
+			name: "Version 3",
+			value: "V3",
+		},
+		{
+			name: "Version 2",
+			value: "V2",
+		},
+		{
+			name: "Version 1",
+			value: "V1",
+		},
+		{
+			name: "Version 0",
+			value: "V0",
+		},
+	];
 	const storedVersion = browser ? localStorage.getItem("version") : null;
 	let version = $state(storedVersion ?? "V4");
 	const color = $derived.by(() => {
-		if (version === "V4") {
-			return colorV4;
-		} else {
-			return colorV3;
+		switch (version) {
+			case "V0":
+				return colorV0;
+			case "V1":
+				return colorV1;
+			case "V2":
+				return colorV2;
+			case "V3":
+				return colorV3;
+			default:
+				return colorV4;
 		}
 	});
 </script>
@@ -32,8 +61,9 @@
 				bind:value={version}
 				onchange={() => localStorage.setItem("version", version)}
 			>
-				<option value="V4">Version 4</option>
-				<option value="V3">Version 3</option>
+				{#each versionOptions as option (option.value)}
+					<option value={option.value}>{option.name}</option>
+				{/each}
 			</select>
 		</div>
 
