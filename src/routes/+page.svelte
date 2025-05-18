@@ -53,7 +53,7 @@
 <main class="mx-2 flex flex-col gap-4 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
 	<div class="flex flex-col gap-2">
 		<div>
-			<label for="version">TailwindCSS Version</label>
+			<label for="version">Tailwind CSS Version</label>
 			<select
 				name="version"
 				id="version"

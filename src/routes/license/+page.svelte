@@ -1,7 +1,7 @@
 <script lang="ts">
 	const license = [
 		{
-			name: "TailwindCSS",
+			name: "Tailwind CSS",
 			url: "https://github.com/tailwindlabs/tailwindcss/blob/main/LICENSE",
 		},
 		{

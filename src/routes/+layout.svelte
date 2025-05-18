@@ -11,8 +11,8 @@
 </script>
 
 <svelte:head>
-	<title>TailwindCSS Color</title>
-	<meta name="description" content="A website showing all available TailwindCSS color" />
+	<title>Tailwind CSS Color</title>
+	<meta name="description" content="A website showing all available Tailwind CSS color" />
 </svelte:head>
 
 <Nav />

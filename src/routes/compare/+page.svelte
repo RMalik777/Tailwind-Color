@@ -78,9 +78,9 @@
 		class="flex h-full w-full flex-row justify-between *:flex *:h-full *:w-full *:flex-col *:items-center *:justify-center"
 	>
 		<div class="left">
-			<div>
+			<div class="flex w-full flex-row justify-start gap-4">
 				<div>
-					<label for="leftVersion">TailwindCSS Version</label>
+					<label for="leftVersion">Tailwind CSS Version</label>
 					<select
 						name="leftVersion"
 						id="leftVersion"
@@ -94,34 +94,40 @@
 						{/each}
 					</select>
 				</div>
-				<select
-					name=""
-					id=""
-					class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
-					bind:value={leftColor}
-					onchange={() => localStorage.setItem("leftColor", leftColor ?? "")}
-				>
-					{#each leftColorOptions as option (option.color)}
-						<option value={option.color} class="capitalize">{option.color}</option>
-					{/each}
-				</select>
-				{#if leftChoice}
+				<div>
+					<label for="leftColor">Color</label>
 					<select
-						name=""
-						id=""
+						name="leftColor"
+						id="leftColor"
+						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
+						bind:value={leftColor}
+						onchange={() => localStorage.setItem("leftColor", leftColor ?? "")}
+					>
+						{#each leftColorOptions as option (option.color)}
+							<option value={option.color} class="capitalize">{option.color}</option>
+						{/each}
+					</select>
+				</div>
+				<div>
+					<label for="leftShade">Shade</label>
+					<select
+						name="leftShade"
+						id="leftShade"
 						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
 						bind:value={leftShade}
 						onchange={() => localStorage.setItem("leftShade", leftShade ?? "")}
 					>
-						{#each leftChoice as option (option.shade)}
-							<option value={option.shade.toString()} class="capitalize"
-								>{leftVersion === "V0"
-									? option.name.replace(leftColor + "-", "")
-									: option.shade}</option
-							>
-						{/each}
+						{#if leftChoice}
+							{#each leftChoice as option (option.shade)}
+								<option value={option.shade.toString()} class="capitalize"
+									>{leftVersion === "V0"
+										? option.name.replace(leftColor + "-", "")
+										: option.shade}</option
+								>
+							{/each}
+						{/if}
 					</select>
-				{/if}
+				</div>
 			</div>
 			<div
 				class="h-full w-full"
@@ -132,9 +138,9 @@
 		</div>
 
 		<div class="right">
-			<div>
+			<div class="flex w-full flex-row justify-start gap-4">
 				<div>
-					<label for="rightVersion">TailwindCSS Version</label>
+					<label for="rightVersion">Tailwind CSS Version</label>
 					<select
 						name="rightVersion"
 						id="rightVersion"
@@ -147,34 +153,40 @@
 						{/each}
 					</select>
 				</div>
-				<select
-					name=""
-					id=""
-					class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
-					bind:value={rightColor}
-					onclick={() => localStorage.setItem("rightColor", rightColor ?? "")}
-				>
-					{#each rightColorOptions as option (option.color)}
-						<option value={option.color} class="capitalize">{option.color}</option>
-					{/each}
-				</select>
-				{#if rightChoice}
+				<div>
+					<label for="rightColor">Color</label>
 					<select
-						name=""
-						id=""
+						name="rightColor"
+						id="rightColor"
+						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
+						bind:value={rightColor}
+						onclick={() => localStorage.setItem("rightColor", rightColor ?? "")}
+					>
+						{#each rightColorOptions as option (option.color)}
+							<option value={option.color} class="capitalize">{option.color}</option>
+						{/each}
+					</select>
+				</div>
+				<div>
+					<label for="rightShade">Shade</label>
+					<select
+						name="rightShade"
+						id="rightShade"
 						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
 						bind:value={rightShade}
 						onclick={() => localStorage.setItem("rightShade", rightShade ?? "")}
 					>
-						{#each rightChoice as option (option.shade)}
-							<option value={option.shade.toString()} class="capitalize"
-								>{rightVersion === "V0"
-									? option.name.replace(rightColor + "-", "")
-									: option.shade}</option
-							>
-						{/each}
+						{#if rightChoice}
+							{#each rightChoice as option (option.shade)}
+								<option value={option.shade.toString()} class="capitalize"
+									>{rightVersion === "V0"
+										? option.name.replace(rightColor + "-", "")
+										: option.shade}</option
+								>
+							{/each}
+						{/if}
 					</select>
-				{/if}
+				</div>
 			</div>
 			<div
 				class="h-full w-full"

@@ -14,27 +14,27 @@
 			name: "Color Data Source",
 			items: [
 				{
-					name: "TailwindCSS 4",
+					name: "Tailwind CSS 4",
 					url: "https://github.com/tailwindlabs/tailwindcss/blob/c7d368b3c42de46e44b17c71d3bf9a9c6b3bc5cb/packages/tailwindcss/theme.css",
 					blank: true,
 				},
 				{
-					name: "TailwindCSS 3",
+					name: "Tailwind CSS 3",
 					url: "https://github.com/tailwindlabs/tailwindcss/blob/89f0f54751639db11affc4f60592002ef14c7ed6/src/public/colors.js",
 					blank: true,
 				},
 				{
-					name: "TailwindCSS 2",
+					name: "Tailwind CSS 2",
 					url: "https://github.com/tailwindlabs/tailwindcss/blob/ee87fed11376b2d23778ca2cb8ea99108416a734/colors.js",
 					blank: true,
 				},
 				{
-					name: "TailwindCSS 1",
+					name: "Tailwind CSS 1",
 					url: "https://github.com/tailwindlabs/tailwindcss/blob/8f3dbfe7a8be54c2afff46492dbf884c461ffa97/stubs/defaultConfig.stub.js",
 					blank: true,
 				},
 				{
-					name: "TailwindCSS 0",
+					name: "Tailwind CSS 0",
 					url: "https://github.com/tailwindlabs/tailwindcss/blob/66e4d1b3192e8013df336c7dff61f561243bd423/defaultConfig.stub.js",
 					blank: true,
 				},
