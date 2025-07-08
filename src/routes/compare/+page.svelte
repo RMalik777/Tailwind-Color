@@ -73,6 +73,11 @@
 	);
 </script>
 
+<svelte:head>
+	<title>Compare | Tailwind CSS Color</title>
+	<meta name="description" content="Compare Tailwind CSS colors across different versions" />
+</svelte:head>
+
 <main class="mx-2 h-dvh pt-16 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
 	<section
 		class="flex h-full w-full flex-row justify-between *:flex *:h-full *:w-full *:flex-col *:items-center *:justify-center"
