@@ -13,7 +13,10 @@
 
 <svelte:head>
 	<title>Tailwind CSS Color</title>
-	<meta name="description" content="A website showing all available Tailwind CSS color" />
+	<meta
+		name="description"
+		content="Check out all available Tailwind CSS colors across different versions, from v0 to v4. Compare the old color and gradient with the new one."
+	/>
 	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#8e0dff" />
 	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#8e0dff" />
 	<meta
