@@ -5,29 +5,7 @@
 	import { PersistedState } from "runed";
 
 	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
-
-	const versionOptions = [
-		{
-			name: "Version 4",
-			value: "V4",
-		},
-		{
-			name: "Version 3",
-			value: "V3",
-		},
-		{
-			name: "Version 2",
-			value: "V2",
-		},
-		{
-			name: "Version 1",
-			value: "V1",
-		},
-		{
-			name: "Version 0",
-			value: "V0",
-		},
-	];
+	import { versionOptions } from "$lib/data/option";
 
 	let leftVersion = new PersistedState("leftVersion", "V4");
 	const leftColorOptions = $derived.by(() => {
@@ -83,7 +61,7 @@
 	<meta name="description" content="Compare Tailwind CSS colors across different versions" />
 </svelte:head>
 
-<main class="mx-2 h-fit min-h-dvh pt-16 sm:mx-4 sm:h-dvh md:mx-6 lg:mx-8 xl:mx-10">
+<div class="flex w-full grow">
 	<section
 		class="flex h-full w-full flex-row justify-between *:flex *:h-full *:w-full *:flex-col *:items-center *:justify-center"
 	>
@@ -226,4 +204,4 @@
 			></div>
 		</div>
 	</section>
-</main>
+</div>

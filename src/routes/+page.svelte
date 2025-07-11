@@ -4,42 +4,14 @@
 	import * as Select from "$lib/components/ui/select/index.js";
 
 	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
+	import { versionOptions, colorOptions } from "$lib/data/option";
+	import type { Color } from "$lib/types/color";
 
 	import Copy from "@lucide/svelte/icons/copy";
 	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
 
-	type Color = "oklch" | "hex" | "hsl" | "rgb";
 	let view = new PersistedState<Color>("view", "oklch");
-
-	const colorOptions = [
-		{ name: "OKLCH", value: "oklch" },
-		{ name: "HEX", value: "hex" },
-		{ name: "HSL", value: "hsl" },
-		{ name: "RGB", value: "rgb" },
-	];
-	const versionOptions = [
-		{
-			name: "Version 4",
-			value: "V4",
-		},
-		{
-			name: "Version 3",
-			value: "V3",
-		},
-		{
-			name: "Version 2",
-			value: "V2",
-		},
-		{
-			name: "Version 1",
-			value: "V1",
-		},
-		{
-			name: "Version 0",
-			value: "V0",
-		},
-	];
 
 	const version = new PersistedState("version", "V4");
 	const color = $derived.by(() => {
@@ -58,7 +30,7 @@
 	});
 </script>
 
-<main class="mx-2 flex flex-col gap-4 pt-16 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
+<div class="flex flex-col gap-4">
 	<div class="flex flex-col gap-2">
 		<div class="flex items-center gap-2">
 			<Label for="version">Tailwind CSS Version</Label>
@@ -129,4 +101,4 @@
 			</div>
 		</section>
 	{/each}
-</main>
+</div>

@@ -11,7 +11,7 @@
 	];
 </script>
 
-<main class="flex min-h-dvh flex-col px-4 py-8 sm:px-6 lg:px-8 xl:px-10">
+<div class="flex flex-col">
 	<h1 class="py-20 text-4xl font-bold tracking-tight">License</h1>
 
 	<section>
@@ -29,4 +29,4 @@
 			{/each}
 		</ul>
 	</section>
-</main>
+</div>
