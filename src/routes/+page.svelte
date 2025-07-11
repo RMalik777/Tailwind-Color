@@ -1,15 +1,23 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
+	import { Button } from "$lib/components/ui/button/index.js";
+	import { Label } from "$lib/components/ui/label/index.js";
+	import * as Select from "$lib/components/ui/select/index.js";
 
-	import { colorV4, colorV3, colorV2, colorV1, colorV0 } from "$lib/data/color";
+	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
 
 	import Copy from "@lucide/svelte/icons/copy";
+	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
 
 	type Color = "oklch" | "hex" | "hsl" | "rgb";
-	const storedView = browser ? (localStorage.getItem("view") as Color | null) : null;
-	let view: Color = $state(storedView ?? "hex");
+	let view = new PersistedState<Color>("view", "oklch");
 
+	const colorOptions = [
+		{ name: "OKLCH", value: "oklch" },
+		{ name: "HEX", value: "hex" },
+		{ name: "HSL", value: "hsl" },
+		{ name: "RGB", value: "rgb" },
+	];
 	const versionOptions = [
 		{
 			name: "Version 4",
@@ -32,10 +40,10 @@
 			value: "V0",
 		},
 	];
-	const storedVersion = browser ? localStorage.getItem("version") : null;
-	let version = $state(storedVersion ?? "V4");
+
+	const version = new PersistedState("version", "V4");
 	const color = $derived.by(() => {
-		switch (version) {
+		switch (version.current) {
 			case "V0":
 				return colorV0;
 			case "V1":
@@ -52,61 +60,69 @@
 
 <main class="mx-2 flex flex-col gap-4 pt-16 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
 	<div class="flex flex-col gap-2">
-		<div>
-			<label for="version">Tailwind CSS Version</label>
-			<select
-				name="version"
-				id="version"
-				class="rounded border border-neutral-500/50 bg-white p-1"
-				bind:value={version}
-				onchange={() => localStorage.setItem("version", version)}
-			>
-				{#each versionOptions as option (option.value)}
-					<option value={option.value}>{option.name}</option>
-				{/each}
-			</select>
+		<div class="flex items-center gap-2">
+			<Label for="version">Tailwind CSS Version</Label>
+			<Select.Root type="single" bind:value={version.current}>
+				<Select.Trigger id="version">
+					{versionOptions.find((option) => option.value === version.current)?.name}
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Group>
+						<Select.Label>Version</Select.Label>
+						{#each versionOptions as option (option.value)}
+							<Select.Item value={option.value}>{option.name}</Select.Item>
+						{/each}
+					</Select.Group>
+				</Select.Content>
+			</Select.Root>
 		</div>
 
-		<div>
-			<label for="view">Color View</label>
-			<select
-				name="view"
-				id="view"
-				class="rounded border border-neutral-500/50 bg-white p-1"
-				bind:value={view}
-				onchange={() => localStorage.setItem("view", view)}
-			>
-				<option value="oklch">OKLCH</option>
-				<option value="hex">HEX</option>
-				<option value="hsl">HSL</option>
-				<option value="rgb">RGB</option>
-			</select>
+		<div class="flex items-center gap-2">
+			<Label for="view">View Color</Label>
+			<Select.Root type="single" bind:value={view.current}>
+				<Select.Trigger id="view">
+					{colorOptions.find((option) => option.value === view.current)?.name}
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Group>
+						<Select.Label>Display</Select.Label>
+						{#each colorOptions as option (option.value)}
+							<Select.Item value={option.value}>{option.name}</Select.Item>
+						{/each}
+					</Select.Group>
+				</Select.Content>
+			</Select.Root>
 		</div>
 	</div>
 
 	{#each color as color (color.color)}
-		<section class="space-y-1 rounded border border-neutral-500/50 p-2">
-			<h2 class="text-xl font-semibold tracking-tight capitalize">{color.color}</h2>
+		<section id={color.color} class="space-y-1 rounded-md border border-neutral-500/50 p-2">
+			<h2 class="text-xl font-semibold tracking-tight capitalize">
+				{color.color}
+			</h2>
 			<div class="flex flex-col gap-2 md:flex-row">
 				{#each color.range as shade (shade.name)}
-					<div class="group w-full overflow-hidden rounded border border-neutral-500/50">
+					{@const viewAs = view.current}
+					<div class="group w-full overflow-hidden rounded-sm border border-neutral-500/50">
 						<div class="aspect-square h-auto w-full" style="background-color: {shade.oklch.long}">
-							<button
-								class="float-right m-1 h-fit w-fit rounded p-1 opacity-50 duration-200 group-hover:opacity-100 focus-visible:opacity-100
+							<Button
+								variant="ghost"
+								size="icon"
+								class="float-right m-1 h-fit w-fit rounded-xs p-1
                 {shade.shade > 300
-									? 'text-white hover:bg-white/10 focus-visible:bg-white/10'
-									: 'text-black hover:bg-black/10 focus-visible:bg-black/10'}"
+									? 'text-white hover:bg-neutral-50/20 hover:text-white focus-visible:bg-neutral-50/10'
+									: 'text-black hover:bg-neutral-950/10 hover:text-black focus-visible:bg-neutral-950/10'}"
 								onclick={() => {
-									navigator.clipboard.writeText(shade[view].long ?? "");
-									toast(`Copied ${shade[view].long}`);
+									navigator.clipboard.writeText(shade[viewAs].long ?? "");
+									toast(`Copied ${shade[viewAs].long}`);
 								}}
 							>
 								<Copy class="w-4" />
-							</button>
+							</Button>
 						</div>
 						<section class="px-1 py-px font-mono text-sm">
 							<h3 class="font-semibold text-nowrap">{shade.name}</h3>
-							<p>{shade[view].short}</p>
+							<p>{shade[viewAs].short}</p>
 						</section>
 					</div>
 				{/each}
