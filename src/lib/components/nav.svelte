@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from "$app/state";
 	import SunIcon from "@lucide/svelte/icons/sun";
 	import MoonIcon from "@lucide/svelte/icons/moon";
 
@@ -30,8 +31,12 @@
 			<li class="text-lg font-semibold tracking-tight">
 				<a
 					href={item.url}
-					class="rounded px-2 py-1 duration-200 ease-out hover:bg-violet-500/10 hover:text-violet-500 focus-visible:bg-violet-500/10 focus-visible:text-violet-500"
-					>{item.name}
+					class="rounded px-2 py-1 duration-200 ease-out hover:bg-violet-500/10 hover:text-violet-500 focus-visible:bg-violet-500/10 focus-visible:text-violet-500 dark:hover:bg-violet-500/20 dark:hover:text-violet-400
+          {page.url.pathname === item.url
+						? 'bg-violet-500/10 text-violet-500 dark:bg-violet-500/20 dark:text-violet-400'
+						: ''}"
+				>
+					{item.name}
 				</a>
 			</li>
 		{/each}
