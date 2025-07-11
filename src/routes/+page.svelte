@@ -11,7 +11,7 @@
 	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
 
-	let view = new PersistedState<Color>("view", "oklch");
+	const view = new PersistedState<Color>("view", "oklch");
 
 	const version = new PersistedState("version", "V4");
 	const color = $derived.by(() => {
@@ -68,14 +68,14 @@
 	</div>
 
 	{#each color as color (color.color)}
-		<section id={color.color} class="space-y-1 rounded-md border border-neutral-500/50 p-2">
+		<section id={color.color} class="space-y-1 rounded-md border border-border p-2">
 			<h2 class="text-xl font-semibold tracking-tight capitalize">
 				{color.color}
 			</h2>
 			<div class="flex flex-col gap-2 md:flex-row">
 				{#each color.range as shade (shade.name)}
 					{@const viewAs = view.current}
-					<div class="group w-full overflow-hidden rounded-sm border border-neutral-500/50">
+					<div class="group w-full overflow-hidden rounded-sm border border-border">
 						<div class="aspect-square h-auto w-full" style="background-color: {shade.oklch.long}">
 							<Button
 								variant="ghost"
@@ -85,8 +85,8 @@
 									? 'text-white hover:bg-neutral-50/20 hover:text-white focus-visible:bg-neutral-50/10'
 									: 'text-black hover:bg-neutral-950/10 hover:text-black focus-visible:bg-neutral-950/10'}"
 								onclick={() => {
-									navigator.clipboard.writeText(shade[viewAs].long ?? "");
-									toast(`Copied ${shade[viewAs].long}`);
+									navigator.clipboard.writeText(shade[viewAs]?.long ?? "");
+									toast(`Copied ${shade[viewAs]?.long}`);
 								}}
 							>
 								<Copy class="w-4" />
@@ -94,7 +94,7 @@
 						</div>
 						<section class="px-1 py-px font-mono text-sm">
 							<h3 class="font-semibold text-nowrap">{shade.name}</h3>
-							<p>{shade[viewAs].short}</p>
+							<p>{shade[viewAs]?.short}</p>
 						</section>
 					</div>
 				{/each}
