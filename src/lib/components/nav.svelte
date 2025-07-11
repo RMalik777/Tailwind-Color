@@ -46,7 +46,7 @@
 			</li>
 		{/each}
 	</ul>
-	<div class="space-x-1">
+	<div class="hidden space-x-1 sm:block">
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger class={buttonVariants({ variant: "outline", size: "icon" })}>
 				<SunIcon
