@@ -17,6 +17,10 @@
 			url: "/compare",
 		},
 		{
+			name: "Gradient",
+			url: "/gradient",
+		},
+		{
 			name: "Gallery",
 			url: "/gallery",
 		},
@@ -26,12 +30,12 @@
 <nav
 	class="fixed z-50 flex h-fit w-full items-center justify-between border-b bg-background/80 px-4 py-2 shadow-xs backdrop-blur-md sm:px-6 lg:px-8 xl:px-10"
 >
-	<ul class="flex gap-2">
+	<ul class="flex gap-2 sm:gap-4">
 		{#each link as item (item.url)}
 			<li class="text-lg font-semibold tracking-tight">
 				<a
 					href={item.url}
-					class="rounded px-2 py-1 duration-200 ease-out hover:bg-violet-500/10 hover:text-violet-500 focus-visible:bg-violet-500/10 focus-visible:text-violet-500 dark:hover:bg-violet-500/20 dark:hover:text-violet-400
+					class="rounded px-2 py-1 duration-200 ease-out hover:bg-violet-500/10 hover:text-violet-500 focus-visible:bg-violet-500/10 focus-visible:text-violet-500 sm:px-4 dark:hover:bg-violet-500/20 dark:hover:text-violet-400
           {page.url.pathname === item.url
 						? 'bg-violet-500/10 text-violet-500 dark:bg-violet-500/20 dark:text-violet-400'
 						: ''}"

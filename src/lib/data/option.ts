@@ -1,10 +1,27 @@
-import type { ColorOption, VersionOption } from "$lib/types/color";
+import type { ColorOption, VersionOption, InterpolationOption } from "$lib/types/color";
 
 export const colorOptions: ColorOption[] = [
 	{ name: "OKLCH", value: "oklch" },
 	{ name: "HEX", value: "hex" },
 	{ name: "HSL", value: "hsl" },
 	{ name: "RGB", value: "rgb" },
+];
+
+export const interpolationOptions: InterpolationOption[] = [
+	{
+		name: "SRGB",
+		value: "srgb",
+	},
+	{ name: "HSL", value: "hsl" },
+	{ name: "OKLAB", value: "oklab" },
+	{
+		name: "OKLCH",
+		value: "oklch",
+	},
+	{ name: "Longer", value: "oklch longer hue" },
+	{ name: "Shorter", value: "oklch shorter hue" },
+	{ name: "Increasing", value: "oklch increasing hue" },
+	{ name: "Decreasing", value: "oklch decreasing hue" },
 ];
 
 export const versionOptions: VersionOption[] = [
