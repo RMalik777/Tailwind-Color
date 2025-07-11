@@ -35,7 +35,7 @@
 		<div class="flex items-center gap-2">
 			<Label for="version">Tailwind CSS Version</Label>
 			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger id="version">
+				<Select.Trigger id="version" class="grow">
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
 				<Select.Content>
