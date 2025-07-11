@@ -43,7 +43,7 @@
 	];
 </script>
 
-<footer class="mt-12 flex w-full flex-col border-t border-neutral-500/50 tracking-tight">
+<footer class="mt-12 flex w-full flex-col border-t border-border tracking-tight">
 	<div
 		class="mx-2 flex flex-col items-start justify-start gap-2 pt-6 sm:mx-4 sm:flex-row sm:gap-10 md:mx-6 md:gap-12 lg:mx-8 lg:gap-16 xl:mx-10 xl:gap-20"
 	>
@@ -57,7 +57,7 @@
 								href={subItem.url}
 								target={subItem.blank ? "_blank" : ""}
 								rel={subItem.blank ? "noopener noreferrer" : ""}
-								class="duration-200 hover:text-purple-600 hover:underline focus-visible:text-purple-600 focus-visible:underline"
+								class="duration-200 hover:text-purple-600 hover:underline focus-visible:text-purple-600 focus-visible:underline dark:hover:text-purple-400 dark:focus-visible:text-purple-400"
 								>{subItem.name}</a
 							>
 						</li>
@@ -70,14 +70,14 @@
 		href="http://raflimalik.com"
 		target="_blank"
 		rel="noopener noreferrer"
-		class="mt-4 self-center text-sm text-neutral-500 hover:text-neutral-600 hover:underline focus-visible:text-neutral-600 focus-visible:underline"
+		class="mt-4 self-center text-sm text-muted-foreground duration-150 hover:text-foreground hover:underline focus-visible:text-foreground focus-visible:underline"
 	>
-		&copy; 2025 Rafli Malik
+		&copy; {new Date().getFullYear()} Rafli Malik
 	</a>
 	<a
 		href="https://github.com/RMalik777/Tailwind-Color"
 		target="_blank"
-		class="self-center text-sm text-neutral-500 hover:text-neutral-600 hover:underline focus-visible:text-neutral-600 focus-visible:underline"
+		class="self-center text-sm text-muted-foreground duration-150 hover:text-foreground hover:underline focus-visible:text-foreground focus-visible:underline"
 		>Source Code</a
 	>
 </footer>

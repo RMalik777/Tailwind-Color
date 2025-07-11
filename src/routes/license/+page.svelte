@@ -23,7 +23,8 @@
 						href={item.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-blue-500 hover:text-blue-600 hover:underline">{item.name}</a
+						class="text-blue-500 hover:text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-500"
+						>{item.name}</a
 					>
 				</li>
 			{/each}
