@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { flip } from "svelte/animate";
+	import { cubicOut } from "svelte/easing";
+
 	import { Button } from "$lib/components/ui/button/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
@@ -30,7 +33,7 @@
 	});
 </script>
 
-<div class="flex flex-col gap-4">
+<div class="flex grow flex-col gap-4">
 	<div class="flex flex-col gap-2">
 		<div class="flex items-center gap-2">
 			<Label for="version">Tailwind CSS Version</Label>
@@ -68,15 +71,26 @@
 	</div>
 
 	{#each color as color (color.color)}
-		<section id={color.color} class="space-y-1 rounded-md border border-border p-2">
+		<section
+			animate:flip={{ duration: 200, easing: cubicOut }}
+			id={color.color}
+			class="space-y-1 rounded-md border border-border p-2"
+		>
 			<h2 class="text-xl font-semibold tracking-tight capitalize">
 				{color.color}
 			</h2>
 			<div class="flex flex-col gap-2 md:flex-row">
 				{#each color.range as shade (shade.name)}
 					{@const viewAs = view.current}
-					<div class="group w-full overflow-hidden rounded-sm border border-border">
-						<div class="aspect-square h-auto w-full" style="background-color: {shade.oklch.long}">
+					<div
+						animate:flip={{ duration: 200, easing: cubicOut }}
+						class="group w-full overflow-hidden rounded-sm border border-border"
+					>
+						<div
+							class="aspect-square h-auto w-full transition-colors duration-150 ease-out"
+							style="
+              background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};"
+						>
 							<Button
 								variant="ghost"
 								size="icon"

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { flip } from "svelte/animate";
+	import { quintOut } from "svelte/easing";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
@@ -67,12 +69,22 @@
 			<p class="text-sm leading-none font-medium">Gap</p>
 		</Label>
 	</div>
-	<div class="flex h-full w-full flex-row {gap.current ? 'gap-[2px] sm:gap-1' : 'gap-0'}">
+	<div
+		class="flex h-full w-full flex-row duration-150 ease-out {gap.current
+			? 'gap-[2px] sm:gap-1'
+			: 'gap-0'}"
+	>
 		{#each color as color (color.color)}
-			<div class="flex h-full w-full grow flex-col {gap.current ? 'gap-[2px] sm:gap-1' : 'gap-0'}">
+			<div
+				animate:flip={{ duration: 200, easing: quintOut }}
+				class="flex h-full w-full grow flex-col duration-150 ease-out {gap.current
+					? 'gap-[2px] sm:gap-1'
+					: 'gap-0'}"
+			>
 				{#each color.range as shade (shade.name)}
 					<div
-						class="group flex h-full w-full items-center justify-center
+						animate:flip={{ duration: 200, delay: 200, easing: quintOut }}
+						class="group flex h-full w-full items-center justify-center transition-colors duration-150 ease-out
             {gap.current ? 'rounded-xs' : 'rounded-none'} 
             {border.current ? 'border' : ''}"
 						style="background-color:{shade.hex.long};"
