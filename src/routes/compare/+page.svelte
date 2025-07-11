@@ -1,7 +1,10 @@
 <script lang="ts">
-	import { browser } from "$app/environment";
+	import { Label } from "$lib/components/ui/label/index.js";
+	import * as Select from "$lib/components/ui/select/index.js";
 
-	import { colorV4, colorV3, colorV2, colorV1, colorV0 } from "$lib/data/color";
+	import { PersistedState } from "runed";
+
+	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
 
 	const versionOptions = [
 		{
@@ -26,9 +29,9 @@
 		},
 	];
 
-	let leftVersion = $state(browser ? localStorage.getItem("leftVersion") : "");
+	let leftVersion = new PersistedState("leftVersion", "V4");
 	const leftColorOptions = $derived.by(() => {
-		switch (leftVersion) {
+		switch (leftVersion.current) {
 			case "V0":
 				return colorV0;
 			case "V1":
@@ -41,16 +44,18 @@
 				return colorV4;
 		}
 	});
-	let leftColor = $state(browser ? localStorage.getItem("leftColor") : "");
-	const leftChoice = $derived(leftColorOptions.find((color) => color.color === leftColor)?.range);
-	let leftShade = $state(browser ? localStorage.getItem("leftShade") : "");
+	let leftColor = new PersistedState("leftColor", "red");
+	const leftChoice = $derived(
+		leftColorOptions.find((color) => color.color === leftColor.current)?.range,
+	);
+	let leftShade = new PersistedState("leftShade", "500");
 	const leftSelectedColor = $derived(
-		leftChoice?.find((color) => color.shade.toString() === leftShade),
+		leftChoice?.find((color) => color.shade.toString() === leftShade.current),
 	);
 
-	let rightVersion = $state(browser ? localStorage.getItem("rightVersion") : "");
+	let rightVersion = new PersistedState("rightVersion", "V4");
 	const rightColorOptions = $derived.by(() => {
-		switch (rightVersion) {
+		switch (rightVersion.current) {
 			case "V0":
 				return colorV0;
 			case "V1":
@@ -63,13 +68,13 @@
 				return colorV4;
 		}
 	});
-	let rightColor = $state(browser ? localStorage.getItem("rightColor") : "");
+	let rightColor = new PersistedState("rightColor", "red");
 	const rightChoice = $derived(
-		rightColorOptions.find((color) => color.color === rightColor)?.range,
+		rightColorOptions.find((color) => color.color === rightColor.current)?.range,
 	);
-	let rightShade = $state(browser ? localStorage.getItem("rightShade") : "");
+	let rightShade = new PersistedState("rightShade", "500");
 	const rightSelectedColor = $derived(
-		rightChoice?.find((color) => color.shade.toString() === rightShade),
+		rightChoice?.find((color) => color.shade.toString() === rightShade.current),
 	);
 </script>
 
@@ -78,124 +83,144 @@
 	<meta name="description" content="Compare Tailwind CSS colors across different versions" />
 </svelte:head>
 
-<main class="mx-2 h-dvh pt-16 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10">
+<main class="mx-2 h-fit min-h-dvh pt-16 sm:mx-4 sm:h-dvh md:mx-6 lg:mx-8 xl:mx-10">
 	<section
 		class="flex h-full w-full flex-row justify-between *:flex *:h-full *:w-full *:flex-col *:items-center *:justify-center"
 	>
 		<div class="left">
-			<div class="flex w-full flex-row justify-start gap-4">
-				<div>
-					<label for="leftVersion">Tailwind CSS Version</label>
-					<select
-						name="leftVersion"
-						id="leftVersion"
-						placeholder="Version"
-						class="rounded border border-neutral-500/50 bg-white p-1"
-						bind:value={leftVersion}
-						onchange={() => localStorage.setItem("leftVersion", leftVersion ?? "")}
-					>
-						{#each versionOptions as option (option.value)}
-							<option value={option.value}>{option.name}</option>
-						{/each}
-					</select>
+			<div class="grid w-full grid-cols-1 items-end gap-2 p-2 sm:grid-cols-3 md:gap-4">
+				<div class="space-y-1">
+					<Label for="leftVersion">Tailwind CSS Version</Label>
+					<Select.Root type="single" bind:value={leftVersion.current}>
+						<Select.Trigger id="leftVersion" class="w-full" placeholder="Select Version">
+							{versionOptions.find((option) => option.value === leftVersion.current)?.name ??
+								"Select Version"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Version</Select.Label>
+								{#each versionOptions as option (option.value)}
+									<Select.Item value={option.value}>{option.name}</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 				</div>
-				<div>
-					<label for="leftColor">Color</label>
-					<select
-						name="leftColor"
-						id="leftColor"
-						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
-						bind:value={leftColor}
-						onchange={() => localStorage.setItem("leftColor", leftColor ?? "")}
-					>
-						{#each leftColorOptions as option (option.color)}
-							<option value={option.color} class="capitalize">{option.color}</option>
-						{/each}
-					</select>
+				<div class="space-y-1">
+					<Label for="leftColor">Color</Label>
+					<Select.Root type="single" bind:value={leftColor.current}>
+						<Select.Trigger id="leftColor" class="w-full capitalize" placeholder="Select Color">
+							{leftColorOptions.find((option) => option.color === leftColor.current)?.color ??
+								"Select Color"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Color</Select.Label>
+								{#each leftColorOptions as option (option.color)}
+									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 				</div>
-				<div>
-					<label for="leftShade">Shade</label>
-					<select
-						name="leftShade"
-						id="leftShade"
-						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
-						bind:value={leftShade}
-						onchange={() => localStorage.setItem("leftShade", leftShade ?? "")}
-					>
-						{#if leftChoice}
-							{#each leftChoice as option (option.shade)}
-								<option value={option.shade.toString()} class="capitalize"
-									>{leftVersion === "V0"
-										? option.name.replace(leftColor + "-", "")
-										: option.shade}</option
-								>
-							{/each}
-						{/if}
-					</select>
+				<div class="space-y-1">
+					<Label for="leftShade">Shade</Label>
+					<Select.Root type="single" bind:value={leftShade.current}>
+						<Select.Trigger id="leftShade" class="w-full capitalize" placeholder="Select Shade">
+							{leftChoice
+								?.find((option) => option.shade.toString() === leftShade.current)
+								?.name.replace(leftColor.current + "-", "") ?? "Select Shade"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Shade</Select.Label>
+								{#if leftChoice}
+									{#each leftChoice as option (option.shade)}
+										<Select.Item value={option.shade.toString()} class="capitalize">
+											{leftVersion.current === "V0"
+												? option.name.replace(leftColor.current + "-", "")
+												: option.shade}
+										</Select.Item>
+									{/each}
+								{/if}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 				</div>
 			</div>
+
 			<div
-				class="h-full w-full"
-				style="background-color: {leftVersion === 'V4'
+				class="h-dvh w-full transition-colors duration-200 ease-linear sm:h-full"
+				style="background-color: {leftVersion.current === 'V4'
 					? leftSelectedColor?.oklch.long
 					: leftSelectedColor?.hex.long}"
 			></div>
 		</div>
 
 		<div class="right">
-			<div class="flex w-full flex-row justify-start gap-4">
-				<div>
-					<label for="rightVersion">Tailwind CSS Version</label>
-					<select
-						name="rightVersion"
-						id="rightVersion"
-						class="rounded border border-neutral-500/50 bg-white p-1"
-						bind:value={rightVersion}
-						onchange={() => localStorage.setItem("rightVersion", rightVersion ?? "")}
-					>
-						{#each versionOptions as option (option.value)}
-							<option value={option.value.toString()}>{option.name}</option>
-						{/each}
-					</select>
+			<div class="grid w-full grid-cols-1 items-end gap-2 p-2 sm:grid-cols-3 md:gap-4">
+				<div class="space-y-1">
+					<Label for="rightVersion">Tailwind CSS Version</Label>
+					<Select.Root type="single" bind:value={rightVersion.current}>
+						<Select.Trigger id="rightVersion" class="w-full" placeholder="Select Version">
+							{versionOptions.find((option) => option.value === rightVersion.current)?.name ??
+								"Select Version"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Version</Select.Label>
+								{#each versionOptions as option (option.value)}
+									<Select.Item value={option.value}>{option.name}</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 				</div>
-				<div>
-					<label for="rightColor">Color</label>
-					<select
-						name="rightColor"
-						id="rightColor"
-						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
-						bind:value={rightColor}
-						onclick={() => localStorage.setItem("rightColor", rightColor ?? "")}
-					>
-						{#each rightColorOptions as option (option.color)}
-							<option value={option.color} class="capitalize">{option.color}</option>
-						{/each}
-					</select>
+				<div class="space-y-1">
+					<Label for="rightColor">Color</Label>
+					<Select.Root type="single" bind:value={rightColor.current}>
+						<Select.Trigger id="rightColor" class="w-full capitalize" placeholder="Select Color">
+							{rightColorOptions.find((option) => option.color === rightColor.current)?.color ??
+								"Select Color"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Color</Select.Label>
+								{#each rightColorOptions as option (option.color)}
+									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 				</div>
-				<div>
-					<label for="rightShade">Shade</label>
-					<select
-						name="rightShade"
-						id="rightShade"
-						class="rounded border border-neutral-500/50 bg-white p-1 capitalize"
-						bind:value={rightShade}
-						onclick={() => localStorage.setItem("rightShade", rightShade ?? "")}
-					>
-						{#if rightChoice}
-							{#each rightChoice as option (option.shade)}
-								<option value={option.shade.toString()} class="capitalize"
-									>{rightVersion === "V0"
-										? option.name.replace(rightColor + "-", "")
-										: option.shade}</option
-								>
-							{/each}
-						{/if}
-					</select>
+				<div class="space-y-1">
+					<Label for="rightShade">Shade</Label>
+					<Select.Root type="single" bind:value={rightShade.current}>
+						<Select.Trigger id="rightShade" class="w-full capitalize" placeholder="Select Shade">
+							{rightChoice
+								?.find((option) => option.shade.toString() === rightShade.current)
+								?.name.replace(rightColor.current + "-", "") ?? "Select Shade"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Shade</Select.Label>
+								{#if rightChoice}
+									{#each rightChoice as option (option.shade)}
+										<Select.Item value={option.shade.toString()} class="capitalize">
+											{rightVersion.current === "V0"
+												? option.name.replace(rightColor.current + "-", "")
+												: option.shade}
+										</Select.Item>
+									{/each}
+								{/if}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
 				</div>
 			</div>
 			<div
-				class="h-full w-full"
-				style="background-color: {rightVersion === 'V4'
+				class="h-dvh w-full transition-colors duration-200 ease-linear sm:h-full"
+				style="background-color: {rightVersion.current === 'V4'
 					? rightSelectedColor?.oklch.long
 					: rightSelectedColor?.hex.long}"
 			></div>
