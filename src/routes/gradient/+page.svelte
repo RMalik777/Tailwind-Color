@@ -2,6 +2,8 @@
 	import { Button } from "$lib/components/ui/button/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
+	import { Input } from "$lib/components/ui/input/index.js";
+	import { Slider } from "$lib/components/ui/slider/index.js";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import { PersistedState } from "runed";
@@ -11,6 +13,7 @@
 
 	const interpolation = new PersistedState("interpolation", "oklch");
 	const version = new PersistedState("version", "V4");
+	const degree = new PersistedState("degree", 90);
 	const leftColorOptions = $derived.by(() => {
 		switch (version.current) {
 			case "V0":
@@ -56,6 +59,8 @@
 	const rightSelectedColor = $derived(
 		rightChoice?.find((color) => color.shade.toString() === rightShade.current),
 	);
+
+	let value = new PersistedState("gradientStops", [0, 100]);
 </script>
 
 <svelte:head>
@@ -95,7 +100,7 @@
 							<Select.Label>Interpolation</Select.Label>
 							{#each interpolationOptions as option (option.value)}
 								{@const isDefault =
-									(option.value === "oklch" && version.current === "V4") ||
+									(option.value === "oklab" && version.current === "V4") ||
 									(option.value === "srgb" && version.current !== "V4")}
 								<Select.Item value={option.value}>
 									{option.name}<span class="text-muted-foreground">
@@ -106,6 +111,27 @@
 						</Select.Group>
 					</Select.Content>
 				</Select.Root>
+			</div>
+			<div class="flex w-full max-w-sm flex-col gap-1">
+				<Label for="degree">Degree</Label>
+				<Input
+					id="degree"
+					type="number"
+					placeholder="90"
+					step="30"
+					bind:value={degree.current}
+					class="w-20 max-w-sm min-w-20 font-mono"
+					oninput={(e) => {
+						const value = parseInt(e.currentTarget.value);
+						if (!isNaN(value)) {
+							if (value > 360) {
+								degree.current = 0;
+							} else if (value < 0) {
+								degree.current = 360;
+							}
+						}
+					}}
+				/>
 			</div>
 		</div>
 		<div class="flex flex-row items-end gap-4">
@@ -218,13 +244,24 @@
 			</div>
 		</div>
 	</div>
+	<div class="space-y-1">
+		<Slider type="multiple" bind:value={value.current} max={100} step={1} />
+		<div
+			class="flex w-full items-center justify-between text-center font-mono text-sm text-muted-foreground"
+		>
+			<p class="w-full grow">{value.current[0]}%</p>
+			<p class="w-full grow">{value.current[1]}%</p>
+		</div>
+	</div>
 
 	<div
 		class="col-span-2 h-dvh w-full rounded-sm transition-colors duration-200 ease-linear sm:h-full"
 		style="
     --tw-gradient-from: {leftSelectedColor?.oklch.long};
     --tw-gradient-to: {rightSelectedColor?.oklch.long};
-    --tw-gradient-position: 90deg in {interpolation.current};
+    --tw-gradient-from-position: {value.current[0]}%;
+    --tw-gradient-to-position: {value.current[1]}%;
+    --tw-gradient-position: {degree.current}deg in {interpolation.current};
 		--tw-gradient-stops: var(
 			--tw-gradient-via-stops,
 			var(--tw-gradient-position),
