@@ -94,7 +94,14 @@
 						<Select.Group>
 							<Select.Label>Interpolation</Select.Label>
 							{#each interpolationOptions as option (option.value)}
-								<Select.Item value={option.value}>{option.name}</Select.Item>
+								{@const isDefault =
+									(option.value === "oklch" && version.current === "V4") ||
+									(option.value === "srgb" && version.current !== "V4")}
+								<Select.Item value={option.value}>
+									{option.name}<span class="text-muted-foreground">
+										{isDefault ? " (Default)" : ""}
+									</span>
+								</Select.Item>
 							{/each}
 						</Select.Group>
 					</Select.Content>
