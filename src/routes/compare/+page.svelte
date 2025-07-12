@@ -207,14 +207,14 @@
 
 	<div class="flex grow flex-row items-center">
 		<div
-			class="h-dvh w-full rounded-l-sm transition-colors duration-200 ease-linear sm:h-full"
+			class="h-dvh w-full rounded-l-sm transition duration-200 ease-linear sm:h-full"
 			style="background-color: {leftVersion.current === 'V4'
 				? leftSelectedColor?.oklch.long
 				: leftSelectedColor?.hex.long}"
 		></div>
 
 		<div
-			class="h-dvh w-full rounded-r-sm transition-colors duration-200 ease-linear sm:h-full"
+			class="h-dvh w-full rounded-r-sm transition duration-200 ease-linear sm:h-full"
 			style="background-color: {rightVersion.current === 'V4'
 				? rightSelectedColor?.oklch.long
 				: rightSelectedColor?.hex.long}"
