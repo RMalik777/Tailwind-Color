@@ -34,6 +34,11 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Gallery</title>
+	<meta name="description" content="See all Tailwind CSS colors in one place." />
+</svelte:head>
+
 <div class="flex w-full grow flex-col gap-1 pb-1">
 	<div class="flex flex-col gap-2 pb-3 sm:flex-row sm:gap-4">
 		<div class="flex items-center gap-2">

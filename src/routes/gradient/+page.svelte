@@ -64,8 +64,8 @@
 </script>
 
 <svelte:head>
-	<title>Compare | Tailwind CSS Color</title>
-	<meta name="description" content="Compare Tailwind CSS colors across different versions" />
+	<title>Gradient | Tailwind CSS Color</title>
+	<meta name="description" content="Compare and test gradient colors in Tailwind CSS" />
 </svelte:head>
 
 <section class="flex w-full grow flex-col justify-between gap-2 pb-2">

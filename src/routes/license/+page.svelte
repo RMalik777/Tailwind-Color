@@ -11,6 +11,11 @@
 	];
 </script>
 
+<svelte:head>
+	<title>License</title>
+	<meta name="description" content="License information for the Tailwind CSS Color Gallery." />
+</svelte:head>
+
 <div class="flex flex-col">
 	<h1 class="py-20 text-4xl font-bold tracking-tight">License</h1>
 
