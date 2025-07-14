@@ -35,7 +35,7 @@
 </script>
 
 <svelte:head>
-	<title>Gallery</title>
+	<title>Gallery | Tailwind CSS Color</title>
 	<meta name="description" content="See all Tailwind CSS colors in one place." />
 </svelte:head>
 
