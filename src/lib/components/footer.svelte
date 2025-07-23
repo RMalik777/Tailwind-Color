@@ -49,7 +49,7 @@
 	>
 		{#each section as item (item.name)}
 			<section class="flex flex-col gap-2 pt-4">
-				<h2 class="text-xl font-semibold">{item.name}</h2>
+				<h2 class="text-lg font-semibold">{item.name}</h2>
 				<ul class="flex flex-col gap-1">
 					{#each item.items as subItem (subItem.url)}
 						<li>
@@ -57,7 +57,7 @@
 								href={subItem.url}
 								target={subItem.blank ? "_blank" : ""}
 								rel={subItem.blank ? "noopener noreferrer" : ""}
-								class="duration-200 hover:text-purple-600 hover:underline focus-visible:text-purple-600 focus-visible:underline dark:hover:text-purple-400 dark:focus-visible:text-purple-400"
+								class="text-muted-foreground transition-all duration-200 hover:text-purple-600 hover:underline focus-visible:text-purple-600 focus-visible:underline dark:hover:text-purple-400 dark:focus-visible:text-purple-400"
 								>{subItem.name}</a
 							>
 						</li>
