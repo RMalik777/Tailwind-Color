@@ -47,6 +47,17 @@
 		{/each}
 	</ul>
 	<div class="hidden space-x-1 sm:block">
+		<Button
+			variant="ghost"
+			size="icon"
+			class="dark:fill-white"
+			href="https://github.com/RMalik777/Tailwind-Color"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			{@html siGithub.svg}
+		</Button>
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger class={buttonVariants({ variant: "outline", size: "icon" })}>
 				<SunIcon
@@ -63,16 +74,5 @@
 				<DropdownMenu.Item onclick={() => resetMode()}>System</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
-		<Button
-			variant="ghost"
-			size="icon"
-			class="dark:fill-white"
-			href="https://github.com/RMalik777/Tailwind-Color"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			{@html siGithub.svg}
-		</Button>
 	</div>
 </nav>
