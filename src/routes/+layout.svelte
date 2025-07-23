@@ -2,7 +2,7 @@
 	import "@fontsource-variable/inter";
 	import "@fontsource-variable/jetbrains-mono";
 	import "../app.css";
-	import { Toaster } from "svelte-sonner";
+	import { Toaster } from "$lib/components/ui/sonner/index.js";
 	import { ModeWatcher } from "mode-watcher";
 
 	import Footer from "$lib/components/footer.svelte";
