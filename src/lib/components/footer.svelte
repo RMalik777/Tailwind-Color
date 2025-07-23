@@ -40,6 +40,16 @@
 				},
 			],
 		},
+		{
+			name: "Other Works",
+			items: [
+				{
+					name: "Font Calculator",
+					url: "https://font.raflimalik.com",
+					blank: true,
+				},
+			],
+		},
 	];
 </script>
 
