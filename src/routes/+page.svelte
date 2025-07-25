@@ -34,11 +34,11 @@
 </script>
 
 <div class="flex grow flex-col gap-4">
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-col gap-2 pb-3 sm:flex-row sm:gap-4">
 		<div class="flex items-center gap-2">
 			<Label for="version">Tailwind CSS Version</Label>
 			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger id="version">
+				<Select.Trigger id="version" class="grow">
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
 				<Select.Content>
@@ -51,11 +51,10 @@
 				</Select.Content>
 			</Select.Root>
 		</div>
-
 		<div class="flex items-center gap-2">
-			<Label for="view">View Color</Label>
+			<Label for="view">Color Format</Label>
 			<Select.Root type="single" bind:value={view.current}>
-				<Select.Trigger id="view">
+				<Select.Trigger id="view" class="grow">
 					{colorOptions.find((option) => option.value === view.current)?.name}
 				</Select.Trigger>
 				<Select.Content>
