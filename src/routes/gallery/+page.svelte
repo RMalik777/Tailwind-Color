@@ -21,15 +21,15 @@
 	const color = $derived.by(() => {
 		switch (version.current) {
 			case "V0":
-				return colorV0;
+				return colorV0.filter((color) => color.color !== "black" && color.color !== "white");
 			case "V1":
-				return colorV1;
+				return colorV1.filter((color) => color.color !== "black" && color.color !== "white");
 			case "V2":
-				return colorV2;
+				return colorV2.filter((color) => color.color !== "black" && color.color !== "white");
 			case "V3":
-				return colorV3;
+				return colorV3.filter((color) => color.color !== "black" && color.color !== "white");
 			default:
-				return colorV4;
+				return colorV4.filter((color) => color.color !== "black" && color.color !== "white");
 		}
 	});
 </script>

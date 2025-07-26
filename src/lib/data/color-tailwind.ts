@@ -358,6 +358,18 @@ export const tailwindColors4: TailwindColor[] = [
 			950: "oklch(14.7% 0.004 49.25)",
 		},
 	},
+	{
+		name: "black",
+		shades: {
+			0: "oklch(0% 0 0)",
+		},
+	},
+	{
+		name: "white",
+		shades: {
+			0: "oklch(100% 0 100)",
+		},
+	},
 ];
 
 export const tailwindColors3: TailwindColor[] = [
@@ -713,6 +725,18 @@ export const tailwindColors3: TailwindColor[] = [
 			950: "#0c0a09",
 		},
 	},
+	{
+		name: "black",
+		shades: {
+			0: "#000000",
+		},
+	},
+	{
+		name: "white",
+		shades: {
+			0: "#ffffff",
+		},
+	},
 ];
 
 export const tailwindColors2: TailwindColor[] = [
@@ -1046,6 +1070,18 @@ export const tailwindColors2: TailwindColor[] = [
 			900: "#1c1917",
 		},
 	},
+	{
+		name: "black",
+		shades: {
+			0: "#000000",
+		},
+	},
+	{
+		name: "white",
+		shades: {
+			0: "#ffffff",
+		},
+	},
 ];
 
 export const tailwindColors1: TailwindColor[] = [
@@ -1312,6 +1348,18 @@ export const tailwindColors0: TailwindColor[] = [
 			darker: "#606f7b",
 			darkest: "#3d4852",
 			black: "#22292f",
+		},
+	},
+	{
+		name: "black",
+		shades: {
+			0: "#000000",
+		},
+	},
+	{
+		name: "white",
+		shades: {
+			0: "#ffffff",
 		},
 	},
 ];

@@ -6,7 +6,7 @@ import {
 	tailwindColors0,
 } from "./color-tailwind";
 
-import { processColorFromHex, processColorFromOklch } from "$lib/util/color-function";
+import { processColorFromHex, processColorFromOklch } from "$lib/functions/color";
 
 export const colorV4 = processColorFromOklch(tailwindColors4);
 export const colorV3 = processColorFromHex(tailwindColors3);

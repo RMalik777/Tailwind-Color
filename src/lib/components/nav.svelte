@@ -22,6 +22,10 @@
 			url: "/gradient",
 		},
 		{
+			name: "Contrast",
+			url: "/contrast",
+		},
+		{
 			name: "Gallery",
 			url: "/gallery",
 		},
