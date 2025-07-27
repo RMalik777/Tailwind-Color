@@ -8,6 +8,10 @@
 			name: "Culori",
 			url: "https://github.com/Evercoder/culori/blob/main/LICENSE",
 		},
+		{
+			name: "apca-w3",
+			url: "https://github.com/Myndex/apca-w3/blob/master/LICENSE.md",
+		},
 	];
 </script>
 
