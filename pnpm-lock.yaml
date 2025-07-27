@@ -24,8 +24,8 @@ importers:
         specifier: ^3.8.2
         version: 3.8.2
       '@lucide/svelte':
-        specifier: ^0.525.0
-        version: 0.525.0(svelte@5.36.17)
+        specifier: ^0.526.0
+        version: 0.526.0(svelte@5.36.17)
       '@sveltejs/adapter-cloudflare':
         specifier: ^7.1.1
         version: 7.1.1(@sveltejs/kit@2.26.1(@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.36.17)(vite@7.0.6(jiti@2.4.2)(lightningcss@1.30.1)))(svelte@5.36.17)(vite@7.0.6(jiti@2.4.2)(lightningcss@1.30.1)))(wrangler@4.14.4(@cloudflare/workers-types@4.20250724.0))
@@ -48,8 +48,8 @@ importers:
         specifier: ^0.1.9
         version: 0.1.9
       bits-ui:
-        specifier: ^2.8.12
-        version: 2.8.12(@internationalized/date@3.8.2)(svelte@5.36.17)
+        specifier: ^2.8.13
+        version: 2.8.13(@internationalized/date@3.8.2)(svelte@5.36.17)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -87,8 +87,8 @@ importers:
         specifier: ^0.31.1
         version: 0.31.1(svelte@5.36.17)
       simple-icons:
-        specifier: ^15.7.0
-        version: 15.7.0
+        specifier: ^15.8.0
+        version: 15.8.0
       svelte:
         specifier: ^5.36.17
         version: 5.36.17
@@ -699,8 +699,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@lucide/svelte@0.525.0':
-    resolution: {integrity: sha512-dyUxkXzepagLUzL8jHQNdeH286nC66ClLACsg+Neu/bjkRJWPWMzkT+H0DKlE70QdkicGCfs1ZGmXCc351hmZA==}
+  '@lucide/svelte@0.526.0':
+    resolution: {integrity: sha512-D0pRA/tTLajPFok7gr5+bMeGeEsszAJOSx02i/jPuiGiakj1DHj3D+OEjTyYLeSHAYOmRu5AdWZB/Ft01tdAUQ==}
     peerDependencies:
       svelte: ^5
 
@@ -1067,8 +1067,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  bits-ui@2.8.12:
-    resolution: {integrity: sha512-1ssRPVjpy/GF0QMrwwsKbpWVNhZmJY3rQJXeDsi1AHjtzdX57fgQMI0XoMxwX01YSvm3U7fBo8RJxAujwfp+8A==}
+  bits-ui@2.8.13:
+    resolution: {integrity: sha512-YC3DiatZzREdbTZR8IuxbQeYg+/MNcyQeuS6Hycl+ufoG7eiV66qICx210plFER9B776FEYSHXSYuQdlvWODpw==}
     engines: {node: '>=20'}
     peerDependencies:
       '@internationalized/date': ^3.8.1
@@ -1799,8 +1799,8 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  simple-icons@15.7.0:
-    resolution: {integrity: sha512-buN9moq1lh6Tujgr2Nc3Vgi4naE0IOKon48G42aLWqSNxjWJlUx+YSqobKcefom4uv1xyAVFcjQOJIhBJvXjGw==}
+  simple-icons@15.8.0:
+    resolution: {integrity: sha512-wErxeGj9E8bcS3sP/G1iqCcKAFW6s5rMIHT2ZeNrqAhF3p0zCkbP+LRJNPFnczGpKdTfS4fPQHCvag1QwsAQvg==}
     engines: {node: '>=0.12.18'}
 
   simple-swizzle@0.2.2:
@@ -2441,7 +2441,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
 
-  '@lucide/svelte@0.525.0(svelte@5.36.17)':
+  '@lucide/svelte@0.526.0(svelte@5.36.17)':
     dependencies:
       svelte: 5.36.17
 
@@ -2785,7 +2785,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  bits-ui@2.8.12(@internationalized/date@3.8.2)(svelte@5.36.17):
+  bits-ui@2.8.13(@internationalized/date@3.8.2)(svelte@5.36.17):
     dependencies:
       '@floating-ui/core': 1.7.2
       '@floating-ui/dom': 1.7.2
@@ -3475,7 +3475,7 @@ snapshots:
 
   shebang-regex@3.0.0: {}
 
-  simple-icons@15.7.0: {}
+  simple-icons@15.8.0: {}
 
   simple-swizzle@0.2.2:
     dependencies:
