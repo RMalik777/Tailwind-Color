@@ -3,19 +3,19 @@
 	// @ts-expect-error - @types/apca-w3 is not updated yet, so fontLookupAPCA is not defined
 	import { calcAPCA, fontLookupAPCA } from "apca-w3";
 
-	import * as Table from "$lib/components/ui/table/index.js";
+	import { Badge } from "$lib/components/ui/badge/index.js";
 	import { Button } from "$lib/components/ui/button/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 	import { Separator } from "$lib/components/ui/separator/index.js";
+	import * as Table from "$lib/components/ui/table/index.js";
 	import * as Tabs from "$lib/components/ui/tabs/index.js";
-	import { Badge } from "$lib/components/ui/badge/index.js";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import BadgeCheck from "@lucide/svelte/icons/badge-check";
 	import BadgeX from "@lucide/svelte/icons/badge-x";
-	import EyeOff from "@lucide/svelte/icons/eye-off";
 	import CaseLower from "@lucide/svelte/icons/case-lower";
+	import EyeOff from "@lucide/svelte/icons/eye-off";
 
 	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
 	import { versionOptions } from "$lib/data/option";
@@ -94,9 +94,6 @@
 			return { name: i * 100, value: font.toString() };
 		});
 	});
-	$effect(() => {
-		$inspect(font);
-	});
 </script>
 
 <svelte:head>
@@ -124,59 +121,61 @@
 		</div>
 	</div>
 
-	<div class="control flex flex-row items-end gap-2 md:gap-4">
+	<div class="control flex flex-row items-center gap-2 sm:items-end md:gap-4">
 		<div class="grid w-full grid-cols-1 items-end gap-2 sm:grid-cols-2 md:gap-4">
-			<div class="col-span-2">
+			<div class="sm:col-span-2">
 				<p class="font-semibold tracking-tight">Background</p>
 				<Separator />
 			</div>
-			<div class="space-y-1">
-				<Label for="leftColor">Color</Label>
-				<Select.Root
-					type="single"
-					bind:value={bgColor.current}
-					onValueChange={(value) => {
-						if (value === "black" || value === "white") bgShade.current = "0";
-						else if (bgShade.current === "0") bgShade.current = "50";
-					}}
-				>
-					<Select.Trigger id="leftColor" class="w-full capitalize" placeholder="Select Color">
-						{bgColorOptions.find((option) => option.color === bgColor.current)?.color ??
-							"Select Color"}
-					</Select.Trigger>
-					<Select.Content preventScroll>
-						<Select.Group>
-							<Select.Label>Color</Select.Label>
-							{#each bgColorOptions as option (option.color)}
-								<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
-							{/each}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
-			</div>
-			<div class="space-y-1">
-				<Label for="leftShade">Shade</Label>
-				<Select.Root type="single" bind:value={bgShade.current} disabled={!bgColor}>
-					<Select.Trigger id="leftShade" class="w-full capitalize" placeholder="Select Shade">
-						{bgChoice
-							?.find((option) => option.shade.toString() === bgShade.current)
-							?.name.replace(bgColor.current + "-", "") ?? "Select Shade"}
-					</Select.Trigger>
-					<Select.Content>
-						<Select.Group>
-							<Select.Label>Shade</Select.Label>
-							{#if bgChoice}
-								{#each bgChoice as option (option.shade)}
-									<Select.Item value={option.shade.toString()} class="capitalize">
-										{version.current === "V0"
-											? option.name.replace(bgColor.current + "-", "")
-											: option.shade}
-									</Select.Item>
+			<div class="grid w-full grid-cols-1 gap-2 sm:col-span-2 sm:grid-cols-2">
+				<div class="w-full space-y-1">
+					<Label for="leftColor">Color</Label>
+					<Select.Root
+						type="single"
+						bind:value={bgColor.current}
+						onValueChange={(value) => {
+							if (value === "black" || value === "white") bgShade.current = "0";
+							else if (bgShade.current === "0") bgShade.current = "50";
+						}}
+					>
+						<Select.Trigger id="leftColor" class="w-full capitalize" placeholder="Select Color">
+							{bgColorOptions.find((option) => option.color === bgColor.current)?.color ??
+								"Select Color"}
+						</Select.Trigger>
+						<Select.Content preventScroll>
+							<Select.Group>
+								<Select.Label>Color</Select.Label>
+								{#each bgColorOptions as option (option.color)}
+									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
 								{/each}
-							{/if}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
+				<div class="w-full space-y-1">
+					<Label for="leftShade">Shade</Label>
+					<Select.Root type="single" bind:value={bgShade.current} disabled={!bgColor}>
+						<Select.Trigger id="leftShade" class="w-full capitalize" placeholder="Select Shade">
+							{bgChoice
+								?.find((option) => option.shade.toString() === bgShade.current)
+								?.name.replace(bgColor.current + "-", "") ?? "Select Shade"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Shade</Select.Label>
+								{#if bgChoice}
+									{#each bgChoice as option (option.shade)}
+										<Select.Item value={option.shade.toString()} class="capitalize">
+											{version.current === "V0"
+												? option.name.replace(bgColor.current + "-", "")
+												: option.shade}
+										</Select.Item>
+									{/each}
+								{/if}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
 			</div>
 		</div>
 
@@ -197,58 +196,60 @@
 		</Button>
 
 		<div class="grid w-full grid-cols-1 items-end gap-2 sm:grid-cols-2 md:gap-4">
-			<div class="col-span-2">
+			<div class="sm:col-span-2">
 				<p class="font-semibold tracking-tight">Text</p>
 				<Separator />
 			</div>
-			<div class="space-y-1">
-				<Label for="textColor">Color</Label>
-				<Select.Root
-					type="single"
-					bind:value={textColor.current}
-					onValueChange={(value) => {
-						if ((value === "black" || value === "white") && textShade.current !== "0")
-							textShade.current = "0";
-						else if (textShade.current === "0") textShade.current = "50";
-					}}
-				>
-					<Select.Trigger id="textColor" class="w-full capitalize" placeholder="Select Color">
-						{textColorOptions.find((option) => option.color === textColor.current)?.color ??
-							"Select Color"}
-					</Select.Trigger>
-					<Select.Content preventScroll>
-						<Select.Group>
-							<Select.Label>Color</Select.Label>
-							{#each textColorOptions as option (option.color)}
-								<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
-							{/each}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
-			</div>
-			<div class="space-y-1">
-				<Label for="rightShade">Shade</Label>
-				<Select.Root type="single" bind:value={textShade.current} disabled={!textColor}>
-					<Select.Trigger id="rightShade" class="w-full capitalize" placeholder="Select Shade">
-						{textChoice
-							?.find((option) => option.shade.toString() === textShade.current)
-							?.name.replace(textColor.current + "-", "") ?? "Select Shade"}
-					</Select.Trigger>
-					<Select.Content>
-						<Select.Group>
-							<Select.Label>Shade</Select.Label>
-							{#if textChoice}
-								{#each textChoice as option (option.shade)}
-									<Select.Item value={option.shade.toString()} class="capitalize">
-										{version.current === "V0"
-											? option.name.replace(textColor.current + "-", "")
-											: option.shade}
-									</Select.Item>
+			<div class="grid w-full grid-cols-1 gap-2 sm:col-span-2 sm:grid-cols-2">
+				<div class="space-y-1">
+					<Label for="textColor">Color</Label>
+					<Select.Root
+						type="single"
+						bind:value={textColor.current}
+						onValueChange={(value) => {
+							if ((value === "black" || value === "white") && textShade.current !== "0")
+								textShade.current = "0";
+							else if (textShade.current === "0") textShade.current = "50";
+						}}
+					>
+						<Select.Trigger id="textColor" class="w-full capitalize" placeholder="Select Color">
+							{textColorOptions.find((option) => option.color === textColor.current)?.color ??
+								"Select Color"}
+						</Select.Trigger>
+						<Select.Content preventScroll>
+							<Select.Group>
+								<Select.Label>Color</Select.Label>
+								{#each textColorOptions as option (option.color)}
+									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
 								{/each}
-							{/if}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
+				<div class="space-y-1">
+					<Label for="rightShade">Shade</Label>
+					<Select.Root type="single" bind:value={textShade.current} disabled={!textColor}>
+						<Select.Trigger id="rightShade" class="w-full capitalize" placeholder="Select Shade">
+							{textChoice
+								?.find((option) => option.shade.toString() === textShade.current)
+								?.name.replace(textColor.current + "-", "") ?? "Select Shade"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Shade</Select.Label>
+								{#if textChoice}
+									{#each textChoice as option (option.shade)}
+										<Select.Item value={option.shade.toString()} class="capitalize">
+											{version.current === "V0"
+												? option.name.replace(textColor.current + "-", "")
+												: option.shade}
+										</Select.Item>
+									{/each}
+								{/if}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
 			</div>
 		</div>
 	</div>

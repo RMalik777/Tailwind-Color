@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button/index.js";
+	import { Input } from "$lib/components/ui/input/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
-	import { Input } from "$lib/components/ui/input/index.js";
 	import { Slider } from "$lib/components/ui/slider/index.js";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
@@ -134,52 +134,54 @@
 				/>
 			</div>
 		</div>
-		<div class="flex flex-row items-end gap-4">
-			<div class="w-full grow space-y-1">
-				<Label for="leftColor">Color</Label>
-				<Select.Root type="single" bind:value={leftColor.current}>
-					<Select.Trigger id="leftColor" class="w-full capitalize" placeholder="Select Color">
-						{leftColorOptions.find((option) => option.color === leftColor.current)?.color ??
-							"Select Color"}
-					</Select.Trigger>
-					<Select.Content>
-						<Select.Group>
-							<Select.Label>Color</Select.Label>
-							{#each leftColorOptions as option (option.color)}
-								<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
-							{/each}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
-			</div>
-			<div class="w-full grow space-y-1">
-				<Label for="leftShade">Shade</Label>
-				<Select.Root type="single" bind:value={leftShade.current}>
-					<Select.Trigger
-						id="leftShade"
-						class="w-full capitalize"
-						placeholder="Select Shade"
-						disabled={!leftChoice}
-					>
-						{leftChoice
-							?.find((option) => option.shade.toString() === leftShade.current)
-							?.name.replace(leftColor.current + "-", "") ?? "Select Shade"}
-					</Select.Trigger>
-					<Select.Content>
-						<Select.Group>
-							<Select.Label>Shade</Select.Label>
-							{#if leftChoice}
-								{#each leftChoice as option (option.shade)}
-									<Select.Item value={option.shade.toString()} class="capitalize">
-										{version.current === "V0"
-											? option.name.replace(leftColor.current + "-", "")
-											: option.shade}
-									</Select.Item>
+		<div class="flex flex-row items-center gap-4 sm:items-end">
+			<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
+				<div class="w-full grow space-y-1">
+					<Label for="leftColor">Color</Label>
+					<Select.Root type="single" bind:value={leftColor.current}>
+						<Select.Trigger id="leftColor" class="w-full capitalize" placeholder="Select Color">
+							{leftColorOptions.find((option) => option.color === leftColor.current)?.color ??
+								"Select Color"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Color</Select.Label>
+								{#each leftColorOptions as option (option.color)}
+									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
 								{/each}
-							{/if}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
+				<div class="w-full grow space-y-1">
+					<Label for="leftShade">Shade</Label>
+					<Select.Root type="single" bind:value={leftShade.current}>
+						<Select.Trigger
+							id="leftShade"
+							class="w-full capitalize"
+							placeholder="Select Shade"
+							disabled={!leftChoice}
+						>
+							{leftChoice
+								?.find((option) => option.shade.toString() === leftShade.current)
+								?.name.replace(leftColor.current + "-", "") ?? "Select Shade"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Shade</Select.Label>
+								{#if leftChoice}
+									{#each leftChoice as option (option.shade)}
+										<Select.Item value={option.shade.toString()} class="capitalize">
+											{version.current === "V0"
+												? option.name.replace(leftColor.current + "-", "")
+												: option.shade}
+										</Select.Item>
+									{/each}
+								{/if}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
 			</div>
 			<Button
 				variant="outline"
@@ -196,51 +198,53 @@
 			>
 				<ArrowLeftRight class="w-fit min-w-fit" />
 			</Button>
-			<div class="w-full grow space-y-1">
-				<Label for="rightColor">Color</Label>
-				<Select.Root type="single" bind:value={rightColor.current}>
-					<Select.Trigger id="rightColor" class="w-full capitalize" placeholder="Select Color">
-						{rightColorOptions.find((option) => option.color === rightColor.current)?.color ??
-							"Select Color"}
-					</Select.Trigger>
-					<Select.Content>
-						<Select.Group>
-							<Select.Label>Color</Select.Label>
-							{#each rightColorOptions as option (option.color)}
-								<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
-							{/each}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
-			</div>
-			<div class="w-full grow space-y-1">
-				<Label for="rightShade">Shade</Label>
-				<Select.Root type="single" bind:value={rightShade.current}>
-					<Select.Trigger
-						id="rightShade"
-						class="w-full capitalize"
-						placeholder="Select Shade"
-						disabled={!rightChoice}
-					>
-						{rightChoice
-							?.find((option) => option.shade.toString() === rightShade.current)
-							?.name.replace(rightColor.current + "-", "") ?? "Select Shade"}
-					</Select.Trigger>
-					<Select.Content>
-						<Select.Group>
-							<Select.Label>Shade</Select.Label>
-							{#if rightChoice}
-								{#each rightChoice as option (option.shade)}
-									<Select.Item value={option.shade.toString()} class="capitalize">
-										{version.current === "V0"
-											? option.name.replace(rightColor.current + "-", "")
-											: option.shade}
-									</Select.Item>
+			<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
+				<div class="w-full grow space-y-1">
+					<Label for="rightColor">Color</Label>
+					<Select.Root type="single" bind:value={rightColor.current}>
+						<Select.Trigger id="rightColor" class="w-full capitalize" placeholder="Select Color">
+							{rightColorOptions.find((option) => option.color === rightColor.current)?.color ??
+								"Select Color"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Color</Select.Label>
+								{#each rightColorOptions as option (option.color)}
+									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
 								{/each}
-							{/if}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
+				<div class="w-full grow space-y-1">
+					<Label for="rightShade">Shade</Label>
+					<Select.Root type="single" bind:value={rightShade.current}>
+						<Select.Trigger
+							id="rightShade"
+							class="w-full capitalize"
+							placeholder="Select Shade"
+							disabled={!rightChoice}
+						>
+							{rightChoice
+								?.find((option) => option.shade.toString() === rightShade.current)
+								?.name.replace(rightColor.current + "-", "") ?? "Select Shade"}
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Group>
+								<Select.Label>Shade</Select.Label>
+								{#if rightChoice}
+									{#each rightChoice as option (option.shade)}
+										<Select.Item value={option.shade.toString()} class="capitalize">
+											{version.current === "V0"
+												? option.name.replace(rightColor.current + "-", "")
+												: option.shade}
+										</Select.Item>
+									{/each}
+								{/if}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+				</div>
 			</div>
 		</div>
 	</div>
