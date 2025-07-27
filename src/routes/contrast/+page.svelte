@@ -256,14 +256,14 @@
 	<div class="flex w-full flex-row items-center gap-16 pb-2 text-center text-sm *:w-full">
 		<div>
 			<div
-				class="h-4 rounded-xs border transition duration-200 ease-out"
+				class="h-2 rounded-xs border transition duration-200 ease-out sm:h-4"
 				style="background-color: {bgSelectedColor?.hex.long};"
 			></div>
 			<p>{bgSelectedColor?.hex.long}</p>
 		</div>
 		<div>
 			<div
-				class="h-4 rounded-xs border transition duration-200 ease-out"
+				class="h-2 rounded-xs border transition duration-200 ease-out sm:h-4"
 				style="background-color: {textSelectedColor?.hex.long};"
 			></div>
 			<p>{textSelectedColor?.hex.long}</p>
@@ -281,7 +281,7 @@
 					class="grid grid-cols-1 items-center gap-0 overflow-clip rounded-lg border tracking-tight max-sm:gap-y-2 max-sm:pt-4 sm:grid-cols-2"
 				>
 					<p
-						class="row-span-2 flex flex-col text-center font-mono text-3xl font-black tracking-tight transition duration-200 ease-out sm:text-4xl lg:text-5xl xl:text-6xl"
+						class="row-span-2 flex flex-col text-center font-mono text-4xl font-black tracking-tight transition duration-200 ease-out sm:text-5xl lg:text-6xl"
 					>
 						{contrastRatio}
 						<span class="text-xs font-normal tracking-normal text-muted-foreground">
@@ -337,7 +337,7 @@
 							<Badge variant="outline" class="font-sans"><CaseLower />Non-content text only</Badge>
 						{/if}
 						<p
-							class="row-span-2 flex flex-col text-center font-mono text-3xl font-black tracking-tight transition duration-200 ease-out sm:text-4xl lg:text-5xl xl:text-6xl"
+							class="row-span-2 flex flex-col text-center font-mono text-4xl font-black tracking-tight transition duration-200 ease-out sm:text-5xl lg:text-6xl"
 						>
 							<span>
 								L<sup>c</sup>
