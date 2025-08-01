@@ -61,7 +61,7 @@
 	const bgColorOptions = $derived(color);
 	const bgColor = new PersistedState("bgColor", "white");
 	const bgChoice = $derived(bgColorOptions.find((color) => color.color === bgColor.current)?.range);
-	const bgShade = new PersistedState("bgShade", "50");
+	const bgShade = new PersistedState("bgShade", "0");
 	const bgSelectedColor = $derived(
 		bgChoice?.find((color) => color.shade.toString() === bgShade.current),
 	);
@@ -71,7 +71,7 @@
 	const textChoice = $derived(
 		textColorOptions.find((color) => color.color === textColor.current)?.range,
 	);
-	const textShade = new PersistedState("textShade", "900");
+	const textShade = new PersistedState("textShade", "0");
 	const textSelectedColor = $derived(
 		textChoice?.find((color) => color.shade.toString() === textShade.current),
 	);
