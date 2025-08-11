@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { PersistedState } from "runed";
+	import { flip } from "svelte/animate";
+	import { fade } from "svelte/transition";
+
+	import { PersistedState, StateHistory } from "runed";
 	// @ts-expect-error - @types/apca-w3 is not updated yet, so fontLookupAPCA is not defined
 	import { calcAPCA, fontLookupAPCA } from "apca-w3";
 
@@ -10,6 +13,7 @@
 	import { Separator } from "$lib/components/ui/separator/index.js";
 	import * as Table from "$lib/components/ui/table/index.js";
 	import * as Tabs from "$lib/components/ui/tabs/index.js";
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import BadgeCheck from "@lucide/svelte/icons/badge-check";
@@ -20,6 +24,7 @@
 	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
 	import { versionOptions } from "$lib/data/option";
 	import { contrastValue, processColorFromHex, relativeLuminance } from "$lib/functions/contrast";
+	import { cubicOut } from "svelte/easing";
 
 	const minContrastSmall = 4.5;
 	const minContrastLarge = 3;
@@ -65,6 +70,11 @@
 	const bgSelectedColor = $derived(
 		bgChoice?.find((color) => color.shade.toString() === bgShade.current),
 	);
+	const bgSelectedColorHistory = new StateHistory(
+		() => bgSelectedColor,
+		() => bgSelectedColor,
+		{ capacity: 10 },
+	);
 
 	const textColorOptions = $derived(color);
 	const textColor = new PersistedState("textColor", "black");
@@ -74,6 +84,11 @@
 	const textShade = new PersistedState("textShade", "0");
 	const textSelectedColor = $derived(
 		textChoice?.find((color) => color.shade.toString() === textShade.current),
+	);
+	const textSelectedColorHistory = new StateHistory(
+		() => textSelectedColor,
+		() => textSelectedColor,
+		{ capacity: 10 },
 	);
 
 	const contrastRatio = $derived.by(() => {
@@ -252,6 +267,69 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="flex w-full flex-row items-center gap-16 max-sm:hidden">
+		<Tooltip.Provider delayDuration={100} skipDelayDuration={200} disableHoverableContent>
+			<div class="grid w-full grid-cols-10 gap-x-2">
+				{#each bgSelectedColorHistory.log.toReversed() as item (item.timestamp)}
+					<div
+						in:fade={{ duration: 150, easing: cubicOut }}
+						animate:flip={{ duration: 200, easing: cubicOut }}
+						class="h-full w-full *:w-full"
+					>
+						<Tooltip.Root>
+							<Tooltip.Trigger
+								onclick={() => {
+									const split = item.snapshot?.name.split("-");
+									if (split) {
+										bgColor.current = split[0];
+										bgShade.current = split[1];
+									}
+								}}
+							>
+								<div
+									class="h-8 w-auto rounded-sm border transition duration-200 ease-out"
+									style="background-color: {item.snapshot?.oklch.long};"
+								></div>
+							</Tooltip.Trigger>
+							<Tooltip.Content side="bottom">
+								<p class="capitalize">{item.snapshot?.name}</p>
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</div>
+				{/each}
+			</div>
+			<div class="grid w-full grid-cols-10 gap-x-2">
+				{#each textSelectedColorHistory.log.toReversed() as item (item.timestamp)}
+					<div
+						in:fade={{ duration: 150, easing: cubicOut }}
+						animate:flip={{ duration: 200, easing: cubicOut }}
+						class="h-full w-full *:w-full"
+					>
+						<Tooltip.Root>
+							<Tooltip.Trigger
+								onclick={() => {
+									const split = item.snapshot?.name.split("-");
+									if (split) {
+										textColor.current = split[0];
+										textShade.current = split[1];
+									}
+								}}
+							>
+								<div
+									class="h-8 w-auto rounded-sm border transition duration-200 ease-out"
+									style="background-color: {item.snapshot?.oklch.long};"
+								></div>
+							</Tooltip.Trigger>
+							<Tooltip.Content side="bottom">
+								<p class="capitalize">{item.snapshot?.name}</p>
+							</Tooltip.Content>
+						</Tooltip.Root>
+					</div>
+				{/each}
+			</div>
+		</Tooltip.Provider>
 	</div>
 
 	<div class="flex w-full flex-row items-center gap-16 pb-2 text-center text-sm *:w-full">
