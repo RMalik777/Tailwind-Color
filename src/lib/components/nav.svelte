@@ -35,6 +35,7 @@
 	];
 </script>
 
+<svelte:window onresize={() => (open = false)} />
 <nav
 	class="fixed z-50 flex h-fit w-full flex-row-reverse items-center justify-between border-b px-4 py-2 shadow-xs sm:flex-row sm:px-6 lg:px-8 xl:px-10"
 >
