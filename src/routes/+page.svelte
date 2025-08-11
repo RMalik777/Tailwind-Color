@@ -33,6 +33,14 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Tailwind CSS Color</title>
+	<meta
+		name="description"
+		content="Check out all available Tailwind CSS colors across different versions, from v0 to v4. Compare the old color and gradient with the new one."
+	/>
+</svelte:head>
+
 <div class="flex grow flex-col gap-4">
 	<div class="flex flex-col gap-2 pb-3 sm:flex-row sm:gap-4">
 		<div class="flex items-center gap-2">
