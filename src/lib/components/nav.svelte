@@ -10,7 +10,7 @@
 	import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
-	let open = $state(true);
+	let open = $state(false);
 	const link = [
 		{
 			name: "Home",
