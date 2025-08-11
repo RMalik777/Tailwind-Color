@@ -30,7 +30,7 @@
 
 <ModeWatcher />
 <Nav />
-<main class="flex h-fit min-h-dvh px-2 pt-16 sm:px-4 md:px-6 lg:px-8 xl:px-10">
+<main class="flex h-fit min-h-svh px-2 pt-16 sm:px-4 md:px-6 lg:px-8 xl:px-10">
 	{@render children()}
 </main>
 <Footer />

@@ -259,7 +259,7 @@
 	</div>
 
 	<div
-		class="col-span-2 h-dvh w-full rounded-sm transition duration-150 ease-linear sm:h-full"
+		class="col-span-2 h-svh w-full rounded-sm transition duration-150 ease-linear sm:h-full"
 		style="
     --tw-gradient-from: {leftSelectedColor?.oklch.long};
     --tw-gradient-to: {rightSelectedColor?.oklch.long};
