@@ -18,8 +18,8 @@ importers:
         specifier: ^5.2.8
         version: 5.2.8
       '@fontsource-variable/jetbrains-mono':
-        specifier: ^5.2.7
-        version: 5.2.7
+        specifier: ^5.2.8
+        version: 5.2.8
       '@internationalized/date':
         specifier: ^3.9.0
         version: 3.9.0
@@ -555,8 +555,8 @@ packages:
   '@fontsource-variable/inter@5.2.8':
     resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
 
-  '@fontsource-variable/jetbrains-mono@5.2.7':
-    resolution: {integrity: sha512-vwU6O4wv1h1BvEJUWaylorj0WZ3+GB3uVsgUH7IpGX/euSXm0UyTu6MWusk1pph562F8cBvuv41P4jufRogF4Q==}
+  '@fontsource-variable/jetbrains-mono@5.2.8':
+    resolution: {integrity: sha512-WBA9elru6Jdp5df2mES55wuOO0WIrn3kpXnI4+W2ek5u3ZgLS9XS4gmIlcQhiZOWEKl95meYdvK7xI+ETLCq/Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2531,7 +2531,7 @@ snapshots:
 
   '@fontsource-variable/inter@5.2.8': {}
 
-  '@fontsource-variable/jetbrains-mono@5.2.7': {}
+  '@fontsource-variable/jetbrains-mono@5.2.8': {}
 
   '@humanfs/core@0.19.1': {}
 
