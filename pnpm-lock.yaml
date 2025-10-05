@@ -51,8 +51,8 @@ importers:
         specifier: ^0.1.9
         version: 0.1.9
       bits-ui:
-        specifier: ^2.11.0
-        version: 2.11.0(@internationalized/date@3.9.0)(svelte@5.39.6)
+        specifier: ^2.11.4
+        version: 2.11.4(@internationalized/date@3.9.0)(svelte@5.39.6)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1228,8 +1228,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  bits-ui@2.11.0:
-    resolution: {integrity: sha512-j/lOFHz6ZDWwj9sOUb6zYSJQdvPc7kr1IRyAdPjln4wOw9UVvKCosbRFEyP4JEzvNFX7HksMG4naDrDHta5bSA==}
+  bits-ui@2.11.4:
+    resolution: {integrity: sha512-OlVBJhNUMDHbIAf8oDAyPchIrU8b1S5NAMm6enMZSKx5HKcf/QPI485/BL1r4EPlv4O3m45e59hBRCETtYFdxg==}
     engines: {node: '>=20'}
     peerDependencies:
       '@internationalized/date': ^3.8.1
@@ -2022,6 +2022,9 @@ packages:
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+
+  style-to-object@1.0.11:
+    resolution: {integrity: sha512-5A560JmXr7wDyGLK12Nq/EYS38VkGlglVzkis1JEdbGWSnbQIEhZzTJhzURXN5/8WwwFCs/f/VVcmkTppbXLow==}
 
   style-to-object@1.0.9:
     resolution: {integrity: sha512-G4qppLgKu/k6FwRpHiGiKPaPTFcG3g4wNVX/Qsfu+RqQM30E7Tyu/TEgxcL9PNLF5pdRLwQdE3YKKf+KF2Dzlw==}
@@ -3110,7 +3113,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  bits-ui@2.11.0(@internationalized/date@3.9.0)(svelte@5.39.6):
+  bits-ui@2.11.4(@internationalized/date@3.9.0)(svelte@5.39.6):
     dependencies:
       '@floating-ui/core': 1.7.3
       '@floating-ui/dom': 1.7.4
@@ -3873,6 +3876,10 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
+  style-to-object@1.0.11:
+    dependencies:
+      inline-style-parser: 0.2.4
+
   style-to-object@1.0.9:
     dependencies:
       inline-style-parser: 0.2.4
@@ -3917,7 +3924,7 @@ snapshots:
     dependencies:
       clsx: 2.1.1
       runed: 0.29.2(svelte@5.39.6)
-      style-to-object: 1.0.9
+      style-to-object: 1.0.11
       svelte: 5.39.6
 
   svelte-toolbelt@0.7.1(svelte@5.39.6):
