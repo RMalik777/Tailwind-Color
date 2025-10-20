@@ -19,7 +19,7 @@
 		"@fontsource-variable/inter": "^5.2.8",
 		"@fontsource-variable/jetbrains-mono": "^5.2.8",
 		"@internationalized/date": "^3.10.0",
-		"@lucide/svelte": "^0.545.0",
+		"@lucide/svelte": "^0.546.0",
 		"@sveltejs/adapter-cloudflare": "^7.2.4",
 		"@sveltejs/enhanced-img": "^0.8.4",
 		"@sveltejs/kit": "^2.47.2",
