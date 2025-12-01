@@ -49,7 +49,7 @@
 				<Select.Trigger id="version" class="grow">
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
-				<Select.Content>
+				<Select.Content preventScroll={false}>
 					<Select.Group>
 						<Select.Label>Version</Select.Label>
 						{#each versionOptions as option (option.value)}
@@ -65,7 +65,7 @@
 				<Select.Trigger id="view" class="grow">
 					{colorOptions.find((option) => option.value === view.current)?.name}
 				</Select.Trigger>
-				<Select.Content>
+				<Select.Content preventScroll={false}>
 					<Select.Group>
 						<Select.Label>Display</Select.Label>
 						{#each colorOptions as option (option.value)}

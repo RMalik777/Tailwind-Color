@@ -73,7 +73,7 @@
 						{versionOptions.find((option) => option.value === leftVersion.current)?.name ??
 							"Select Version"}
 					</Select.Trigger>
-					<Select.Content>
+					<Select.Content preventScroll={false}>
 						<Select.Group>
 							<Select.Label>Version</Select.Label>
 							{#each versionOptions as option (option.value)}
@@ -90,7 +90,7 @@
 						{leftColorOptions.find((option) => option.color === leftColor.current)?.color ??
 							"Select Color"}
 					</Select.Trigger>
-					<Select.Content>
+					<Select.Content preventScroll={false}>
 						<Select.Group>
 							<Select.Label>Color</Select.Label>
 							{#each leftColorOptions as option (option.color)}
@@ -108,7 +108,7 @@
 							?.find((option) => option.shade.toString() === leftShade.current)
 							?.name.replace(leftColor.current + "-", "") ?? "Select Shade"}
 					</Select.Trigger>
-					<Select.Content>
+					<Select.Content preventScroll={false}>
 						<Select.Group>
 							<Select.Label>Shade</Select.Label>
 							{#if leftChoice}
@@ -151,7 +151,7 @@
 						{versionOptions.find((option) => option.value === rightVersion.current)?.name ??
 							"Select Version"}
 					</Select.Trigger>
-					<Select.Content>
+					<Select.Content preventScroll={false}>
 						<Select.Group>
 							<Select.Label>Version</Select.Label>
 							{#each versionOptions as option (option.value)}
@@ -168,7 +168,7 @@
 						{rightColorOptions.find((option) => option.color === rightColor.current)?.color ??
 							"Select Color"}
 					</Select.Trigger>
-					<Select.Content>
+					<Select.Content preventScroll={false}>
 						<Select.Group>
 							<Select.Label>Color</Select.Label>
 							{#each rightColorOptions as option (option.color)}
@@ -186,7 +186,7 @@
 							?.find((option) => option.shade.toString() === rightShade.current)
 							?.name.replace(rightColor.current + "-", "") ?? "Select Shade"}
 					</Select.Trigger>
-					<Select.Content>
+					<Select.Content preventScroll={false}>
 						<Select.Group>
 							<Select.Label>Shade</Select.Label>
 							{#if rightChoice}

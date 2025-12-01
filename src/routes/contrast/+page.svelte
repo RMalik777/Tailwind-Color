@@ -124,7 +124,7 @@
 				<Select.Trigger id="version" class="grow">
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
-				<Select.Content>
+				<Select.Content preventScroll={false}>
 					<Select.Group>
 						<Select.Label>Version</Select.Label>
 						{#each versionOptions as option (option.value)}
@@ -175,7 +175,7 @@
 								?.find((option) => option.shade.toString() === bgShade.current)
 								?.name.replace(bgColor.current + "-", "") ?? "Select Shade"}
 						</Select.Trigger>
-						<Select.Content>
+						<Select.Content preventScroll={false}>
 							<Select.Group>
 								<Select.Label>Shade</Select.Label>
 								{#if bgChoice}
@@ -249,7 +249,7 @@
 								?.find((option) => option.shade.toString() === textShade.current)
 								?.name.replace(textColor.current + "-", "") ?? "Select Shade"}
 						</Select.Trigger>
-						<Select.Content>
+						<Select.Content preventScroll={false}>
 							<Select.Group>
 								<Select.Label>Shade</Select.Label>
 								{#if textChoice}
