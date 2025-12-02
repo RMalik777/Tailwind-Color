@@ -5,10 +5,17 @@
 	import { Toaster } from "$lib/components/ui/sonner/index.js";
 	import { ModeWatcher } from "mode-watcher";
 
+	import { onMount, type Snippet } from "svelte";
+	import { configure } from "onedollarstats";
+
 	import Footer from "$lib/components/footer.svelte";
 	import Nav from "$lib/components/nav.svelte";
 
-	let { children } = $props();
+	let { children }: { children: Snippet } = $props();
+
+	onMount(() => {
+		configure({ trackLocalhostAs: "local.raflimalik.com" });
+	});
 </script>
 
 <svelte:head>
@@ -31,7 +38,7 @@
 <ModeWatcher />
 <Nav />
 <main class="flex h-fit min-h-svh px-2 pt-16 sm:px-4 md:px-6 lg:px-8 xl:px-10">
-	{@render children()}
+	{@render children?.()}
 </main>
 <Footer />
 <Toaster />

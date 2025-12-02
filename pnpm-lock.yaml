@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      onedollarstats:
+        specifier: ^0.0.11
+        version: 0.0.11
     devDependencies:
       '@eslint/compat':
         specifier: ^2.0.0
@@ -1689,6 +1693,9 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
+
+  onedollarstats@0.0.11:
+    resolution: {integrity: sha512-GboD/AZdfQB9Bhs0uupp40jG/F+yI4ed7rkUI6zbtXXqqKdo8qlT1ZqGATXF4zccBXnPylUvG7bYpiDyaONpjg==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -3474,6 +3481,8 @@ snapshots:
   nanoid@3.3.11: {}
 
   natural-compare@1.4.0: {}
+
+  onedollarstats@0.0.11: {}
 
   optionator@0.9.4:
     dependencies:
