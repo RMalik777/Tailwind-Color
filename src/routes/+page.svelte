@@ -133,10 +133,10 @@
 								<span class="sr-only">Copy color {shade.name} as {viewAs}</span>
 							</Button>
 						</div>
-						<section class="px-1 py-px font-mono text-sm md:text-xs lg:text-sm">
+						<section class="px-1 py-px font-mono text-sm tracking-tight md:text-xs lg:text-sm">
 							<h3 class="hidden font-bold sm:block md:hidden lg:block">{shade.name}</h3>
 							<h3 class="block font-bold sm:hidden md:block lg:hidden">{shade.shade}</h3>
-							<p class="">{shade[viewAs]?.short}</p>
+							<p class="tracking-tighter">{shade[viewAs]?.short}</p>
 						</section>
 					</div>
 				{/each}
