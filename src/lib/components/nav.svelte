@@ -40,7 +40,7 @@
 	class="fixed z-50 flex h-fit w-full flex-row-reverse items-center justify-between border-b px-4 py-2 shadow-xs sm:flex-row sm:px-6 lg:px-8 xl:px-10"
 >
 	<div
-		class="absolute top-0 left-0 -z-1 h-full w-full bg-background sm:bg-background/85 sm:backdrop-blur-lg"
+		class="absolute top-0 left-0 -z-1 h-full w-full bg-background sm:bg-background/90 sm:backdrop-blur-lg"
 	></div>
 	<Button variant="outline" size="icon" class="sm:hidden" onclick={() => (open = !open)}>
 		<MenuIcon class="size-5" />
