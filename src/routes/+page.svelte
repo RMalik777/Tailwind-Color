@@ -112,11 +112,7 @@
 						animate:flip={{ duration: 200, easing: cubicOut }}
 						class="group w-full overflow-hidden rounded-sm border border-border"
 					>
-						<div
-							class="aspect-square h-auto w-full transition-colors duration-150 ease-out"
-							style="
-              background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};"
-						>
+						<div class="aspect-square h-auto w-full transition-colors duration-150 ease-out">
 							<Button
 								variant="ghost"
 								size="icon"
