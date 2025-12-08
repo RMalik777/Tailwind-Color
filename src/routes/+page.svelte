@@ -15,6 +15,10 @@
 	import { toast } from "svelte-sonner";
 
 	const view = new PersistedState<Color>("view", "oklch");
+	const scroll = $state({
+		y: 0,
+		x: 0,
+	});
 
 	const version = new PersistedState("version", "V4");
 	const color = $derived.by(() => {
@@ -41,12 +45,27 @@
 	/>
 </svelte:head>
 
-<div class="flex grow flex-col gap-4">
-	<div class="flex flex-col gap-2 pb-3 sm:flex-row sm:gap-4">
-		<div class="flex items-center gap-2">
+<svelte:window
+	onscroll={() => {
+		scroll.y = window.scrollY;
+		scroll.x = window.scrollX;
+	}}
+/>
+
+<div class="flex w-full flex-col gap-4">
+	<div
+		class={[
+			scroll.y > 50 ? "" : "md:border-transparent md:p-0 md:pt-2",
+			"fixed bottom-0 left-0 m-4 flex w-[calc(100%-theme(space.8))] flex-row items-center justify-start gap-2 rounded-lg border bg-background/90 p-2 backdrop-blur-lg transition-all duration-200 *:grow md:sticky md:top-14 md:m-0 md:w-full md:max-w-svw md:gap-4 md:*:not-first:grow-0",
+		]}
+	>
+		<h1 class="hidden text-xl font-medium tracking-tight sm:pl-1 md:block md:grow">
+			Color Pallete
+		</h1>
+		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
 			<Label for="version">Tailwind CSS Version</Label>
 			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger id="version" class="grow">
+				<Select.Trigger id="version" class="grow bg-background max-md:w-full">
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
 				<Select.Content preventScroll={false}>
@@ -59,10 +78,10 @@
 				</Select.Content>
 			</Select.Root>
 		</div>
-		<div class="flex items-center gap-2">
+		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
 			<Label for="view">Color Format</Label>
 			<Select.Root type="single" bind:value={view.current}>
-				<Select.Trigger id="view" class="grow">
+				<Select.Trigger id="view" class="grow bg-background max-md:w-full">
 					{colorOptions.find((option) => option.value === view.current)?.name}
 				</Select.Trigger>
 				<Select.Content preventScroll={false}>
@@ -86,7 +105,7 @@
 			<h2 class="text-xl font-semibold tracking-tight capitalize">
 				{color.color}
 			</h2>
-			<div class="flex flex-col gap-2 md:flex-row">
+			<div class="grid grid-cols-3 gap-2 sm:grid-cols-4 md:flex md:flex-row">
 				{#each color.range as shade (shade.name)}
 					{@const viewAs = view.current}
 					<div
@@ -114,9 +133,10 @@
 								<span class="sr-only">Copy color {shade.name} as {viewAs}</span>
 							</Button>
 						</div>
-						<section class="px-1 py-px font-mono text-sm">
-							<h3 class="font-semibold text-nowrap">{shade.name}</h3>
-							<p>{shade[viewAs]?.short}</p>
+						<section class="px-1 py-px font-mono text-sm md:text-xs lg:text-sm">
+							<h3 class="hidden font-bold sm:block md:hidden lg:block">{shade.name}</h3>
+							<h3 class="block font-bold sm:hidden md:block lg:hidden">{shade.shade}</h3>
+							<p class="">{shade[viewAs]?.short}</p>
 						</section>
 					</div>
 				{/each}
