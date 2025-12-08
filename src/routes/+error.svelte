@@ -18,7 +18,7 @@
 	<title>{page.status} | {page.error?.message}</title>
 </svelte:head>
 
-<div class="h-svh sm:-mt-16">
+<div class="h-svh w-full sm:-mt-16">
 	<div class="flex h-full w-full flex-col items-center justify-start gap-4 sm:justify-center">
 		{#if img}
 			<div class="mx-auto max-h-2/3 sm:max-h-1/2">
