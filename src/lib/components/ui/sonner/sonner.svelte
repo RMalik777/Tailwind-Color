@@ -11,7 +11,7 @@
 
 <Sonner
 	richColors
-	position={innerWidth > 640 ? "bottom-center" : "top-right"}
+	position={innerWidth > 640 ? "bottom-right" : "top-center"}
 	theme={mode.current}
 	class="toaster group"
 	style="--normal-bg: var(--color-popover); --normal-text: var(--color-popover-foreground); --normal-border: var(--color-border);"
