@@ -28,18 +28,17 @@
 	</Button>
 
 	<div
-		class="top-12.5 h-full gap-2 transition-all duration-300 ease-in-out max-sm:fixed max-sm:flex max-sm:flex-col max-sm:space-y-1 max-sm:overflow-hidden max-sm:rounded-b-md max-sm:border max-sm:bg-background max-sm:px-8 max-sm:py-4 sm:flex sm:gap-2 md:gap-4 {open
-			? 'right-0 max-sm:w-full'
-			: '-right-full max-sm:invisible max-sm:w-fit'}"
+		class="top-12.5 h-full gap-2 transition-all duration-300 ease-in-out max-sm:fixed max-sm:flex max-sm:flex-col max-sm:space-y-1 max-sm:overflow-hidden max-sm:rounded-b-md max-sm:border max-sm:bg-background max-sm:px-8 max-sm:py-4 sm:flex sm:gap-2 md:gap-4
+    {open ? 'right-0 max-sm:w-full' : '-right-full max-sm:invisible max-sm:w-fit'}"
 	>
 		{#each link as item (item.url)}
+			{@const isActive =
+				item.url === "/" ? page.url.pathname === item.url : page.url.pathname.startsWith(item.url)}
 			<a
 				href={resolve(item.url)}
 				onclick={() => (open = false)}
-				class="rounded-sm px-2 py-2 text-base font-semibold tracking-tight transition-all duration-200 ease-out hover:bg-violet-500/10 hover:text-violet-500 focus-visible:bg-violet-500/10 focus-visible:text-violet-500 max-sm:text-right sm:px-4 sm:py-1 sm:text-lg dark:hover:bg-violet-500/20 dark:hover:text-violet-400
-          {page.url.pathname === item.url
-					? 'bg-violet-500/10 text-violet-500 dark:bg-violet-500/20 dark:text-violet-400'
-					: ''}"
+				aria-current={isActive ? "page" : undefined}
+				class="aria-[current=page]:after:transition-name-[indicator] relative overflow-hidden rounded-sm p-2 text-base font-semibold tracking-tight transition-all duration-200 ease-out after:absolute after:inset-0 after:h-full after:w-full after:rounded-sm after:transition-all after:duration-200 after:ease-out after:content-[''] hover:bg-violet-500/10 hover:text-violet-500 focus-visible:bg-violet-500/10 focus-visible:text-violet-500 aria-[current=page]:after:bg-linear-90 aria-[current=page]:after:from-violet-500/10 aria-[current=page]:after:to-purple-500/10 aria-[current=page]:after:text-violet-500 max-sm:text-right sm:px-4 sm:py-1 sm:text-lg dark:hover:bg-violet-500/20 dark:hover:text-violet-400 aria-[current=page]:dark:after:bg-violet-500/20 aria-[current=page]:dark:after:text-violet-400"
 			>
 				{item.name}
 			</a>

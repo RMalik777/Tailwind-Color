@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -10,7 +9,9 @@
 	--font-mono:
 		"JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
 		"Liberation Mono", "Courier New", monospace;
+	--ease-custom: cubic-bezier(0.83, 0, 0.17, 1);
 }
+
 :root {
 	--radius: 0.625rem;
 	--background: oklch(1 0 0);

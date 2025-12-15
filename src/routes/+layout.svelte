@@ -6,6 +6,7 @@
 	import { ModeWatcher } from "mode-watcher";
 
 	import { onMount, type Snippet } from "svelte";
+	import { onNavigate } from "$app/navigation";
 	import { configure } from "onedollarstats";
 
 	import Footer from "$lib/components/footer.svelte";
@@ -16,6 +17,17 @@
 	onMount(() => {
 		configure({ trackLocalhostAs: "local.raflimalik.com" });
 	});
+	// VIEW TRANSITION API
+	// onNavigate((navigation) => {
+	// 	if (!document.startViewTransition) return;
+
+	// 	return new Promise((resolve) => {
+	// 		document.startViewTransition(async () => {
+	// 			resolve();
+	// 			await navigation.complete;
+	// 		});
+	// 	});
+	// });
 </script>
 
 <svelte:head>
