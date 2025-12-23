@@ -5,6 +5,7 @@
 	import { Button } from "$lib/components/ui/button/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
+	import Toolbar from "$lib/components/toolbar.svelte";
 
 	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
 	import { versionOptions, colorOptions } from "$lib/data/option";
@@ -53,19 +54,19 @@
 />
 
 <div class="flex w-full flex-col gap-4">
-	<div
-		class={[
-			scroll.y > 50 ? "shadow-xs" : "shadow-none md:border-transparent md:p-0 md:pt-2",
-			"fixed bottom-0 left-0 m-4 flex w-[calc(100%-theme(space.8))] flex-row items-center justify-start gap-2 rounded-lg border bg-background/90 p-2 backdrop-blur-lg transition-all duration-200 *:grow md:sticky md:top-14 md:m-0 md:w-full md:max-w-svw md:gap-4 md:*:not-first:grow-0",
-		]}
-	>
-		<h1 class="hidden text-xl font-medium tracking-tight sm:pl-1 md:block md:grow">
+	<Toolbar>
+		<h1
+			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
+		>
 			Color Pallete
 		</h1>
 		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
-			<Label for="version">Tailwind CSS Version</Label>
+			<Label for="version" class="transition-name-[version-label]">Tailwind CSS Version</Label>
 			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger id="version" class="grow bg-background max-md:w-full">
+				<Select.Trigger
+					id="version"
+					class="grow bg-background transition-name-[version-select] max-md:w-full"
+				>
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
 				<Select.Content preventScroll={false}>
@@ -79,9 +80,12 @@
 			</Select.Root>
 		</div>
 		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
-			<Label for="view">Color Format</Label>
+			<Label for="view" class="transition-name-[view-label]">Color Format</Label>
 			<Select.Root type="single" bind:value={view.current}>
-				<Select.Trigger id="view" class="grow bg-background max-md:w-full">
+				<Select.Trigger
+					id="view"
+					class="grow bg-background transition-name-[view-select] max-md:w-full"
+				>
 					{colorOptions.find((option) => option.value === view.current)?.name}
 				</Select.Trigger>
 				<Select.Content preventScroll={false}>
@@ -94,13 +98,13 @@
 				</Select.Content>
 			</Select.Root>
 		</div>
-	</div>
+	</Toolbar>
 
 	{#each color as color (color.color)}
 		<section
 			animate:flip={{ duration: 200, easing: cubicOut }}
 			id={color.color}
-			class="space-y-1 rounded-md border border-border p-2"
+			class="space-y-1 rounded-lg border border-border p-2"
 		>
 			<h2 class="text-xl font-semibold tracking-tight capitalize">
 				{color.color}

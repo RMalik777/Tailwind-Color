@@ -127,3 +127,7 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+@utility transition-name-* {
+	view-transition-name: --value([*]);
+}
