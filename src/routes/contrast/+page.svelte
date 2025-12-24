@@ -222,9 +222,11 @@
 						type="single"
 						bind:value={textColor.current}
 						onValueChange={(value) => {
-							if ((value === "black" || value === "white") && textShade.current !== "0")
+							if ((value === "black" || value === "white") && textShade.current !== "0") {
 								textShade.current = "0";
-							else if (textShade.current === "0") textShade.current = "50";
+							} else if (value !== "black" && value !== "white" && textShade.current === "0") {
+								textShade.current = "50";
+							}
 						}}
 					>
 						<Select.Trigger id="textColor" class="w-full capitalize" placeholder="Select Color">
