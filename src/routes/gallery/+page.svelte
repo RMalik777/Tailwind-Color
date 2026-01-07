@@ -5,6 +5,7 @@
 	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
+	import Toolbar from "$lib/components/toolbar.svelte";
 
 	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
@@ -40,11 +41,16 @@
 </svelte:head>
 
 <div class="flex w-full grow flex-col gap-1 pb-1">
-	<div class="flex flex-col gap-2 pb-3 sm:flex-row sm:gap-4">
-		<div class="flex items-center gap-2">
-			<Label for="version">Tailwind CSS Version</Label>
+	<Toolbar className="max-sm:grid max-sm:grid-cols-2 max-sm:gap-2">
+		<h1
+			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
+		>
+			Gallery
+		</h1>
+		<div class="flex flex-col gap-2 *:w-full sm:flex-row sm:items-center">
+			<Label for="version" class="transition-name-[version-label]">Version</Label>
 			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger id="version" class="grow">
+				<Select.Trigger size="sm" id="version" class="grow transition-name-[version-select]">
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
 				<Select.Content preventScroll={false}>
@@ -57,10 +63,10 @@
 				</Select.Content>
 			</Select.Root>
 		</div>
-		<div class="flex items-center gap-2">
-			<Label for="view">Color Format</Label>
+		<div class="flex flex-col gap-2 *:w-full sm:flex-row sm:items-center">
+			<Label for="view" class="transition-name-[view-label]">Color Format</Label>
 			<Select.Root type="single" bind:value={view.current}>
-				<Select.Trigger id="view" class="grow">
+				<Select.Trigger size="sm" id="view" class="grow transition-name-[view-select] ">
 					{colorOptions.find((option) => option.value === view.current)?.name}
 				</Select.Trigger>
 				<Select.Content preventScroll={false}>
@@ -74,29 +80,30 @@
 			</Select.Root>
 		</div>
 		<Label
-			class="flex items-center gap-2 rounded-lg border p-2 hover:bg-accent/50 has-[[aria-checked=true]]:border-violet-600 has-[[aria-checked=true]]:bg-violet-50 dark:has-[[aria-checked=true]]:border-violet-900 dark:has-[[aria-checked=true]]:bg-violet-950"
+			class="flex h-8 items-center gap-2 rounded-md border p-2 hover:bg-accent/50 has-aria-checked:border-violet-600 has-aria-checked:bg-violet-50 dark:has-aria-checked:border-violet-900 dark:has-aria-checked:bg-violet-950"
 		>
 			<Checkbox
 				id="toggle-2"
 				bind:checked={border.current}
-				class="data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600 data-[state=checked]:text-white dark:data-[state=checked]:border-violet-700 dark:data-[state=checked]:bg-violet-700"
+				class="rounded-[3px] data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600 data-[state=checked]:text-white dark:data-[state=checked]:border-violet-700 dark:data-[state=checked]:bg-violet-700"
 			/>
 			<p class="text-sm leading-none font-medium">Border</p>
 		</Label>
 		<Label
-			class="flex items-center gap-2 rounded-lg border p-2 hover:bg-accent/50 has-[[aria-checked=true]]:border-violet-600 has-[[aria-checked=true]]:bg-violet-50 dark:has-[[aria-checked=true]]:border-violet-900 dark:has-[[aria-checked=true]]:bg-violet-950"
+			class="flex h-8 items-center gap-2 rounded-md border p-2 hover:bg-accent/50 has-aria-checked:border-violet-600 has-aria-checked:bg-violet-50 dark:has-aria-checked:border-violet-900 dark:has-aria-checked:bg-violet-950"
 		>
 			<Checkbox
 				id="toggle-2"
 				bind:checked={gap.current}
-				class="data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600 data-[state=checked]:text-white dark:data-[state=checked]:border-violet-700 dark:data-[state=checked]:bg-violet-700"
+				class="rounded-[3px] data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600 data-[state=checked]:text-white dark:data-[state=checked]:border-violet-700 dark:data-[state=checked]:bg-violet-700"
 			/>
 			<p class="text-sm leading-none font-medium">Gap</p>
 		</Label>
-	</div>
+	</Toolbar>
+
 	<div
 		class="flex h-full w-full flex-row duration-150 ease-out {gap.current
-			? 'gap-[2px] sm:gap-1'
+			? 'gap-0.5 sm:gap-1'
 			: 'gap-0'}"
 	>
 		{#each color as color (color.color)}
@@ -111,7 +118,7 @@
 
 				<div
 					class="flex h-full w-full grow flex-col duration-150 ease-out {gap.current
-						? 'gap-[2px] sm:gap-1'
+						? 'gap-0.5 sm:gap-1'
 						: 'gap-0'}"
 				>
 					{#each color.range as shade (shade.name)}
@@ -120,17 +127,17 @@
 							class="group flex h-full w-full items-center justify-center transition-all duration-150 ease-out
               {gap.current ? 'rounded-xs' : 'rounded-none'} 
               {border.current ? 'border' : ''}"
-							style="background-color:{shade.hex.long};"
+							style="
+                background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};
+                view-transition-name: color-{color.color}-{shade.shade};"
 							onclick={() => {
 								navigator.clipboard.writeText(shade[view.current].long ?? "");
 								toast(`Copied ${shade[view.current].long}`);
 							}}
 						>
 							<span
-								class="hidden text-xs font-semibold tracking-tight opacity-95 duration-150 ease-out group-hover:block sm:text-sm starting:opacity-0 {shade.shade >
-								400
-									? 'text-white'
-									: 'text-black'}"
+								class="hidden text-xs font-semibold tracking-tight opacity-95 duration-150 ease-out group-hover:block sm:text-sm starting:opacity-0
+                {shade.shade > 400 ? 'text-white' : 'text-black'}"
 							>
 								{shade.name.replace(color.color + "-", "")}
 							</span>

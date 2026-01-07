@@ -119,9 +119,9 @@
 <div class="space-y-2 pb-1">
 	<div class="flex flex-col gap-2 sm:flex-row sm:gap-4">
 		<div class="flex items-center gap-2">
-			<Label for="version">Tailwind CSS Version</Label>
+			<Label for="version" class="transition-name-[version-label]">Tailwind CSS Version</Label>
 			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger id="version" class="grow">
+				<Select.Trigger id="version" class="grow transition-name-[version-select]">
 					{versionOptions.find((option) => option.value === version.current)?.name}
 				</Select.Trigger>
 				<Select.Content preventScroll={false}>

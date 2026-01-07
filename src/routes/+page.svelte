@@ -134,7 +134,9 @@
 								}}
 							>
 								<Copy class="w-4" />
-								<span class="sr-only">Copy color {shade.name} as {viewAs}</span>
+								<span class="sr-only">
+									Copy color {shade.name} in {viewAs} value
+								</span>
 							</Button>
 						</div>
 						<section class="px-1 py-px font-mono text-sm tracking-tight md:text-xs lg:text-sm">
