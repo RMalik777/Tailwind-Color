@@ -1,5 +1,5 @@
 <script lang="ts">
-	import "@fontsource-variable/inter";
+	import "@fontsource-variable/inter/opsz";
 	import "@fontsource-variable/jetbrains-mono";
 	import "../app.css";
 	import { Toaster } from "$lib/components/ui/sonner/index.js";
