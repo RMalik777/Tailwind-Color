@@ -97,8 +97,8 @@ importers:
         specifier: ^0.37.1
         version: 0.37.1(@sveltejs/kit@2.50.0(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.46.4)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2)))(svelte@5.46.4)(typescript@5.9.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.30.2)))(svelte@5.46.4)
       simple-icons:
-        specifier: ^16.5.0
-        version: 16.5.0
+        specifier: ^16.6.0
+        version: 16.6.0
       svelte:
         specifier: ^5.46.4
         version: 5.46.4
@@ -2138,8 +2138,8 @@ packages:
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
 
-  simple-icons@16.5.0:
-    resolution: {integrity: sha512-72nn0oHADKx6Hknu7q6M0vfL8LiCUMKABOHane2+4xdqaFBSHfNNBjuZioihiqVQMz7IvVle4NKAM0IlXvl/9A==}
+  simple-icons@16.6.0:
+    resolution: {integrity: sha512-lzSVlAhflhwud7EprwSalbCpHKpculOfaAk1P+S3QajO1bHG5nqwI1VeGnn4rwaE4xSSSKDsOFFL0XfIDv5iIQ==}
     engines: {node: '>=0.12.18'}
 
   simple-swizzle@0.2.4:
@@ -4184,7 +4184,7 @@ snapshots:
 
   siginfo@2.0.0: {}
 
-  simple-icons@16.5.0: {}
+  simple-icons@16.6.0: {}
 
   simple-swizzle@0.2.4:
     dependencies:
