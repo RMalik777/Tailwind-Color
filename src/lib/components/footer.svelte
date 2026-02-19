@@ -15,7 +15,7 @@
 			items: [
 				{
 					name: "Tailwind CSS 4",
-					url: "https://github.com/tailwindlabs/tailwindcss/blob/c7d368b3c42de46e44b17c71d3bf9a9c6b3bc5cb/packages/tailwindcss/theme.css",
+					url: "https://github.com/tailwindlabs/tailwindcss/blob/1b16411919457ee47d38910fd07e134e9765eb4c/packages/tailwindcss/theme.css",
 					blank: true,
 				},
 				{
