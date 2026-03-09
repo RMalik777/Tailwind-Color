@@ -46,7 +46,7 @@
 		"simple-icons": "^16.11.0",
 		"svelte": "^5.53.7",
 		"svelte-check": "^4.4.5",
-		"svelte-sonner": "^1.0.7",
+		"svelte-sonner": "^1.0.8",
 		"tailwind-merge": "^3.5.0",
 		"tailwind-variants": "^3.2.2",
 		"tailwindcss": "^4.2.1",
