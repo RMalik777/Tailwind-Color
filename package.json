@@ -64,6 +64,6 @@
 		]
 	},
 	"dependencies": {
-		"onedollarstats": "^0.0.16"
+		"onedollarstats": "^0.0.17"
 	}
 }
