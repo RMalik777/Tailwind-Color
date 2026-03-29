@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       onedollarstats:
-        specifier: ^0.0.16
-        version: 0.0.16
+        specifier: ^0.0.17
+        version: 0.0.17
     devDependencies:
       '@codspeed/vitest-plugin':
         specifier: ^5.2.0
@@ -1871,8 +1871,8 @@ packages:
   obug@2.1.1:
     resolution: {integrity: sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==}
 
-  onedollarstats@0.0.16:
-    resolution: {integrity: sha512-nv1zZYIiVXW0me4fiFUB6VL0WByJSMMnP2wo/UjYDdihUTBq7PPeWwdpwwoAxG4dIqFYIhFbPX+pS2qIIlHOaw==}
+  onedollarstats@0.0.17:
+    resolution: {integrity: sha512-A2DYWgXVyfuHsRA7gmZoVBQG8GyK0Eivlb7SsW+F6vbLft5o3ifpENKyGds75kYQVhPw5yQ4gRYaOXz61aRIZQ==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -3884,7 +3884,7 @@ snapshots:
 
   obug@2.1.1: {}
 
-  onedollarstats@0.0.16: {}
+  onedollarstats@0.0.17: {}
 
   optionator@0.9.4:
     dependencies:
