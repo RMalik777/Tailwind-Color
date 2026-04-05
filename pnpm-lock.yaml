@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       onedollarstats:
-        specifier: ^0.0.17
-        version: 0.0.17
+        specifier: ^0.0.18
+        version: 0.0.18
     devDependencies:
       '@codspeed/vitest-plugin':
         specifier: ^5.2.0
@@ -198,8 +198,8 @@ packages:
   '@emnapi/runtime@1.9.0':
     resolution: {integrity: sha512-QN75eB0IH2ywSpRpNddCRfQIhmJYBCJ1x5Lb3IscKAL8bMnVAKnRg8dCoXbHzVLLH7P38N2Z3mtulB7W0J0FKw==}
 
-  '@emnapi/runtime@1.9.1':
-    resolution: {integrity: sha512-VYi5+ZVLhpgK4hQ0TAjiQiZ6ol0oe4mBx7mVv7IflsiEp0OWoVsp/+f9Vc1hOhE0TtkORVrI1GvzyreqpgWtkA==}
+  '@emnapi/runtime@1.9.2':
+    resolution: {integrity: sha512-3U4+MIWHImeyu1wnmVygh5WlgfYDtyf0k8AbLhMFxOipihf6nrWC4syIm/SwEeec0mNSafiiNnMJwbza/Is6Lw==}
 
   '@esbuild/aix-ppc64@0.25.4':
     resolution: {integrity: sha512-1VCICWypeQKhVbE9oW/sJaAmjLxhVqacdkvPLEjwlttjfwENRSClS8EjBz0KzRyFSCPDIkuXW34Je/vk7zdB7Q==}
@@ -1867,8 +1867,8 @@ packages:
   obug@2.1.1:
     resolution: {integrity: sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==}
 
-  onedollarstats@0.0.17:
-    resolution: {integrity: sha512-A2DYWgXVyfuHsRA7gmZoVBQG8GyK0Eivlb7SsW+F6vbLft5o3ifpENKyGds75kYQVhPw5yQ4gRYaOXz61aRIZQ==}
+  onedollarstats@0.0.18:
+    resolution: {integrity: sha512-piFGVsd7Xvt2BIVMl341xJTn9xgEFpDn8713SXFE00iu8EcQGVTNMPZpRFWhphH2X4/gG4WW/DSh4KVO4iHRXQ==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -2482,7 +2482,7 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@emnapi/runtime@1.9.1':
+  '@emnapi/runtime@1.9.2':
     dependencies:
       tslib: 2.8.1
     optional: true
@@ -2854,7 +2854,7 @@ snapshots:
 
   '@img/sharp-wasm32@0.33.5':
     dependencies:
-      '@emnapi/runtime': 1.9.1
+      '@emnapi/runtime': 1.9.2
     optional: true
 
   '@img/sharp-wasm32@0.34.5':
@@ -3886,7 +3886,7 @@ snapshots:
 
   obug@2.1.1: {}
 
-  onedollarstats@0.0.17: {}
+  onedollarstats@0.0.18: {}
 
   optionator@0.9.4:
     dependencies:
