@@ -34,7 +34,7 @@
 		"clsx": "^2.1.1",
 		"colorparsley": "^0.1.8",
 		"culori": "^4.0.2",
-		"eslint": "^10.1.0",
+		"eslint": "^10.2.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.16.0",
 		"globals": "^17.4.0",
