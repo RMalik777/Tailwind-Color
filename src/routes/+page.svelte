@@ -22,7 +22,7 @@
 	});
 
 	const version = new PersistedState("version", "V4");
-	const color = $derived.by(() => {
+	const colors = $derived.by(() => {
 		switch (version.current) {
 			case "V0":
 				return colorV0.filter((color) => color.color !== "black" && color.color !== "white");
@@ -100,7 +100,7 @@
 		</div>
 	</Toolbar>
 
-	{#each color as color (color.color)}
+	{#each colors as color (color.color)}
 		<section
 			animate:flip={{ duration: 200, easing: cubicOut }}
 			id={color.color}
@@ -119,7 +119,8 @@
 						<div
 							class="aspect-square h-auto w-full transition-colors duration-150 ease-out"
 							style="
-              background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};"
+              background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};
+              view-transition-name: color-{color.color}-{shade.shade};"
 						>
 							<Button
 								variant="ghost"
