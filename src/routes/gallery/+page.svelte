@@ -19,7 +19,7 @@
 	const version = new PersistedState("version", "V4");
 	const view = new PersistedState<Color>("view", "oklch");
 
-	const color = $derived.by(() => {
+	const colors = $derived.by(() => {
 		switch (version.current) {
 			case "V0":
 				return colorV0.filter((color) => color.color !== "black" && color.color !== "white");
@@ -106,7 +106,7 @@
 			? 'gap-0.5 sm:gap-1'
 			: 'gap-0'}"
 	>
-		{#each color as color (color.color)}
+		{#each colors as color (color.color)}
 			<div animate:flip={{ duration: 200, easing: quintOut }} class="flex w-full grow flex-col">
 				<div class="relative h-6 w-full">
 					<p
