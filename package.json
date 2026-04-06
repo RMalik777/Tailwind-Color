@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@codspeed/vitest-plugin": "^5.2.0",
-		"@eslint/compat": "^2.0.3",
+		"@eslint/compat": "^2.0.4",
 		"@eslint/js": "^10.0.1",
 		"@fontsource-variable/inter": "^5.2.8",
 		"@fontsource-variable/jetbrains-mono": "^5.2.8",
