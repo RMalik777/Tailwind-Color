@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       onedollarstats:
-        specifier: ^0.0.19
-        version: 0.0.19
+        specifier: ^0.0.22
+        version: 0.0.22
     devDependencies:
       '@codspeed/vitest-plugin':
         specifier: ^5.4.0
@@ -1996,8 +1996,19 @@ packages:
   obug@2.1.1:
     resolution: {integrity: sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==}
 
-  onedollarstats@0.0.19:
-    resolution: {integrity: sha512-aO/EHiaKSGPnlinNBOeaOGcsw3vC/uw1tgYfj+5MIN1NBI0uutJFi2sZlRmQG6/ko+j/ZOxgo39OAHX/oi0XOw==}
+  onedollarstats@0.0.22:
+    resolution: {integrity: sha512-UExFpfJm4Bihi2CnCOx0t+FYkDEuFO9AayjCq+7Mj5v00JaPVBJNxREM7+WO1lrWfvbzyqi+1C3EA8ZD65Mbew==}
+    peerDependencies:
+      expo-router: '>=3.0.0'
+      react: '>=18.0.0'
+      react-native: '>=0.73.0'
+    peerDependenciesMeta:
+      expo-router:
+        optional: true
+      react:
+        optional: true
+      react-native:
+        optional: true
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -4120,7 +4131,7 @@ snapshots:
 
   obug@2.1.1: {}
 
-  onedollarstats@0.0.19: {}
+  onedollarstats@0.0.22: {}
 
   optionator@0.9.4:
     dependencies:
