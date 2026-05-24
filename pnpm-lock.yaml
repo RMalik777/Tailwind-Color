@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       onedollarstats:
-        specifier: ^0.0.22
-        version: 0.0.22
+        specifier: ^0.0.23
+        version: 0.0.23
     devDependencies:
       '@codspeed/vitest-plugin':
         specifier: ^5.4.0
@@ -1996,8 +1996,8 @@ packages:
   obug@2.1.1:
     resolution: {integrity: sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==}
 
-  onedollarstats@0.0.22:
-    resolution: {integrity: sha512-UExFpfJm4Bihi2CnCOx0t+FYkDEuFO9AayjCq+7Mj5v00JaPVBJNxREM7+WO1lrWfvbzyqi+1C3EA8ZD65Mbew==}
+  onedollarstats@0.0.23:
+    resolution: {integrity: sha512-wn8hy4wDJjeC9+1lVcKyLQ69iWmyIKx55t4IehaaJhDW/P1lbAXV25CDsICgAGbtljyszNpAf9hzr09af8Waxw==}
     peerDependencies:
       expo-router: '>=3.0.0'
       react: '>=18.0.0'
@@ -2238,6 +2238,11 @@ packages:
 
   semver@7.8.0:
     resolution: {integrity: sha512-AcM7dV/5ul4EekoQ29Agm5vri8JNqRyj39o0qpX6vDF2GZrtutZl5RwgD1XnZjiTAfncsJhMI48QQH3sN87YNA==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.8.1:
+    resolution: {integrity: sha512-rkVq3IXh+4FDGch+KwzX3aV9W3kO54GyEgpvBzSyctDA6Xtd7RJQV1xmXbeQp5v7+VzLOfVqiutSE6GICgPFvg==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -4132,7 +4137,7 @@ snapshots:
 
   obug@2.1.1: {}
 
-  onedollarstats@0.0.22: {}
+  onedollarstats@0.0.23: {}
 
   optionator@0.9.4:
     dependencies:
@@ -4328,6 +4333,8 @@ snapshots:
 
   semver@7.8.0: {}
 
+  semver@7.8.1: {}
+
   set-cookie-parser@3.1.0: {}
 
   shadcn-svelte@1.2.7(svelte@5.55.7(@typescript-eslint/types@8.59.4)):
@@ -4342,7 +4349,7 @@ snapshots:
     dependencies:
       color: 4.2.3
       detect-libc: 2.1.2
-      semver: 7.8.0
+      semver: 7.8.1
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.33.5
       '@img/sharp-darwin-x64': 0.33.5
