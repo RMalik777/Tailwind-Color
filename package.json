@@ -57,14 +57,8 @@
 		"vite": "^8.0.14",
 		"vitest": "^4.1.7"
 	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild",
-			"sharp",
-			"workerd"
-		]
-	},
 	"dependencies": {
 		"onedollarstats": "^0.0.23"
-	}
+	},
+  "packageManager": "pnpm@11.6.0"
 }
