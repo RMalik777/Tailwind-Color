@@ -22,7 +22,7 @@
 		"@fontsource-variable/jetbrains-mono": "^5.2.8",
 		"@internationalized/date": "^3.12.2",
 		"@lucide/svelte": "^1.22.0",
-		"@sveltejs/adapter-cloudflare": "^7.2.8",
+		"@sveltejs/adapter-cloudflare": "^7.2.9",
 		"@sveltejs/enhanced-img": "^0.10.4",
 		"@sveltejs/kit": "^2.69.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
