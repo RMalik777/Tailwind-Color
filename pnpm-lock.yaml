@@ -37,8 +37,8 @@ importers:
         specifier: ^7.2.9
         version: 7.2.9(@sveltejs/kit@2.69.1(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0)))(svelte@5.56.3(@typescript-eslint/types@8.64.0))(typescript@7.0.2)(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0)))(wrangler@4.51.0(@cloudflare/workers-types@4.20260702.1))
       '@sveltejs/enhanced-img':
-        specifier: ^0.10.4
-        version: 0.10.4(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0)))(rollup@4.60.1)(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0))
+        specifier: ^0.11.0
+        version: 0.11.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0)))(rollup@4.60.1)(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0))
       '@sveltejs/kit':
         specifier: ^2.69.1
         version: 2.69.1(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0)))(svelte@5.56.3(@typescript-eslint/types@8.64.0))(typescript@7.0.2)(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0))
@@ -1183,8 +1183,8 @@ packages:
       '@sveltejs/kit': ^2.0.0
       wrangler: ^4.0.0
 
-  '@sveltejs/enhanced-img@0.10.4':
-    resolution: {integrity: sha512-Am5nmAKUo7Nboqq7Dhtfn7dcXA087d7gIz6Vecn1opB41aJ680+0q9U9KvEcMgduOyeiwckTIOQOx4Mmq9GcvA==}
+  '@sveltejs/enhanced-img@0.11.0':
+    resolution: {integrity: sha512-TN7VzGoqwFqvA4Faj1brUPHLtcEkyFa08nrn9bfm98yVrzr0g4bOZHjlBoPYHHX+sZNGE+cxznhTVgarECPQsA==}
     peerDependencies:
       '@sveltejs/vite-plugin-svelte': ^6.0.0 || ^7.0.0
       svelte: ^5.0.0
@@ -2416,11 +2416,6 @@ packages:
     resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
     engines: {node: '>=6'}
 
-  semver@7.8.4:
-    resolution: {integrity: sha512-rUCObTnP32Q08R2uuIrt7r9PlEonuTmtuXYcW6s5kjdlj3xbnwe+21yXptAUYcMAABLkYYTtnmzb3w3EDZfueA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.8.5:
     resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
     engines: {node: '>=10'}
@@ -3233,7 +3228,7 @@ snapshots:
 
   '@img/sharp-wasm32@0.34.5':
     dependencies:
-      '@emnapi/runtime': 1.11.1
+      '@emnapi/runtime': 1.11.2
     optional: true
 
   '@img/sharp-win32-arm64@0.34.5':
@@ -3457,7 +3452,7 @@ snapshots:
       worktop: 0.8.0-next.18
       wrangler: 4.51.0(@cloudflare/workers-types@4.20260702.1)
 
-  '@sveltejs/enhanced-img@0.10.4(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0)))(rollup@4.60.1)(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0))':
+  '@sveltejs/enhanced-img@0.11.0(@sveltejs/vite-plugin-svelte@7.1.2(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0)))(rollup@4.60.1)(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 7.1.2(svelte@5.56.3(@typescript-eslint/types@8.64.0))(vite@8.1.4(esbuild@0.27.7)(jiti@2.7.0))
       magic-string: 0.30.21
@@ -4587,8 +4582,6 @@ snapshots:
     dependencies:
       mri: 1.2.0
 
-  semver@7.8.4: {}
-
   semver@7.8.5: {}
 
   set-cookie-parser@3.1.1: {}
@@ -4631,7 +4624,7 @@ snapshots:
     dependencies:
       '@img/colour': 1.1.0
       detect-libc: 2.1.2
-      semver: 7.8.4
+      semver: 7.8.5
     optionalDependencies:
       '@img/sharp-darwin-arm64': 0.34.5
       '@img/sharp-darwin-x64': 0.34.5
