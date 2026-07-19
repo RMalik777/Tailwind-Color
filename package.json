@@ -24,7 +24,7 @@
 		"@lucide/svelte": "^1.24.0",
 		"@sveltejs/adapter-cloudflare": "^7.2.9",
 		"@sveltejs/enhanced-img": "^0.11.0",
-		"@sveltejs/kit": "^2.69.3",
+		"@sveltejs/kit": "^2.70.1",
 		"@sveltejs/vite-plugin-svelte": "^7.2.0",
 		"@tailwindcss/vite": "^4.3.2",
 		"@types/apca-w3": "^0.1.3",
