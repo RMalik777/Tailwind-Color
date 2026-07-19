@@ -100,8 +100,8 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2(svelte@5.56.5(@typescript-eslint/types@8.64.0))
       simple-icons:
-        specifier: ^16.26.0
-        version: 16.26.0
+        specifier: ^16.27.0
+        version: 16.27.0
       svelte:
         specifier: ^5.56.5
         version: 5.56.5(@typescript-eslint/types@8.64.0)
@@ -2440,8 +2440,8 @@ packages:
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
 
-  simple-icons@16.26.0:
-    resolution: {integrity: sha512-T9rNJtyOshULM8heLlvrZY346g9zOgZILQ3vxP+FWcX13RhaOLez7YM/hNCEx3b5gJckSCNDoNsjZuDncSMYSQ==}
+  simple-icons@16.27.0:
+    resolution: {integrity: sha512-Rk2dCRVCPHnla9/mHmztJOlbkfncPDUMSOPozQO3+c+vr6Uwy9jhNHeuxxvNZgbF9ZwpoT1BCu1LNB4Q07VmZQ==}
     engines: {node: '>=0.12.18'}
 
   simple-swizzle@0.2.4:
@@ -4642,7 +4642,7 @@ snapshots:
 
   siginfo@2.0.0: {}
 
-  simple-icons@16.26.0: {}
+  simple-icons@16.27.0: {}
 
   simple-swizzle@0.2.4:
     dependencies:
