@@ -21,10 +21,11 @@
 	import CaseLower from "@lucide/svelte/icons/case-lower";
 	import EyeOff from "@lucide/svelte/icons/eye-off";
 
-	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
+	import { getColorsByVersion } from "$lib/data/color";
 	import { versionOptions } from "$lib/data/option";
-	import { contrastValue, processColorFromHex, relativeLuminance } from "$lib/functions/contrast";
+	import { contrastValue, hexToLinearRgb, relativeLuminance } from "$lib/functions/contrast";
 	import { cubicOut } from "svelte/easing";
+	import type { Version } from "$lib/types/color";
 
 	const minContrastSmall = 4.5;
 	const minContrastLarge = 3;
@@ -46,26 +47,12 @@
 			],
 		},
 	];
-	const version = new PersistedState("version", "V4");
-	const contrastType = new PersistedState("contrastType", "apca");
+	const version = new PersistedState<Version>("version", "V4");
+	const contrastType = new PersistedState<"wcag" | "apca">("contrastType", "apca");
 
-	const color = $derived.by(() => {
-		switch (version.current) {
-			case "V0":
-				return colorV0;
-			case "V1":
-				return colorV1;
-			case "V2":
-				return colorV2;
-			case "V3":
-				return colorV3;
-			default:
-				return colorV4;
-		}
-	});
-	const bgColorOptions = $derived(color);
+	const color = $derived(getColorsByVersion(version.current));
 	const bgColor = new PersistedState("bgColor", "white");
-	const bgChoice = $derived(bgColorOptions.find((color) => color.color === bgColor.current)?.range);
+	const bgChoice = $derived(color.find((color) => color.color === bgColor.current)?.range);
 	const bgShade = new PersistedState("bgShade", "0");
 	const bgSelectedColor = $derived(
 		bgChoice?.find((color) => color.shade.toString() === bgShade.current),
@@ -76,11 +63,8 @@
 		{ capacity: 10 },
 	);
 
-	const textColorOptions = $derived(color);
 	const textColor = new PersistedState("textColor", "black");
-	const textChoice = $derived(
-		textColorOptions.find((color) => color.color === textColor.current)?.range,
-	);
+	const textChoice = $derived(color.find((color) => color.color === textColor.current)?.range);
 	const textShade = new PersistedState("textShade", "0");
 	const textSelectedColor = $derived(
 		textChoice?.find((color) => color.shade.toString() === textShade.current),
@@ -93,9 +77,9 @@
 
 	const contrastRatio = $derived.by(() => {
 		if (!bgSelectedColor || !textSelectedColor) return 0;
-		const bgColor = processColorFromHex(bgSelectedColor.hex.long ?? "");
+		const bgColor = hexToLinearRgb(bgSelectedColor.hex.long ?? "");
 		const bgLuminance = relativeLuminance(bgColor.r, bgColor.g, bgColor.b);
-		const textColor = processColorFromHex(textSelectedColor.hex.long ?? "");
+		const textColor = hexToLinearRgb(textSelectedColor.hex.long ?? "");
 		const textLuminance = relativeLuminance(textColor.r, textColor.g, textColor.b);
 
 		return contrastValue(bgLuminance, textLuminance);
@@ -154,13 +138,13 @@
 						}}
 					>
 						<Select.Trigger id="leftColor" class="w-full capitalize" placeholder="Select Color">
-							{bgColorOptions.find((option) => option.color === bgColor.current)?.color ??
+							{color.find((option) => option.color === bgColor.current)?.color ??
 								"Select Color"}
 						</Select.Trigger>
 						<Select.Content preventScroll>
 							<Select.Group>
 								<Select.Label>Color</Select.Label>
-								{#each bgColorOptions as option (option.color)}
+								{#each color as option (option.color)}
 									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
 								{/each}
 							</Select.Group>
@@ -230,13 +214,13 @@
 						}}
 					>
 						<Select.Trigger id="textColor" class="w-full capitalize" placeholder="Select Color">
-							{textColorOptions.find((option) => option.color === textColor.current)?.color ??
+							{color.find((option) => option.color === textColor.current)?.color ??
 								"Select Color"}
 						</Select.Trigger>
 						<Select.Content preventScroll>
 							<Select.Group>
 								<Select.Label>Color</Select.Label>
-								{#each textColorOptions as option (option.color)}
+								{#each color as option (option.color)}
 									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
 								{/each}
 							</Select.Group>
