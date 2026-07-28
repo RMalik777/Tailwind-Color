@@ -1,7 +1,7 @@
 import { bench, describe } from "vitest";
 import {
 	relativeLuminance,
-	processColorFromHex,
+	hexToLinearRgb,
 	contrastValue,
 } from "../src/lib/functions/contrast";
 
@@ -13,16 +13,16 @@ describe("Contrast Calculation Benchmarks", () => {
 	const blue = "#0000FF";
 	const gray = "#808080";
 
-	bench("processColorFromHex - white", () => {
-		processColorFromHex(white);
+	bench("hexToLinearRgb - white", () => {
+		hexToLinearRgb(white);
 	});
 
-	bench("processColorFromHex - black", () => {
-		processColorFromHex(black);
+	bench("hexToLinearRgb - black", () => {
+		hexToLinearRgb(black);
 	});
 
-	bench("processColorFromHex - colored", () => {
-		processColorFromHex(red);
+	bench("hexToLinearRgb - colored", () => {
+		hexToLinearRgb(red);
 	});
 
 	bench("relativeLuminance calculation", () => {
@@ -38,16 +38,16 @@ describe("Contrast Calculation Benchmarks", () => {
 	});
 
 	bench("full contrast workflow - white vs black", () => {
-		const { r: r1, g: g1, b: b1 } = processColorFromHex(white);
-		const { r: r2, g: g2, b: b2 } = processColorFromHex(black);
+		const { r: r1, g: g1, b: b1 } = hexToLinearRgb(white);
+		const { r: r2, g: g2, b: b2 } = hexToLinearRgb(black);
 		const l1 = relativeLuminance(r1, g1, b1);
 		const l2 = relativeLuminance(r2, g2, b2);
 		contrastValue(l1, l2);
 	});
 
 	bench("full contrast workflow - colored", () => {
-		const { r: r1, g: g1, b: b1 } = processColorFromHex(red);
-		const { r: r2, g: g2, b: b2 } = processColorFromHex(blue);
+		const { r: r1, g: g1, b: b1 } = hexToLinearRgb(red);
+		const { r: r2, g: g2, b: b2 } = hexToLinearRgb(blue);
 		const l1 = relativeLuminance(r1, g1, b1);
 		const l2 = relativeLuminance(r2, g2, b2);
 		contrastValue(l1, l2);
@@ -57,8 +57,8 @@ describe("Contrast Calculation Benchmarks", () => {
 		const colors = [white, black, red, blue, gray];
 		for (let i = 0; i < colors.length; i++) {
 			for (let j = i + 1; j < colors.length; j++) {
-				const { r: r1, g: g1, b: b1 } = processColorFromHex(colors[i]);
-				const { r: r2, g: g2, b: b2 } = processColorFromHex(colors[j]);
+				const { r: r1, g: g1, b: b1 } = hexToLinearRgb(colors[i]);
+				const { r: r2, g: g2, b: b2 } = hexToLinearRgb(colors[j]);
 				const l1 = relativeLuminance(r1, g1, b1);
 				const l2 = relativeLuminance(r2, g2, b2);
 				contrastValue(l1, l2);

@@ -1,8 +1,8 @@
 export type { TailwindColor } from "$lib/data/color-tailwind";
 export type { ColorLists } from "$lib/data/color";
+export type { Version } from "$lib/types/version";
 
 export type Color = "oklch" | "hex" | "hsl" | "rgb";
-export type Version = "V4" | "V3" | "V2" | "V1" | "V0";
 
 export type ColorRange = {
 	name: string;

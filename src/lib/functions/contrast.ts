@@ -28,7 +28,7 @@ export function calculateRGB(color: number) {
  * @returns Object containing linearized RGB values (0-1 range)
  * @throws {Error} If the hex color format is invalid
  */
-export function hexToLinearRgb(color: string) {
+export function hexToLinearRgb(color: string): { r: number; g: number; b: number } {
 	if (!/^#[0-9A-F]{6}$/i.test(color)) {
 		throw new Error("Invalid hex color format. Expected format: #RRGGBB");
 	}
