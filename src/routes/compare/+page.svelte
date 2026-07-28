@@ -7,53 +7,28 @@
 	import { PersistedState } from "runed";
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 
-	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
+	import { getColorsByVersion } from "$lib/data/color";
 	import { versionOptions } from "$lib/data/option";
+	import type { Version } from "$lib/types/color";
 
-	let leftVersion = new PersistedState("leftVersion", "V4");
-	const leftColorOptions = $derived.by(() => {
-		switch (leftVersion.current) {
-			case "V0":
-				return colorV0;
-			case "V1":
-				return colorV1;
-			case "V2":
-				return colorV2;
-			case "V3":
-				return colorV3;
-			default:
-				return colorV4;
-		}
-	});
-	let leftColor = new PersistedState("leftColor", "red");
+	const leftVersion = new PersistedState<Version>("leftVersion", "V4");
+	const leftColorOptions = $derived(getColorsByVersion(leftVersion.current));
+	const leftColor = new PersistedState("leftColor", "red");
 	const leftChoice = $derived(
 		leftColorOptions.find((color) => color.color === leftColor.current)?.range,
 	);
-	let leftShade = new PersistedState("leftShade", "500");
+	const leftShade = new PersistedState("leftShade", "500");
 	const leftSelectedColor = $derived(
 		leftChoice?.find((color) => color.shade.toString() === leftShade.current),
 	);
 
-	let rightVersion = new PersistedState("rightVersion", "V4");
-	const rightColorOptions = $derived.by(() => {
-		switch (rightVersion.current) {
-			case "V0":
-				return colorV0;
-			case "V1":
-				return colorV1;
-			case "V2":
-				return colorV2;
-			case "V3":
-				return colorV3;
-			default:
-				return colorV4;
-		}
-	});
-	let rightColor = new PersistedState("rightColor", "red");
+	const rightVersion = new PersistedState<Version>("rightVersion", "V4");
+	const rightColorOptions = $derived(getColorsByVersion(rightVersion.current));
+	const rightColor = new PersistedState("rightColor", "red");
 	const rightChoice = $derived(
 		rightColorOptions.find((color) => color.color === rightColor.current)?.range,
 	);
-	let rightShade = new PersistedState("rightShade", "500");
+	const rightShade = new PersistedState("rightShade", "500");
 	const rightSelectedColor = $derived(
 		rightChoice?.find((color) => color.shade.toString() === rightShade.current),
 	);

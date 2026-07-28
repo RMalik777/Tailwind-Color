@@ -7,35 +7,18 @@
 	import * as Select from "$lib/components/ui/select/index.js";
 	import Toolbar from "$lib/components/toolbar.svelte";
 
-	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
+	import { getColorsByVersion } from "$lib/data/color";
 	import { versionOptions, colorOptions } from "$lib/data/option";
-	import type { Color } from "$lib/types/color";
+	import type { Color, Version } from "$lib/types/color";
 
 	import Copy from "@lucide/svelte/icons/copy";
 	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
 
 	const view = new PersistedState<Color>("view", "oklch");
-	const scroll = $state({
-		y: 0,
-		x: 0,
-	});
 
-	const version = new PersistedState("version", "V4");
-	const colors = $derived.by(() => {
-		switch (version.current) {
-			case "V0":
-				return colorV0.filter((color) => color.color !== "black" && color.color !== "white");
-			case "V1":
-				return colorV1.filter((color) => color.color !== "black" && color.color !== "white");
-			case "V2":
-				return colorV2.filter((color) => color.color !== "black" && color.color !== "white");
-			case "V3":
-				return colorV3.filter((color) => color.color !== "black" && color.color !== "white");
-			default:
-				return colorV4.filter((color) => color.color !== "black" && color.color !== "white");
-		}
-	});
+	const version = new PersistedState<Version>("version", "V4");
+	const colors = $derived(getColorsByVersion(version.current, true));
 </script>
 
 <svelte:head>
@@ -45,13 +28,6 @@
 		content="Check out all available Tailwind CSS colors across different versions, from v0 to v4. Compare the old color and gradient with the new one."
 	/>
 </svelte:head>
-
-<svelte:window
-	onscroll={() => {
-		scroll.y = window.scrollY;
-		scroll.x = window.scrollX;
-	}}
-/>
 
 <div class="flex w-full flex-col gap-4">
 	<Toolbar>

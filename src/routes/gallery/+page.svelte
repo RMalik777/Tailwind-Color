@@ -10,29 +10,16 @@
 	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
 
-	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
+	import { getColorsByVersion } from "$lib/data/color";
 	import { colorOptions, versionOptions } from "$lib/data/option";
-	import type { Color } from "$lib/types/color";
+	import type { Color, Version } from "$lib/types/color";
 
 	const border = new PersistedState("border", false);
 	const gap = new PersistedState("gap", true);
-	const version = new PersistedState("version", "V4");
+	const version = new PersistedState<Version>("version", "V4");
 	const view = new PersistedState<Color>("view", "oklch");
 
-	const colors = $derived.by(() => {
-		switch (version.current) {
-			case "V0":
-				return colorV0.filter((color) => color.color !== "black" && color.color !== "white");
-			case "V1":
-				return colorV1.filter((color) => color.color !== "black" && color.color !== "white");
-			case "V2":
-				return colorV2.filter((color) => color.color !== "black" && color.color !== "white");
-			case "V3":
-				return colorV3.filter((color) => color.color !== "black" && color.color !== "white");
-			default:
-				return colorV4.filter((color) => color.color !== "black" && color.color !== "white");
-		}
-	});
+	const colors = $derived(getColorsByVersion(version.current, true));
 </script>
 
 <svelte:head>
@@ -93,7 +80,7 @@
 			class="flex h-8 items-center gap-2 rounded-md border p-2 hover:bg-accent/50 has-aria-checked:border-violet-600 has-aria-checked:bg-violet-50 dark:has-aria-checked:border-violet-900 dark:has-aria-checked:bg-violet-950"
 		>
 			<Checkbox
-				id="toggle-2"
+				id="toggle-3"
 				bind:checked={gap.current}
 				class="rounded-[3px] data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600 data-[state=checked]:text-white dark:data-[state=checked]:border-violet-700 dark:data-[state=checked]:bg-violet-700"
 			/>

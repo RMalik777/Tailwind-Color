@@ -9,59 +9,34 @@
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import { PersistedState } from "runed";
 
-	import { colorV0, colorV1, colorV2, colorV3, colorV4 } from "$lib/data/color";
+	import { getColorsByVersion } from "$lib/data/color";
 	import { interpolationOptions, versionOptions } from "$lib/data/option";
+	import type { Version } from "$lib/types/color";
 
 	const interpolation = new PersistedState("interpolation", "oklch");
-	const version = new PersistedState("version", "V4");
+	const version = new PersistedState<Version>("version", "V4");
 	const degree = new PersistedState("degree", 90);
-	const leftColorOptions = $derived.by(() => {
-		switch (version.current) {
-			case "V0":
-				return colorV0;
-			case "V1":
-				return colorV1;
-			case "V2":
-				return colorV2;
-			case "V3":
-				return colorV3;
-			default:
-				return colorV4;
-		}
-	});
-	let leftColor = new PersistedState("gradientLeftColor", "red");
+	const colorOptions = $derived(getColorsByVersion(version.current));
+
+	const leftColor = new PersistedState("gradientLeftColor", "red");
 	const leftChoice = $derived(
-		leftColorOptions.find((color) => color.color === leftColor.current)?.range,
+		colorOptions.find((color) => color.color === leftColor.current)?.range,
 	);
-	let leftShade = new PersistedState("gradientLeftShade", "500");
+	const leftShade = new PersistedState("gradientLeftShade", "500");
 	const leftSelectedColor = $derived(
 		leftChoice?.find((color) => color.shade.toString() === leftShade.current),
 	);
 
-	const rightColorOptions = $derived.by(() => {
-		switch (version.current) {
-			case "V0":
-				return colorV0;
-			case "V1":
-				return colorV1;
-			case "V2":
-				return colorV2;
-			case "V3":
-				return colorV3;
-			default:
-				return colorV4;
-		}
-	});
-	let rightColor = new PersistedState("gradientRightColor", "fuchsia");
+	const rightColor = new PersistedState("gradientRightColor", "fuchsia");
 	const rightChoice = $derived(
-		rightColorOptions.find((color) => color.color === rightColor.current)?.range,
+		colorOptions.find((color) => color.color === rightColor.current)?.range,
 	);
-	let rightShade = new PersistedState("gradientRightShade", "500");
+	const rightShade = new PersistedState("gradientRightShade", "500");
 	const rightSelectedColor = $derived(
 		rightChoice?.find((color) => color.shade.toString() === rightShade.current),
 	);
 
-	let value = new PersistedState("gradientStops", [0, 100]);
+	const value = new PersistedState("gradientStops", [0, 100]);
 </script>
 
 <svelte:head>
@@ -157,13 +132,13 @@
 								placeholder="Select Color"
 								size="sm"
 							>
-								{leftColorOptions.find((option) => option.color === leftColor.current)?.color ??
+								{colorOptions.find((option) => option.color === leftColor.current)?.color ??
 									"Select Color"}
 							</Select.Trigger>
 							<Select.Content preventScroll={false}>
 								<Select.Group>
 									<Select.Label>Color</Select.Label>
-									{#each leftColorOptions as option (option.color)}
+									{#each colorOptions as option (option.color)}
 										<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item
 										>
 									{/each}
@@ -227,13 +202,13 @@
 								placeholder="Select Color"
 								size="sm"
 							>
-								{rightColorOptions.find((option) => option.color === rightColor.current)?.color ??
+								{colorOptions.find((option) => option.color === rightColor.current)?.color ??
 									"Select Color"}
 							</Select.Trigger>
 							<Select.Content preventScroll={false}>
 								<Select.Group>
 									<Select.Label>Color</Select.Label>
-									{#each rightColorOptions as option (option.color)}
+									{#each colorOptions as option (option.color)}
 										<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item
 										>
 									{/each}
