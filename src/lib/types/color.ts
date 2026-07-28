@@ -1,3 +1,5 @@
+import type { Version } from "$lib/types/version";
+
 export type { TailwindColor } from "$lib/data/color-tailwind";
 export type { ColorLists } from "$lib/data/color";
 export type { Version } from "$lib/types/version";
