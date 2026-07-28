@@ -89,14 +89,18 @@
 	</Toolbar>
 
 	<div
-		class="flex h-full w-full flex-row duration-150 ease-out {gap.current
+		class="flex h-full w-full flex-row overflow-x-auto duration-150 ease-out {gap.current
 			? 'gap-0.5 sm:gap-1'
 			: 'gap-0'}"
 	>
 		{#each colors as color (color.color)}
-			<div animate:flip={{ duration: 200, easing: quintOut }} class="flex w-full grow flex-col">
+			<div
+				animate:flip={{ duration: 200, easing: quintOut }}
+				class="flex min-w-10 shrink-0 grow flex-col"
+			>
 				<div class="relative h-6 w-full">
 					<p
+						title={color.color}
 						class="absolute top-0 right-0 w-full truncate text-center text-xs text-muted-foreground capitalize sm:text-sm"
 					>
 						{color.color}
