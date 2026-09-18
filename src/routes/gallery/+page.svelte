@@ -94,16 +94,17 @@
 			: 'gap-0'}"
 	>
 		{#each colors as color (color.color)}
+			{@const uppercaseColor = color.color.charAt(0).toUpperCase() + color.color.slice(1)}
 			<div
 				animate:flip={{ duration: 200, easing: quintOut }}
-				class="flex min-w-10 shrink-0 grow flex-col"
+				class="flex w-full min-w-10 grow flex-col"
 			>
 				<div class="relative h-6 w-full">
 					<p
-						title={color.color}
+						title={uppercaseColor}
 						class="absolute top-0 right-0 w-full truncate text-center text-xs text-muted-foreground capitalize sm:text-sm"
 					>
-						{color.color}
+						{uppercaseColor}
 					</p>
 				</div>
 
@@ -127,7 +128,7 @@
 							}}
 						>
 							<span
-								class="hidden text-xs font-semibold tracking-tight opacity-95 duration-150 ease-out group-hover:block sm:text-sm starting:opacity-0
+								class="hidden text-xs font-semibold tracking-tight opacity-95 duration-150 ease-out group-hover:block group-focus-visible:block sm:text-sm starting:opacity-0
                 {shade.shade > 400 ? 'text-white' : 'text-black'}"
 							>
 								{shade.name.replace(color.color + "-", "")}
