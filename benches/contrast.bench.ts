@@ -1,9 +1,5 @@
 import { bench, describe } from "vitest";
-import {
-	relativeLuminance,
-	hexToLinearRgb,
-	contrastValue,
-} from "../src/lib/functions/contrast";
+import { relativeLuminance, hexToLinearRgb, contrastValue } from "../src/lib/functions/contrast";
 
 describe("Contrast Calculation Benchmarks", () => {
 	// Test colors

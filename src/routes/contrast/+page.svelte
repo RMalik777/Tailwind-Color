@@ -138,8 +138,7 @@
 						}}
 					>
 						<Select.Trigger id="leftColor" class="w-full capitalize" placeholder="Select Color">
-							{color.find((option) => option.color === bgColor.current)?.color ??
-								"Select Color"}
+							{color.find((option) => option.color === bgColor.current)?.color ?? "Select Color"}
 						</Select.Trigger>
 						<Select.Content preventScroll>
 							<Select.Group>
@@ -214,8 +213,7 @@
 						}}
 					>
 						<Select.Trigger id="textColor" class="w-full capitalize" placeholder="Select Color">
-							{color.find((option) => option.color === textColor.current)?.color ??
-								"Select Color"}
+							{color.find((option) => option.color === textColor.current)?.color ?? "Select Color"}
 						</Select.Trigger>
 						<Select.Content preventScroll>
 							<Select.Group>
