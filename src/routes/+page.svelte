@@ -2,18 +2,16 @@
 	import { flip } from "svelte/animate";
 	import { cubicOut } from "svelte/easing";
 
-	import { Button } from "$lib/components/ui/button/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 	import * as Select from "$lib/components/ui/select/index.js";
 	import Toolbar from "$lib/components/toolbar.svelte";
+	import CopyButton from "$lib/components/custom/copy-button.svelte";
 
 	import { getColorsByVersion } from "$lib/data/color";
 	import { versionOptions, colorOptions } from "$lib/data/option";
 	import type { Color, Version } from "$lib/types/color";
 
-	import Copy from "@lucide/svelte/icons/copy";
 	import { PersistedState } from "runed";
-	import { toast } from "svelte-sonner";
 
 	const view = new PersistedState<Color>("view", "oklch");
 
@@ -98,23 +96,14 @@
               background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};
               view-transition-name: color-{color.color}-{shade.shade};"
 						>
-							<Button
-								variant="ghost"
-								size="icon"
-								class="float-right m-1 h-fit w-fit rounded-xs p-1
+							<CopyButton
+								value={shade[viewAs]?.long ?? ""}
+								label={`${shade.name} in ${viewAs} value`}
+								class="float-right rounded-sm
                 {shade.shade > 300
 									? 'text-white hover:bg-neutral-50/20 hover:text-white focus-visible:bg-neutral-50/10'
 									: 'text-black hover:bg-neutral-950/10 hover:text-black focus-visible:bg-neutral-950/10'}"
-								onclick={() => {
-									navigator.clipboard.writeText(shade[viewAs]?.long ?? "");
-									toast(`Copied ${shade[viewAs]?.long}`);
-								}}
-							>
-								<Copy class="w-4" />
-								<span class="sr-only">
-									Copy color {shade.name} in {viewAs} value
-								</span>
-							</Button>
+							></CopyButton>
 						</div>
 						<section class="px-1 py-px font-mono text-sm tracking-tight md:text-xs lg:text-sm">
 							<h3 class="hidden font-bold sm:block md:hidden lg:block">{shade.name}</h3>
