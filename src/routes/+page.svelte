@@ -32,7 +32,7 @@
 		<h1
 			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
 		>
-			Color Pallete
+			Color Palette
 		</h1>
 		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
 			<Label for="version" class="transition-name-[version-label]">Tailwind CSS Version</Label>
