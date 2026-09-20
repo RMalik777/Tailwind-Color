@@ -8,12 +8,12 @@
 	import CopyButton from "$lib/components/custom/copy-button.svelte";
 
 	import { getColorsByVersion } from "$lib/data/color";
-	import { versionOptions, colorOptions } from "$lib/data/option";
-	import type { Color, Version } from "$lib/types/color";
+	import { versionOptions, colorOptions } from "$lib/const/option";
+	import type { ColorFormat, Version } from "$lib/types/color";
 
 	import { PersistedState } from "runed";
 
-	const view = new PersistedState<Color>("view", "oklch");
+	const view = new PersistedState<ColorFormat>("view", "oklch");
 
 	const version = new PersistedState<Version>("version", "V4");
 	const colors = $derived(getColorsByVersion(version.current, true));

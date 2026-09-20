@@ -1,11 +1,6 @@
-export interface TailwindColor {
-	name: string;
-	shades: {
-		[key: string]: string;
-	};
-}
+import type { RawTailwindColor } from "$lib/types/color";
 
-export const tailwindColors4: TailwindColor[] = [
+export const tailwindColors4: RawTailwindColor[] = [
 	{
 		name: "red",
 		shades: {
@@ -436,7 +431,7 @@ export const tailwindColors4: TailwindColor[] = [
 	},
 ];
 
-export const tailwindColors3: TailwindColor[] = [
+export const tailwindColors3: RawTailwindColor[] = [
 	{
 		name: "red",
 		shades: {
@@ -803,7 +798,7 @@ export const tailwindColors3: TailwindColor[] = [
 	},
 ];
 
-export const tailwindColors2: TailwindColor[] = [
+export const tailwindColors2: RawTailwindColor[] = [
 	{
 		name: "red",
 		shades: {
@@ -1148,7 +1143,7 @@ export const tailwindColors2: TailwindColor[] = [
 	},
 ];
 
-export const tailwindColors1: TailwindColor[] = [
+export const tailwindColors1: RawTailwindColor[] = [
 	{
 		name: "red",
 		shades: {
@@ -1291,7 +1286,7 @@ export const tailwindColors1: TailwindColor[] = [
 	},
 ];
 
-export const tailwindColors0: TailwindColor[] = [
+export const tailwindColors0: RawTailwindColor[] = [
 	{
 		name: "red",
 		shades: {

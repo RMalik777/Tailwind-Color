@@ -26,21 +26,19 @@
 	import Minus from "@lucide/svelte/icons/minus";
 
 	import { getColorsByVersion } from "$lib/data/color";
-	import { versionOptions } from "$lib/data/option";
+	import { versionOptions } from "$lib/const/option";
 	import { ColorHistory } from "$lib/functions/color-history.svelte";
 	import { contrastValue, hexToLinearRgb, relativeLuminance } from "$lib/functions/contrast";
-	import type { ColorLists, Version } from "$lib/types/color";
-
-	/** Shades of a single color family, as produced by the palette data. */
-	type PaletteRange = ColorLists[number]["range"];
+	import { findFamily, findShade, resolveShade } from "$lib/functions/color";
+	import type { ColorShade, Version } from "$lib/types/color";
 
 	type Side = {
 		id: string;
 		label: string;
 		color: PersistedState<string>;
 		shade: PersistedState<string>;
-		choices: PaletteRange | undefined;
-		selected: PaletteRange[number] | undefined;
+		choices: ColorShade[] | undefined;
+		selected: ColorShade | undefined;
 		history: ColorHistory;
 	};
 
@@ -69,18 +67,14 @@
 
 	const bgColor = new PersistedState("bgColor", "white");
 	const bgShade = new PersistedState("bgShade", "0");
-	const bgChoice = $derived(color.find((color) => color.color === bgColor.current)?.range);
-	const bgSelectedColor = $derived(
-		bgChoice?.find((color) => color.shade.toString() === bgShade.current),
-	);
+	const bgChoice = $derived(findFamily(color, bgColor.current)?.range);
+	const bgSelectedColor = $derived(findShade(bgChoice, bgShade.current));
 	const bgHistory = new ColorHistory();
 
 	const textColor = new PersistedState("textColor", "black");
 	const textShade = new PersistedState("textShade", "0");
-	const textChoice = $derived(color.find((color) => color.color === textColor.current)?.range);
-	const textSelectedColor = $derived(
-		textChoice?.find((color) => color.shade.toString() === textShade.current),
-	);
+	const textChoice = $derived(findFamily(color, textColor.current)?.range);
+	const textSelectedColor = $derived(findShade(textChoice, textShade.current));
 	const textHistory = new ColorHistory();
 
 	const contrastRatio = $derived.by(() => {
@@ -129,26 +123,9 @@
 		untrack(() => textHistory.push({ ...entry, name: selected.name, css: selected.oklch.long }));
 	});
 
-	/**
-	 * Keeps the shade valid after a color family change. Black and white only
-	 * carry one shade, and the V0 palette uses a different shade set entirely,
-	 * so fall back to whatever the new family has closest to 500.
-	 */
-	function resolveShade(range: PaletteRange | undefined, current: string) {
-		if (!range?.length) return current;
-		if (range.some((option) => option.shade.toString() === current)) return current;
-		const closest = range.reduce((a, b) =>
-			Math.abs(b.shade - 500) < Math.abs(a.shade - 500) ? b : a,
-		);
-		return closest.shade.toString();
-	}
-
 	function selectColor(side: Side, value: string) {
 		side.color.current = value;
-		side.shade.current = resolveShade(
-			color.find((option) => option.color === value)?.range,
-			side.shade.current,
-		);
+		side.shade.current = resolveShade(findFamily(color, value)?.range, side.shade.current);
 	}
 
 	function swap() {

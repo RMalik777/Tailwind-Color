@@ -11,13 +11,13 @@
 	import { toast } from "svelte-sonner";
 
 	import { getColorsByVersion } from "$lib/data/color";
-	import { colorOptions, versionOptions } from "$lib/data/option";
-	import type { Color, Version } from "$lib/types/color";
+	import { colorOptions, versionOptions } from "$lib/const/option";
+	import type { ColorFormat, Version } from "$lib/types/color";
 
 	const border = new PersistedState("border", false);
 	const gap = new PersistedState("gap", true);
 	const version = new PersistedState<Version>("version", "V4");
-	const view = new PersistedState<Color>("view", "oklch");
+	const view = new PersistedState<ColorFormat>("view", "oklch");
 
 	const colors = $derived(getColorsByVersion(version.current, true));
 </script>

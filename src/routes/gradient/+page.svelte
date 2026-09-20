@@ -10,7 +10,8 @@
 	import { PersistedState } from "runed";
 
 	import { getColorsByVersion } from "$lib/data/color";
-	import { interpolationOptions, versionOptions } from "$lib/data/option";
+	import { interpolationOptions, versionOptions } from "$lib/const/option";
+	import { findFamily, findShade } from "$lib/functions/color";
 	import type { Version } from "$lib/types/color";
 
 	const interpolation = new PersistedState("interpolation", "oklch");
@@ -19,22 +20,14 @@
 	const colorOptions = $derived(getColorsByVersion(version.current));
 
 	const leftColor = new PersistedState("gradientLeftColor", "red");
-	const leftChoice = $derived(
-		colorOptions.find((color) => color.color === leftColor.current)?.range,
-	);
+	const leftChoice = $derived(findFamily(colorOptions, leftColor.current)?.range);
 	const leftShade = new PersistedState("gradientLeftShade", "500");
-	const leftSelectedColor = $derived(
-		leftChoice?.find((color) => color.shade.toString() === leftShade.current),
-	);
+	const leftSelectedColor = $derived(findShade(leftChoice, leftShade.current));
 
 	const rightColor = new PersistedState("gradientRightColor", "fuchsia");
-	const rightChoice = $derived(
-		colorOptions.find((color) => color.color === rightColor.current)?.range,
-	);
+	const rightChoice = $derived(findFamily(colorOptions, rightColor.current)?.range);
 	const rightShade = new PersistedState("gradientRightShade", "500");
-	const rightSelectedColor = $derived(
-		rightChoice?.find((color) => color.shade.toString() === rightShade.current),
-	);
+	const rightSelectedColor = $derived(findShade(rightChoice, rightShade.current));
 
 	const value = new PersistedState("gradientStops", [0, 100]);
 </script>

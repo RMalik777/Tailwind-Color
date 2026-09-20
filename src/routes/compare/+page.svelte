@@ -8,30 +8,23 @@
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 
 	import { getColorsByVersion } from "$lib/data/color";
-	import { versionOptions } from "$lib/data/option";
+	import { versionOptions } from "$lib/const/option";
+	import { findFamily, findShade } from "$lib/functions/color";
 	import type { Version } from "$lib/types/color";
 
 	const leftVersion = new PersistedState<Version>("leftVersion", "V4");
 	const leftColorOptions = $derived(getColorsByVersion(leftVersion.current));
 	const leftColor = new PersistedState("leftColor", "red");
-	const leftChoice = $derived(
-		leftColorOptions.find((color) => color.color === leftColor.current)?.range,
-	);
+	const leftChoice = $derived(findFamily(leftColorOptions, leftColor.current)?.range);
 	const leftShade = new PersistedState("leftShade", "500");
-	const leftSelectedColor = $derived(
-		leftChoice?.find((color) => color.shade.toString() === leftShade.current),
-	);
+	const leftSelectedColor = $derived(findShade(leftChoice, leftShade.current));
 
 	const rightVersion = new PersistedState<Version>("rightVersion", "V4");
 	const rightColorOptions = $derived(getColorsByVersion(rightVersion.current));
 	const rightColor = new PersistedState("rightColor", "red");
-	const rightChoice = $derived(
-		rightColorOptions.find((color) => color.color === rightColor.current)?.range,
-	);
+	const rightChoice = $derived(findFamily(rightColorOptions, rightColor.current)?.range);
 	const rightShade = new PersistedState("rightShade", "500");
-	const rightSelectedColor = $derived(
-		rightChoice?.find((color) => color.shade.toString() === rightShade.current),
-	);
+	const rightSelectedColor = $derived(findShade(rightChoice, rightShade.current));
 </script>
 
 <svelte:head>
