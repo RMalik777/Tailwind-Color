@@ -15,6 +15,8 @@
 	import * as Table from "$lib/components/ui/table/index.js";
 	import * as Tabs from "$lib/components/ui/tabs/index.js";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+	import * as Card from "$lib/components/ui/card/index.js";
+
 	import Toolbar from "$lib/components/toolbar.svelte";
 
 	import ColorPicker from "$lib/components/custom/color-picker.svelte";
@@ -142,69 +144,71 @@
 </svelte:head>
 
 {#snippet colorPicker(side: Side)}
-	<div class="flex min-w-0 flex-col gap-3 rounded-lg border bg-card p-3 sm:p-4">
-		<div class="flex items-baseline justify-between gap-2">
-			<p class="text-base font-semibold tracking-tight">{side.label}</p>
-			<p class="shrink-0 font-mono text-xs text-muted-foreground uppercase">
-				{side.selected?.hex.long ?? "—"}
-			</p>
-		</div>
-
-		<div
-			class="flex h-16 items-end rounded-md p-2 ring-1 ring-border transition duration-200 ease-out ring-inset sm:h-20"
-			style="background-color: {side.selected?.hex.long ?? 'transparent'};"
-		>
-			<span
-				class="rounded-sm bg-background/90 px-1.5 py-0.5 font-mono text-[11px] font-medium text-foreground capitalize ring-1 ring-border backdrop-blur-sm ring-inset"
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>{side.label}</Card.Title>
+			<Card.Description class="font-mono uppercase"
+				>{side.selected?.hex.long ?? "—"}</Card.Description
 			>
-				{side.selected?.name ?? "No color selected"}
-			</span>
-		</div>
-
-		<div class="grid grid-cols-2 gap-2">
-			<div class="space-y-1">
-				<Label for="{side.id}Color">Color</Label>
-				<ColorPicker id="{side.id}Color" options={color} selected={side.color} />
+		</Card.Header>
+		<Card.Content class="space-y-4">
+			<div
+				class="flex h-16 items-end rounded-md border border-border p-2 transition duration-200 ease-out sm:h-20"
+				style="background-color: {side.selected?.hex.long ?? 'transparent'};"
+			>
+				<span
+					class="rounded-sm border border-border bg-background/90 px-1.5 py-0.5 font-mono text-[11px] font-medium text-foreground capitalize backdrop-blur-sm"
+				>
+					{side.selected?.name ?? "No color selected"}
+				</span>
 			</div>
-			<div class="space-y-1">
-				<Label for="{side.id}Shade">Shade</Label>
-				<ShadePicker id="{side.id}Shade" options={side.family} selected={side.shade} />
-			</div>
-		</div>
-
-		<div class="space-y-1.5">
-			<p class="text-[11px] font-medium tracking-wide text-muted-foreground uppercase">Recent</p>
-			{#if side.history.items.length === 0}
-				<p class="text-xs text-muted-foreground">Colors you pick show up here.</p>
-			{:else}
-				<div class="flex flex-wrap gap-1.5">
-					{#each side.history.items as item (item.color + "-" + item.shade)}
-						{@const active = item.color === side.color.current && item.shade === side.shade.current}
-						<div
-							in:fade={{ duration: 150, easing: cubicOut }}
-							animate:flip={{ duration: 200, easing: cubicOut }}
-						>
-							<Tooltip.Root>
-								<Tooltip.Trigger
-									aria-label="Use {item.name}"
-									aria-current={active}
-									class="block size-7 rounded-md ring-1 ring-border transition duration-200 ease-out ring-inset hover:scale-110 focus-visible:ring-2 focus-visible:ring-ring aria-current:ring-2 aria-current:ring-foreground"
-									style="background-color: {item.css};"
-									onclick={() => {
-										side.color.current = item.color;
-										side.shade.current = item.shade;
-									}}
-								></Tooltip.Trigger>
-								<Tooltip.Content side="bottom">
-									<p class="capitalize">{item.name}</p>
-								</Tooltip.Content>
-							</Tooltip.Root>
-						</div>
-					{/each}
+			<div class="grid grid-cols-2 gap-4">
+				<div class="space-y-1">
+					<Label for="{side.id}Color">Color</Label>
+					<ColorPicker id="{side.id}Color" options={color} selected={side.color} />
 				</div>
-			{/if}
-		</div>
-	</div>
+				<div class="space-y-1">
+					<Label for="{side.id}Shade">Shade</Label>
+					<ShadePicker id="{side.id}Shade" options={side.family} selected={side.shade} />
+				</div>
+			</div>
+		</Card.Content>
+		<Card.Footer>
+			<div class="space-y-1.5">
+				<p class="text-xs font-medium tracking-wide text-muted-foreground uppercase">Recent</p>
+				{#if side.history.items.length === 0}
+					<p class="text-xs text-muted-foreground">Colors you pick show up here.</p>
+				{:else}
+					<div class="flex flex-wrap gap-1.5">
+						{#each side.history.items as item (item.color + "-" + item.shade)}
+							{@const active =
+								item.color === side.color.current && item.shade === side.shade.current}
+							<div
+								in:fade={{ duration: 150, easing: cubicOut }}
+								animate:flip={{ duration: 200, easing: cubicOut }}
+							>
+								<Tooltip.Root>
+									<Tooltip.Trigger
+										aria-label="Use {item.name}"
+										aria-current={active}
+										class="block size-6 rounded-sm border-2 border-border transition duration-200 ease-out aria-current:border-foreground"
+										style="background-color: {item.css};"
+										onclick={() => {
+											side.color.current = item.color;
+											side.shade.current = item.shade;
+										}}
+									></Tooltip.Trigger>
+									<Tooltip.Content side="bottom">
+										<p class="capitalize">{item.name}</p>
+									</Tooltip.Content>
+								</Tooltip.Root>
+							</div>
+						{/each}
+					</div>
+				{/if}
+			</div>
+		</Card.Footer>
+	</Card.Root>
 {/snippet}
 
 <div class="flex w-full grow flex-col gap-3 pb-2">
@@ -232,41 +236,39 @@
 		</div>
 	</Toolbar>
 
-	<Tooltip.Provider delayDuration={100} skipDelayDuration={200} disableHoverableContent>
-		<div class="grid items-stretch gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-			{@render colorPicker({
-				id: "bg",
-				label: "Background",
-				color: bgColor,
-				shade: bgShade,
-				family: bgChoice,
-				selected: bgSelectedColor,
-				history: bgHistory,
-			})}
+	<div class="grid items-stretch gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+		{@render colorPicker({
+			id: "bg",
+			label: "Background",
+			color: bgColor,
+			shade: bgShade,
+			family: bgChoice,
+			selected: bgSelectedColor,
+			history: bgHistory,
+		})}
 
-			<div class="flex items-center justify-center">
-				<Button
-					variant="outline"
-					class="w-full gap-2 sm:size-9 sm:w-9 sm:p-0"
-					aria-label="Swap background and text color"
-					onclick={swap}
-				>
-					<ArrowLeftRight class="size-4 shrink-0" />
-					<span class="sm:hidden">Swap colors</span>
-				</Button>
-			</div>
-
-			{@render colorPicker({
-				id: "text",
-				label: "Text",
-				color: textColor,
-				shade: textShade,
-				family: textChoice,
-				selected: textSelectedColor,
-				history: textHistory,
-			})}
+		<div class="flex items-center justify-center">
+			<Button
+				variant="outline"
+				class="w-full gap-2 sm:size-9 sm:w-9 sm:p-0"
+				aria-label="Swap background and text color"
+				onclick={swap}
+			>
+				<ArrowLeftRight class="size-4 shrink-0" />
+				<span class="sm:hidden">Swap colors</span>
+			</Button>
 		</div>
-	</Tooltip.Provider>
+
+		{@render colorPicker({
+			id: "text",
+			label: "Text",
+			color: textColor,
+			shade: textShade,
+			family: textChoice,
+			selected: textSelectedColor,
+			history: textHistory,
+		})}
+	</div>
 
 	<Tabs.Root class="w-full gap-2" bind:value={contrastType.current}>
 		<Tabs.List class="w-full">
@@ -441,13 +443,14 @@
 				<span class="capitalize">{bgSelectedColor?.name ?? "—"}</span>
 			</p>
 		</div>
+
 		<div
-			class="space-y-5 p-4 transition duration-200 ease-out sm:p-6"
+			class="space-y-4 p-4 transition duration-200 ease-out sm:p-6"
 			style="background-color: {bgSelectedColor?.hex.long ?? '#ffffff'}; color: {textSelectedColor
 				?.hex.long ?? '#000000'};"
 		>
 			<div class="space-y-1">
-				<p class="text-[10px] font-medium tracking-widest uppercase opacity-60">24px · Heading</p>
+				<p class="text-xs font-medium tracking-widest uppercase opacity-60">24px · Heading</p>
 				<p class="text-2xl">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-normal">amet consectetur adipisicing elit.</span>
@@ -456,7 +459,7 @@
 				</p>
 			</div>
 			<div class="space-y-1">
-				<p class="text-[10px] font-medium tracking-widest uppercase opacity-60">16px · Body</p>
+				<p class="text-xs font-medium tracking-widest uppercase opacity-60">16px · Body</p>
 				<p class="text-base">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-light">amet consectetur adipisicing elit.</span>
@@ -467,7 +470,7 @@
 				</p>
 			</div>
 			<div class="space-y-1">
-				<p class="text-[10px] font-medium tracking-widest uppercase opacity-60">12px · Caption</p>
+				<p class="text-xs font-medium tracking-widest uppercase opacity-60">12px · Caption</p>
 				<p class="text-xs">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-light">amet consectetur adipisicing elit.</span>

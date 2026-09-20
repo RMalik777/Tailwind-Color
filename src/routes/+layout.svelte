@@ -1,6 +1,7 @@
 <script lang="ts">
 	import "../app.css";
 	import { Toaster } from "$lib/components/ui/sonner/index.js";
+	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import { ModeWatcher } from "mode-watcher";
 
 	import { onMount, type Snippet } from "svelte";
@@ -48,7 +49,9 @@
 <ModeWatcher />
 <Nav />
 <main class="flex h-fit min-h-svh px-2 pt-14 sm:px-4 md:px-6 lg:px-8 xl:px-10">
-	{@render children?.()}
+	<Tooltip.Provider delayDuration={150} skipDelayDuration={200} disableHoverableContent>
+		{@render children?.()}
+	</Tooltip.Provider>
 </main>
 <Footer />
 <Toaster />
