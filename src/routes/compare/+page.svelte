@@ -36,7 +36,12 @@
 </svelte:head>
 
 <section class="flex w-full grow flex-col justify-between gap-2 pb-2">
-	<Toolbar>
+	<Toolbar className="flex-col items-stretch">
+		<h1
+			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
+		>
+			Compare
+		</h1>
 		<div class="control flex flex-row items-center gap-2 sm:items-end md:gap-4">
 			<div class="grid w-full grid-cols-1 items-end gap-2 sm:grid-cols-3 md:gap-4">
 				<div class="space-y-1">
@@ -123,7 +128,9 @@
 		</div>
 	</Toolbar>
 
-	<div class="flex grow flex-row items-center transition-name-[color-preview]">
+	<div
+		class="flex grow flex-row items-center overflow-hidden rounded-lg border border-border transition-name-[color-preview]"
+	>
 		<div
 			class="h-svh w-full rounded-l-lg transition duration-200 ease-linear sm:h-full"
 			style="background-color: {leftVersion.current === 'V4'
