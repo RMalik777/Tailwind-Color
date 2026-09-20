@@ -6,6 +6,9 @@
 	import { Slider } from "$lib/components/ui/slider/index.js";
 	import Toolbar from "$lib/components/toolbar.svelte";
 
+	import ColorPicker from "$lib/components/custom/color-picker.svelte";
+	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import { PersistedState } from "runed";
 
@@ -20,14 +23,14 @@
 	const colorOptions = $derived(getColorsByVersion(version.current));
 
 	const leftColor = new PersistedState("gradientLeftColor", "red");
-	const leftChoice = $derived(findFamily(colorOptions, leftColor.current)?.range);
+	const leftChoice = $derived(findFamily(colorOptions, leftColor.current));
 	const leftShade = new PersistedState("gradientLeftShade", "500");
-	const leftSelectedColor = $derived(findShade(leftChoice, leftShade.current));
+	const leftSelectedColor = $derived(findShade(leftChoice?.range, leftShade.current));
 
 	const rightColor = new PersistedState("gradientRightColor", "fuchsia");
-	const rightChoice = $derived(findFamily(colorOptions, rightColor.current)?.range);
+	const rightChoice = $derived(findFamily(colorOptions, rightColor.current));
 	const rightShade = new PersistedState("gradientRightShade", "500");
-	const rightSelectedColor = $derived(findShade(rightChoice, rightShade.current));
+	const rightSelectedColor = $derived(findShade(rightChoice?.range, rightShade.current));
 
 	const value = new PersistedState("gradientStops", [0, 100]);
 </script>
@@ -118,56 +121,11 @@
 				<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
 					<div class="w-full grow space-y-1">
 						<Label for="leftColor">Color</Label>
-						<Select.Root type="single" bind:value={leftColor.current}>
-							<Select.Trigger
-								id="leftColor"
-								class="w-full capitalize"
-								placeholder="Select Color"
-								size="sm"
-							>
-								{colorOptions.find((option) => option.color === leftColor.current)?.color ??
-									"Select Color"}
-							</Select.Trigger>
-							<Select.Content preventScroll={false}>
-								<Select.Group>
-									<Select.Label>Color</Select.Label>
-									{#each colorOptions as option (option.color)}
-										<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item
-										>
-									{/each}
-								</Select.Group>
-							</Select.Content>
-						</Select.Root>
+						<ColorPicker id="leftColor" options={colorOptions} selected={leftColor} size="sm" />
 					</div>
 					<div class="w-full grow space-y-1">
 						<Label for="leftShade">Shade</Label>
-						<Select.Root type="single" bind:value={leftShade.current}>
-							<Select.Trigger
-								id="leftShade"
-								class="w-full capitalize"
-								placeholder="Select Shade"
-								disabled={!leftChoice}
-								size="sm"
-							>
-								{leftChoice
-									?.find((option) => option.shade.toString() === leftShade.current)
-									?.name.replace(leftColor.current + "-", "") ?? "Select Shade"}
-							</Select.Trigger>
-							<Select.Content preventScroll={false}>
-								<Select.Group>
-									<Select.Label>Shade</Select.Label>
-									{#if leftChoice}
-										{#each leftChoice as option (option.shade)}
-											<Select.Item value={option.shade.toString()} class="capitalize">
-												{version.current === "V0"
-													? option.name.replace(leftColor.current + "-", "")
-													: option.shade}
-											</Select.Item>
-										{/each}
-									{/if}
-								</Select.Group>
-							</Select.Content>
-						</Select.Root>
+						<ShadePicker id="leftShade" options={leftChoice} selected={leftShade} size="sm" />
 					</div>
 				</div>
 				<Button
@@ -188,56 +146,11 @@
 				<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
 					<div class="w-full grow space-y-1">
 						<Label for="rightColor">Color</Label>
-						<Select.Root type="single" bind:value={rightColor.current}>
-							<Select.Trigger
-								id="rightColor"
-								class="w-full capitalize"
-								placeholder="Select Color"
-								size="sm"
-							>
-								{colorOptions.find((option) => option.color === rightColor.current)?.color ??
-									"Select Color"}
-							</Select.Trigger>
-							<Select.Content preventScroll={false}>
-								<Select.Group>
-									<Select.Label>Color</Select.Label>
-									{#each colorOptions as option (option.color)}
-										<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item
-										>
-									{/each}
-								</Select.Group>
-							</Select.Content>
-						</Select.Root>
+						<ColorPicker id="rightColor" options={colorOptions} selected={rightColor} size="sm" />
 					</div>
 					<div class="w-full grow space-y-1">
 						<Label for="rightShade">Shade</Label>
-						<Select.Root type="single" bind:value={rightShade.current}>
-							<Select.Trigger
-								id="rightShade"
-								class="w-full capitalize"
-								placeholder="Select Shade"
-								disabled={!rightChoice}
-								size="sm"
-							>
-								{rightChoice
-									?.find((option) => option.shade.toString() === rightShade.current)
-									?.name.replace(rightColor.current + "-", "") ?? "Select Shade"}
-							</Select.Trigger>
-							<Select.Content preventScroll={false}>
-								<Select.Group>
-									<Select.Label>Shade</Select.Label>
-									{#if rightChoice}
-										{#each rightChoice as option (option.shade)}
-											<Select.Item value={option.shade.toString()} class="capitalize">
-												{version.current === "V0"
-													? option.name.replace(rightColor.current + "-", "")
-													: option.shade}
-											</Select.Item>
-										{/each}
-									{/if}
-								</Select.Group>
-							</Select.Content>
-						</Select.Root>
+						<ShadePicker id="rightShade" options={rightChoice} selected={rightShade} size="sm" />
 					</div>
 				</div>
 			</div>

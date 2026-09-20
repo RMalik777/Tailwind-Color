@@ -17,6 +17,9 @@
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import Toolbar from "$lib/components/toolbar.svelte";
 
+	import ColorPicker from "$lib/components/custom/color-picker.svelte";
+	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import BadgeCheck from "@lucide/svelte/icons/badge-check";
 	import BadgeX from "@lucide/svelte/icons/badge-x";
@@ -29,15 +32,15 @@
 	import { versionOptions } from "$lib/const/option";
 	import { ColorHistory } from "$lib/functions/color-history.svelte";
 	import { contrastValue, hexToLinearRgb, relativeLuminance } from "$lib/functions/contrast";
-	import { findFamily, findShade, resolveShade } from "$lib/functions/color";
-	import type { ColorShade, Version } from "$lib/types/color";
+	import { findFamily, findShade } from "$lib/functions/color";
+	import type { ColorFamily, ColorShade, Version } from "$lib/types/color";
 
 	type Side = {
 		id: string;
 		label: string;
 		color: PersistedState<string>;
 		shade: PersistedState<string>;
-		choices: ColorShade[] | undefined;
+		family: ColorFamily | undefined;
 		selected: ColorShade | undefined;
 		history: ColorHistory;
 	};
@@ -67,14 +70,14 @@
 
 	const bgColor = new PersistedState("bgColor", "white");
 	const bgShade = new PersistedState("bgShade", "0");
-	const bgChoice = $derived(findFamily(color, bgColor.current)?.range);
-	const bgSelectedColor = $derived(findShade(bgChoice, bgShade.current));
+	const bgChoice = $derived(findFamily(color, bgColor.current));
+	const bgSelectedColor = $derived(findShade(bgChoice?.range, bgShade.current));
 	const bgHistory = new ColorHistory();
 
 	const textColor = new PersistedState("textColor", "black");
 	const textShade = new PersistedState("textShade", "0");
-	const textChoice = $derived(findFamily(color, textColor.current)?.range);
-	const textSelectedColor = $derived(findShade(textChoice, textShade.current));
+	const textChoice = $derived(findFamily(color, textColor.current));
+	const textSelectedColor = $derived(findShade(textChoice?.range, textShade.current));
 	const textHistory = new ColorHistory();
 
 	const contrastRatio = $derived.by(() => {
@@ -123,11 +126,6 @@
 		untrack(() => textHistory.push({ ...entry, name: selected.name, css: selected.oklch.long }));
 	});
 
-	function selectColor(side: Side, value: string) {
-		side.color.current = value;
-		side.shade.current = resolveShade(findFamily(color, value)?.range, side.shade.current);
-	}
-
 	function swap() {
 		const swapColor = bgColor.current;
 		const swapShade = bgShade.current;
@@ -166,59 +164,11 @@
 		<div class="grid grid-cols-2 gap-2">
 			<div class="space-y-1">
 				<Label for="{side.id}Color">Color</Label>
-				<Select.Root
-					type="single"
-					value={side.color.current}
-					onValueChange={(value) => selectColor(side, value)}
-				>
-					<Select.Trigger id="{side.id}Color" class="w-full capitalize" placeholder="Select Color">
-						{color.find((option) => option.color === side.color.current)?.color ?? "Select Color"}
-					</Select.Trigger>
-					<Select.Content preventScroll>
-						<Select.Group>
-							<Select.Label>Color</Select.Label>
-							{#each color as option (option.color)}
-								<Select.Item value={option.color} class="capitalize">
-									<span
-										class="size-3.5 shrink-0 rounded-xs ring-1 ring-border ring-inset"
-										style="background-color: {option.range.at(Math.floor(option.range.length / 2))
-											?.oklch.long};"
-									></span>
-									{option.color}
-								</Select.Item>
-							{/each}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
+				<ColorPicker id="{side.id}Color" options={color} selected={side.color} />
 			</div>
 			<div class="space-y-1">
 				<Label for="{side.id}Shade">Shade</Label>
-				<Select.Root
-					type="single"
-					value={side.shade.current}
-					onValueChange={(value) => (side.shade.current = value)}
-					disabled={!side.choices || side.choices.length < 2}
-				>
-					<Select.Trigger id="{side.id}Shade" class="w-full capitalize" placeholder="Select Shade">
-						{side.choices
-							?.find((option) => option.shade.toString() === side.shade.current)
-							?.name.replace(side.color.current + "-", "") ?? "Select Shade"}
-					</Select.Trigger>
-					<Select.Content preventScroll={false}>
-						<Select.Group>
-							<Select.Label>Shade</Select.Label>
-							{#each side.choices ?? [] as option (option.shade)}
-								<Select.Item value={option.shade.toString()} class="capitalize">
-									<span
-										class="size-3.5 shrink-0 rounded-xs ring-1 ring-border ring-inset"
-										style="background-color: {option.oklch.long};"
-									></span>
-									{option.name.replace(side.color.current + "-", "")}
-								</Select.Item>
-							{/each}
-						</Select.Group>
-					</Select.Content>
-				</Select.Root>
+				<ShadePicker id="{side.id}Shade" options={side.family} selected={side.shade} />
 			</div>
 		</div>
 
@@ -289,7 +239,7 @@
 				label: "Background",
 				color: bgColor,
 				shade: bgShade,
-				choices: bgChoice,
+				family: bgChoice,
 				selected: bgSelectedColor,
 				history: bgHistory,
 			})}
@@ -311,7 +261,7 @@
 				label: "Text",
 				color: textColor,
 				shade: textShade,
-				choices: textChoice,
+				family: textChoice,
 				selected: textSelectedColor,
 				history: textHistory,
 			})}

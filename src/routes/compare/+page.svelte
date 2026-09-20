@@ -4,6 +4,9 @@
 	import { Button } from "$lib/components/ui/button/index.js";
 	import Toolbar from "$lib/components/toolbar.svelte";
 
+	import ColorPicker from "$lib/components/custom/color-picker.svelte";
+	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+
 	import { PersistedState } from "runed";
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 
@@ -12,19 +15,19 @@
 	import { findFamily, findShade } from "$lib/functions/color";
 	import type { Version } from "$lib/types/color";
 
-	const leftVersion = new PersistedState<Version>("leftVersion", "V4");
+	const leftVersion = new PersistedState<Version>("leftVersion", "V3");
 	const leftColorOptions = $derived(getColorsByVersion(leftVersion.current));
 	const leftColor = new PersistedState("leftColor", "red");
-	const leftChoice = $derived(findFamily(leftColorOptions, leftColor.current)?.range);
+	const leftChoice = $derived(findFamily(leftColorOptions, leftColor.current));
 	const leftShade = new PersistedState("leftShade", "500");
-	const leftSelectedColor = $derived(findShade(leftChoice, leftShade.current));
+	const leftSelectedColor = $derived(findShade(leftChoice?.range, leftShade.current));
 
 	const rightVersion = new PersistedState<Version>("rightVersion", "V4");
 	const rightColorOptions = $derived(getColorsByVersion(rightVersion.current));
 	const rightColor = new PersistedState("rightColor", "red");
-	const rightChoice = $derived(findFamily(rightColorOptions, rightColor.current)?.range);
+	const rightChoice = $derived(findFamily(rightColorOptions, rightColor.current));
 	const rightShade = new PersistedState("rightShade", "500");
-	const rightSelectedColor = $derived(findShade(rightChoice, rightShade.current));
+	const rightSelectedColor = $derived(findShade(rightChoice?.range, rightShade.current));
 </script>
 
 <svelte:head>
@@ -55,54 +58,11 @@
 				</div>
 				<div class="space-y-1">
 					<Label for="leftColor">Color</Label>
-					<Select.Root type="single" bind:value={leftColor.current}>
-						<Select.Trigger
-							id="leftColor"
-							class="w-full capitalize"
-							placeholder="Select Color"
-							size="sm"
-						>
-							{leftColorOptions.find((option) => option.color === leftColor.current)?.color ??
-								"Select Color"}
-						</Select.Trigger>
-						<Select.Content preventScroll={false}>
-							<Select.Group>
-								<Select.Label>Color</Select.Label>
-								{#each leftColorOptions as option (option.color)}
-									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
-								{/each}
-							</Select.Group>
-						</Select.Content>
-					</Select.Root>
+					<ColorPicker id="leftColor" options={leftColorOptions} selected={leftColor} size="sm" />
 				</div>
 				<div class="space-y-1">
 					<Label for="leftShade">Shade</Label>
-					<Select.Root type="single" bind:value={leftShade.current}>
-						<Select.Trigger
-							id="leftShade"
-							class="w-full capitalize"
-							placeholder="Select Shade"
-							size="sm"
-						>
-							{leftChoice
-								?.find((option) => option.shade.toString() === leftShade.current)
-								?.name.replace(leftColor.current + "-", "") ?? "Select Shade"}
-						</Select.Trigger>
-						<Select.Content preventScroll={false}>
-							<Select.Group>
-								<Select.Label>Shade</Select.Label>
-								{#if leftChoice}
-									{#each leftChoice as option (option.shade)}
-										<Select.Item value={option.shade.toString()} class="capitalize">
-											{leftVersion.current === "V0"
-												? option.name.replace(leftColor.current + "-", "")
-												: option.shade}
-										</Select.Item>
-									{/each}
-								{/if}
-							</Select.Group>
-						</Select.Content>
-					</Select.Root>
+					<ShadePicker id="leftShade" options={leftChoice} selected={leftShade} size="sm" />
 				</div>
 			</div>
 			<Button
@@ -148,54 +108,16 @@
 				</div>
 				<div class="space-y-1">
 					<Label for="rightColor">Color</Label>
-					<Select.Root type="single" bind:value={rightColor.current}>
-						<Select.Trigger
-							id="rightColor"
-							class="w-full capitalize"
-							placeholder="Select Color"
-							size="sm"
-						>
-							{rightColorOptions.find((option) => option.color === rightColor.current)?.color ??
-								"Select Color"}
-						</Select.Trigger>
-						<Select.Content preventScroll={false}>
-							<Select.Group>
-								<Select.Label>Color</Select.Label>
-								{#each rightColorOptions as option (option.color)}
-									<Select.Item value={option.color} class="capitalize">{option.color}</Select.Item>
-								{/each}
-							</Select.Group>
-						</Select.Content>
-					</Select.Root>
+					<ColorPicker
+						id="rightColor"
+						options={rightColorOptions}
+						selected={rightColor}
+						size="sm"
+					/>
 				</div>
 				<div class="space-y-1">
 					<Label for="rightShade">Shade</Label>
-					<Select.Root type="single" bind:value={rightShade.current}>
-						<Select.Trigger
-							id="rightShade"
-							class="w-full capitalize"
-							placeholder="Select Shade"
-							size="sm"
-						>
-							{rightChoice
-								?.find((option) => option.shade.toString() === rightShade.current)
-								?.name.replace(rightColor.current + "-", "") ?? "Select Shade"}
-						</Select.Trigger>
-						<Select.Content preventScroll={false}>
-							<Select.Group>
-								<Select.Label>Shade</Select.Label>
-								{#if rightChoice}
-									{#each rightChoice as option (option.shade)}
-										<Select.Item value={option.shade.toString()} class="capitalize">
-											{rightVersion.current === "V0"
-												? option.name.replace(rightColor.current + "-", "")
-												: option.shade}
-										</Select.Item>
-									{/each}
-								{/if}
-							</Select.Group>
-						</Select.Content>
-					</Select.Root>
+					<ShadePicker id="rightShade" options={rightChoice} selected={rightShade} size="sm" />
 				</div>
 			</div>
 		</div>
