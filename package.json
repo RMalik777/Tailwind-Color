@@ -35,7 +35,7 @@
 		"cn": "^0.3.0",
 		"colorparsley": "^0.1.8",
 		"culori": "^4.0.2",
-		"eslint": "^10.10.0",
+		"eslint": "^10.11.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.23.0",
 		"globals": "^17.12.0",
@@ -46,7 +46,7 @@
 		"runed": "^0.37.1",
 		"shadcn-svelte": "^1.7.0",
 		"simple-icons": "^16.31.0",
-		"svelte": "^5.57.0",
+		"svelte": "^5.57.1",
 		"svelte-check": "^4.7.6",
 		"svelte-sonner": "^1.2.1",
 		"tailwind-merge": "^3.7.0",
@@ -61,5 +61,5 @@
 	"dependencies": {
 		"onedollarstats": "^0.0.23"
 	},
-	"packageManager": "pnpm@11.24.0"
+	"packageManager": "pnpm@12.5.1"
 }
