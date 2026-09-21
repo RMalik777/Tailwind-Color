@@ -13,7 +13,7 @@
 	import { getColorsByVersion } from "$lib/data/color";
 	import { versionOptions } from "$lib/const/option";
 	import { findFamily, findShade } from "$lib/functions/color";
-	import type { Version } from "$lib/types/color";
+	import type { ColorShade, Version } from "$lib/types/color";
 
 	const leftVersion = new PersistedState<Version>("leftVersion", "V3");
 	const leftColorOptions = $derived(getColorsByVersion(leftVersion.current));
@@ -30,12 +30,25 @@
 	const rightSelectedColor = $derived(findShade(rightChoice?.range, rightShade.current));
 </script>
 
+{#snippet half(shade: ColorShade | undefined, version: Version)}
+	<div
+		class="flex w-full items-end p-2 transition duration-200 ease-out"
+		style="background-color: {version === 'V4' ? shade?.oklch.long : shade?.hex.long}"
+	>
+		<span
+			class="rounded-sm border border-border bg-background/90 px-1.5 py-0.5 font-mono text-[11px] font-medium text-foreground backdrop-blur-sm"
+		>
+			{shade?.name ?? "—"} · {version}
+		</span>
+	</div>
+{/snippet}
+
 <svelte:head>
 	<title>Compare | Tailwind CSS Color</title>
 	<meta name="description" content="Compare Tailwind CSS colors across different versions" />
 </svelte:head>
 
-<section class="flex w-full grow flex-col justify-between gap-2 pb-2">
+<section class="flex w-full grow flex-col justify-between gap-2 pb-(--toolbar-space) md:pb-2">
 	<Toolbar className="flex-col items-stretch">
 		<h1
 			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
@@ -87,6 +100,7 @@
 				}}
 			>
 				<ArrowLeftRight class="w-fit min-w-fit" />
+				<span class="sr-only">Swap left and right colors</span>
 			</Button>
 			<div class="grid w-full grid-cols-1 items-end gap-2 sm:grid-cols-3 md:gap-4">
 				<div class="space-y-1">
@@ -129,20 +143,9 @@
 	</Toolbar>
 
 	<div
-		class="flex grow flex-row items-center overflow-hidden rounded-lg border border-border transition-name-[color-preview]"
+		class="flex min-h-48 grow flex-row overflow-hidden rounded-lg border border-border transition-name-[color-preview]"
 	>
-		<div
-			class="h-svh w-full rounded-l-lg transition duration-200 ease-linear sm:h-full"
-			style="background-color: {leftVersion.current === 'V4'
-				? leftSelectedColor?.oklch.long
-				: leftSelectedColor?.hex.long}"
-		></div>
-
-		<div
-			class="h-svh w-full rounded-r-lg transition duration-200 ease-linear sm:h-full"
-			style="background-color: {rightVersion.current === 'V4'
-				? rightSelectedColor?.oklch.long
-				: rightSelectedColor?.hex.long}"
-		></div>
+		{@render half(leftSelectedColor, leftVersion.current)}
+		{@render half(rightSelectedColor, rightVersion.current)}
 	</div>
 </section>

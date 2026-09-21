@@ -20,19 +20,19 @@
 	<meta name="description" content="License information for the Tailwind CSS Color Gallery." />
 </svelte:head>
 
-<div class="flex flex-col">
-	<h1 class="py-20 text-4xl font-bold tracking-tight">License</h1>
+<div class="flex w-full max-w-2xl flex-col gap-8 pt-12 pb-4 sm:pt-16">
+	<h1 class="text-4xl font-bold tracking-tight">License</h1>
 
-	<section>
-		<h2 class="text-2xl font-bold">Third Party Code Used</h2>
-		<ul>
+	<section class="space-y-3">
+		<h2 class="text-xl font-semibold tracking-tight">Third Party Code Used</h2>
+		<ul class="space-y-1.5">
 			{#each license as item (item.url)}
 				<li>
 					<a
 						href={item.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-blue-500 hover:text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-500"
+						class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
 						>{item.name}</a
 					>
 				</li>

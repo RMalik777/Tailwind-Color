@@ -61,3 +61,14 @@ export function contrastValue(l1: number, l2: number): number {
 		return Number.parseFloat(((l2 + 0.05) / (l1 + 0.05)).toFixed(2));
 	}
 }
+
+/**
+ * Tells whether dark text reads better than white text on a color.
+ * 0.179 is the luminance where black and white text reach the same contrast ratio.
+ * @param color - Hex color string in the format #RRGGBB
+ * @returns True when black text has more contrast than white text
+ */
+export function isLightColor(color: string): boolean {
+	const { r, g, b } = hexToLinearRgb(color);
+	return relativeLuminance(r, g, b) > 0.179;
+}

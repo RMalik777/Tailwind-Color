@@ -11,6 +11,7 @@
 	import { toast } from "svelte-sonner";
 
 	import { getColorsByVersion } from "$lib/data/color";
+	import { isLightColor } from "$lib/functions/contrast";
 	import { colorOptions, versionOptions } from "$lib/const/option";
 	import type { ColorFormat, Version } from "$lib/types/color";
 
@@ -27,7 +28,7 @@
 	<meta name="description" content="See all Tailwind CSS colors in one place." />
 </svelte:head>
 
-<div class="flex w-full grow flex-col gap-1 pb-1">
+<div class="flex w-full grow flex-col gap-1 pb-(--toolbar-space) md:pb-1">
 	<Toolbar className="max-sm:grid max-sm:grid-cols-2 max-sm:gap-2">
 		<h1
 			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
@@ -51,7 +52,7 @@
 			</Select.Root>
 		</div>
 		<div class="flex flex-col gap-2 *:w-full sm:flex-row sm:items-center">
-			<Label for="view" class="transition-name-[view-label]">Color Format</Label>
+			<Label for="view" class="whitespace-nowrap transition-name-[view-label]">Color Format</Label>
 			<Select.Root type="single" bind:value={view.current}>
 				<Select.Trigger size="sm" id="view" class="grow transition-name-[view-select] ">
 					{colorOptions.find((option) => option.value === view.current)?.name}
@@ -102,7 +103,7 @@
 				<div class="relative h-6 w-full">
 					<p
 						title={uppercaseColor}
-						class="absolute top-0 right-0 w-full truncate text-center text-xs text-muted-foreground capitalize sm:text-sm"
+						class="absolute top-0 right-0 w-full truncate text-center text-xs text-muted-foreground capitalize"
 					>
 						{uppercaseColor}
 					</p>
@@ -129,7 +130,7 @@
 						>
 							<span
 								class="hidden text-xs font-semibold tracking-tight opacity-95 duration-150 ease-out group-hover:block group-focus-visible:block sm:text-sm starting:opacity-0
-                {shade.shade > 400 ? 'text-white' : 'text-black'}"
+                {isLightColor(shade.hex.long) ? 'text-black' : 'text-white'}"
 							>
 								{shade.name.replace(color.color + "-", "")}
 							</span>

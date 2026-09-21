@@ -13,6 +13,11 @@
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
 	let open = $state(false);
+	const current = $derived(
+		link.find((item) =>
+			item.url === "/" ? page.url.pathname === item.url : page.url.pathname.startsWith(item.url),
+		),
+	);
 </script>
 
 <svelte:window onresize={() => (open = false)} />
@@ -28,7 +33,7 @@
 	</Button>
 
 	<div
-		class="top-12.5 h-full gap-2 transition-all duration-300 ease-in-out max-sm:fixed max-sm:flex max-sm:flex-col max-sm:space-y-1 max-sm:overflow-hidden max-sm:rounded-b-md max-sm:border max-sm:bg-background max-sm:px-8 max-sm:py-4 sm:flex sm:gap-2 md:gap-4
+		class="top-12.5 gap-2 transition-all duration-300 ease-in-out max-sm:fixed max-sm:flex max-sm:flex-col max-sm:space-y-1 max-sm:overflow-hidden max-sm:rounded-b-md max-sm:border max-sm:bg-background max-sm:px-8 max-sm:py-4 max-sm:shadow-lg sm:flex sm:h-full sm:gap-2 md:gap-4
     {open ? 'right-0 max-sm:w-full' : '-right-full max-sm:invisible max-sm:w-fit'}"
 	>
 		{#each link as item (item.url)}
@@ -89,6 +94,12 @@
 			</DropdownMenu.Root>
 		</div>
 	</div>
+	<p class="flex min-w-0 gap-1.5 text-base font-semibold tracking-tight sm:hidden">
+		<span class="shrink-0">Tailwind Color</span>
+		{#if current && current.url !== "/"}
+			<span class="truncate text-muted-foreground">/ {current.name}</span>
+		{/if}
+	</p>
 	<div class="hidden items-center justify-end space-x-1 sm:flex">
 		<Button
 			variant="ghost"

@@ -40,9 +40,14 @@
 	<meta name="description" content="Compare and test gradient colors in Tailwind CSS" />
 </svelte:head>
 
-<section class="flex w-full grow flex-col justify-between gap-2 pb-2">
+<section class="flex w-full grow flex-col justify-between gap-2 pb-(--toolbar-space) md:pb-2">
 	<Toolbar>
 		<div class="control flex flex-col gap-4">
+			<h1
+				class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block"
+			>
+				Gradient
+			</h1>
 			<div class="flex flex-row items-end gap-4">
 				<div class="space-y-1">
 					<Label for="version" class="transition-name-[version-label]">Version</Label>
@@ -95,7 +100,7 @@
 						</Select.Content>
 					</Select.Root>
 				</div>
-				<div class="flex w-full max-w-sm flex-col gap-1">
+				<div class="space-y-1">
 					<Label for="degree">Degree</Label>
 					<Input
 						id="degree"
@@ -103,7 +108,7 @@
 						placeholder="90"
 						step="30"
 						bind:value={degree.current}
-						class="h-8 w-20 max-w-sm min-w-20 font-mono"
+						class="h-7 w-20 font-mono"
 						oninput={(e) => {
 							const value = parseInt(e.currentTarget.value);
 							if (!isNaN(value)) {
@@ -142,6 +147,7 @@
 					}}
 				>
 					<ArrowLeftRight class="w-fit min-w-fit" />
+					<span class="sr-only">Swap left and right colors</span>
 				</Button>
 				<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
 					<div class="w-full grow space-y-1">
@@ -156,18 +162,22 @@
 			</div>
 			<div class="space-y-1">
 				<Slider type="multiple" bind:value={value.current} max={100} step={1} />
-				<div
-					class="flex w-full items-center justify-between text-center font-mono text-sm text-muted-foreground"
-				>
-					<p class="w-full grow">{value.current[0]}%</p>
-					<p class="w-full grow">{value.current[1]}%</p>
+				<div class="relative h-5 font-mono text-sm text-muted-foreground">
+					{#each value.current as stop, i (i)}
+						<p
+							class="absolute top-0 -translate-x-1/2 tabular-nums"
+							style="left: clamp(1.25rem, {stop}%, calc(100% - 1.25rem));"
+						>
+							{stop}%
+						</p>
+					{/each}
 				</div>
 			</div>
 		</div>
 	</Toolbar>
 
 	<div
-		class="col-span-2 h-svh w-full rounded-sm transition duration-150 ease-linear transition-name-[color-preview] sm:h-full"
+		class="min-h-48 w-full grow rounded-lg transition duration-150 ease-linear transition-name-[color-preview]"
 		style="
     --tw-gradient-from: {leftSelectedColor?.oklch.long};
     --tw-gradient-to: {rightSelectedColor?.oklch.long};

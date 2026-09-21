@@ -153,7 +153,7 @@
 		</Card.Header>
 		<Card.Content class="space-y-4">
 			<div
-				class="flex h-16 items-end rounded-md border border-border p-2 transition duration-200 ease-out sm:h-20"
+				class="flex h-16 items-end rounded-md border border-foreground/15 p-2 transition duration-200 ease-out sm:h-20"
 				style="background-color: {side.selected?.hex.long ?? 'transparent'};"
 			>
 				<span
@@ -212,7 +212,7 @@
 {/snippet}
 
 <div class="flex w-full grow flex-col gap-3 pb-2">
-	<Toolbar className="max-sm:grid max-sm:grid-cols-2 max-sm:gap-2">
+	<Toolbar>
 		<h1
 			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
 		>
@@ -271,7 +271,7 @@
 	</div>
 
 	<Tabs.Root class="w-full gap-2" bind:value={contrastType.current}>
-		<Tabs.List class="w-full">
+		<Tabs.List class="w-full sm:max-w-xs">
 			<Tabs.Trigger value="wcag">WCAG 2</Tabs.Trigger>
 			<Tabs.Trigger value="apca">APCA</Tabs.Trigger>
 		</Tabs.List>
@@ -408,8 +408,8 @@
 							{#each font as { name, value } (name)}
 								{#if name !== 0}
 									<Table.Row>
-										<Table.Cell class="font-medium">{name}</Table.Cell>
-										<Table.Cell class="font-mono">
+										<Table.Cell class="py-1.5 font-medium">{name}</Table.Cell>
+										<Table.Cell class="py-1.5 font-mono">
 											{#if value === "999"}
 												<Badge variant="destructive" class="font-sans">
 													<EyeOff />Contrast too low
@@ -451,7 +451,7 @@
 		>
 			<div class="space-y-1">
 				<p class="text-xs font-medium tracking-widest uppercase opacity-60">24px · Heading</p>
-				<p class="text-2xl">
+				<p class="max-w-[70ch] text-2xl">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-normal">amet consectetur adipisicing elit.</span>
 					<span class="font-medium">In, mollitia vero? Laborum possimus sed suscipit vero.</span>
@@ -460,7 +460,7 @@
 			</div>
 			<div class="space-y-1">
 				<p class="text-xs font-medium tracking-widest uppercase opacity-60">16px · Body</p>
-				<p class="text-base">
+				<p class="max-w-[70ch] text-base">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-light">amet consectetur adipisicing elit.</span>
 					<span class="font-normal">In, mollitia vero? Laborum possimus sed</span>
@@ -471,7 +471,7 @@
 			</div>
 			<div class="space-y-1">
 				<p class="text-xs font-medium tracking-widest uppercase opacity-60">12px · Caption</p>
-				<p class="text-xs">
+				<p class="max-w-[70ch] text-xs">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-light">amet consectetur adipisicing elit.</span>
 					<span class="font-normal">In, mollitia vero? Laborum possimus sed</span>
@@ -491,7 +491,7 @@
 					href="https://git.apcacontrast.com/documentation/WhyAPCA"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-primary underline-offset-4 hover:underline"
+					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
 				>
 					Why APCA?
 				</a>
@@ -501,7 +501,7 @@
 					href="https://git.apcacontrast.com/documentation/APCAeasyIntro.html"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-primary underline-offset-4 hover:underline"
+					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
 				>
 					The Easy Intro to the APCA Contrast Method
 				</a>
@@ -511,7 +511,7 @@
 					href="https://git.myndex.com/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-primary underline-offset-4 hover:underline"
+					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
 				>
 					All Myndex Research content, including APCA
 				</a>
@@ -521,7 +521,7 @@
 					href="https://github.com/Myndex/SAPC-APCA/discussions"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-primary underline-offset-4 hover:underline"
+					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
 				>
 					SAPC-APCA discussions
 				</a>

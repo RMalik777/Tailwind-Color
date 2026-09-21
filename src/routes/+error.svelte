@@ -37,17 +37,17 @@
 			<ArrowLeft />
 			Back to Home
 		</Button>
+		{#if img}
+			<p class="text-sm text-muted-foreground">
+				Logo by: <a
+					href="https://github.com/SAWARATSUKI/KawaiiLogos"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="text-violet-600 underline underline-offset-4 dark:text-violet-400"
+				>
+					Sawaratsuki</a
+				>
+			</p>
+		{/if}
 	</div>
-	{#if img}
-		<p class="self-end text-sm text-muted-foreground">
-			Logo by: <a
-				href="https://github.com/SAWARATSUKI/KawaiiLogos"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="text-blue-400 underline transition duration-150 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-600"
-			>
-				Sawaratsuki</a
-			>
-		</p>
-	{/if}
 </div>

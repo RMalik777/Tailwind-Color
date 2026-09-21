@@ -8,6 +8,7 @@
 	import CopyButton from "$lib/components/custom/copy-button.svelte";
 
 	import { getColorsByVersion } from "$lib/data/color";
+	import { isLightColor } from "$lib/functions/contrast";
 	import { versionOptions, colorOptions } from "$lib/const/option";
 	import type { ColorFormat, Version } from "$lib/types/color";
 
@@ -35,7 +36,7 @@
 			Color Palette
 		</h1>
 		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
-			<Label for="version" class="transition-name-[version-label]">Tailwind CSS Version</Label>
+			<Label for="version" class="transition-name-[version-label]">Version</Label>
 			<Select.Root type="single" bind:value={version.current}>
 				<Select.Trigger
 					id="version"
@@ -91,7 +92,7 @@
 						class="group w-full overflow-hidden rounded-sm border border-border"
 					>
 						<div
-							class="aspect-square h-auto w-full transition-colors duration-150 ease-out"
+							class="flex aspect-square h-auto w-full items-start justify-end p-0.5 transition-colors duration-150 ease-out"
 							style="
               background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};
               view-transition-name: color-{color.color}-{shade.shade};"
@@ -99,16 +100,20 @@
 							<CopyButton
 								value={shade[viewAs]?.long ?? ""}
 								label={`${shade.name} in ${viewAs} value`}
-								class="float-right rounded-sm
-                {shade.shade > 300
-									? 'text-white hover:bg-neutral-50/20 hover:text-white focus-visible:bg-neutral-50/10'
-									: 'text-black hover:bg-neutral-950/10 hover:text-black focus-visible:bg-neutral-950/10'}"
+								class="rounded-sm pointer-fine:opacity-0 pointer-fine:group-focus-within:opacity-100 pointer-fine:group-hover:opacity-100
+                {isLightColor(shade.hex.long)
+									? 'text-black hover:bg-neutral-950/10 hover:text-black focus-visible:bg-neutral-950/10'
+									: 'text-white hover:bg-neutral-50/20 hover:text-white focus-visible:bg-neutral-50/10'}"
 							></CopyButton>
 						</div>
-						<section class="px-1 py-px font-mono text-sm tracking-tight md:text-xs lg:text-sm">
+						<section class="px-1.5 py-1 font-mono text-sm tracking-tight md:text-xs lg:text-sm">
 							<h3 class="hidden font-bold sm:block md:hidden lg:block">{shade.name}</h3>
 							<h3 class="block font-bold sm:hidden md:block lg:hidden">{shade.shade}</h3>
-							<p class="tracking-tighter">{shade[viewAs]?.short}</p>
+							<p class="tracking-tighter" title={shade[viewAs]?.long}>
+								{#each shade[viewAs]?.short.split(" ") ?? [] as part, i (i)}
+									<span class="block">{part}</span>
+								{/each}
+							</p>
 						</section>
 					</div>
 				{/each}
