@@ -7,126 +7,146 @@
 	import MenuIcon from "@lucide/svelte/icons/menu";
 	import MoonIcon from "@lucide/svelte/icons/moon";
 	import SunIcon from "@lucide/svelte/icons/sun";
+	import XIcon from "@lucide/svelte/icons/x";
 
 	import { link } from "$lib/const/nav";
 	import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 
 	let open = $state(false);
-	const current = $derived(
-		link.find((item) =>
-			item.url === "/" ? page.url.pathname === item.url : page.url.pathname.startsWith(item.url),
-		),
-	);
+	const isActive = (url: string) =>
+		url === "/" ? page.url.pathname === url : page.url.pathname.startsWith(url);
+	const current = $derived(link.find((item) => isActive(item.url)));
+
+	/** Violet ramp for the logo mark, light to dark. */
+	const mark = ["#c4b4ff", "#8e51ff", "#7008e7", "#4d179a"];
 </script>
 
-<svelte:window onresize={() => (open = false)} />
-<nav
-	class="fixed z-50 flex h-fit w-full flex-row-reverse items-center justify-between border-b px-4 py-2 shadow-xs sm:flex-row sm:px-6 lg:px-8 xl:px-10"
->
-	<div
-		class="absolute top-0 left-0 -z-1 h-full w-full bg-background sm:bg-background/90 sm:backdrop-blur-lg"
-	></div>
-	<Button variant="outline" size="icon" class="sm:hidden" onclick={() => (open = !open)}>
-		<MenuIcon class="size-5" />
-		<span class="sr-only">Toggle navigation</span>
-	</Button>
-
-	<div
-		class="top-12.5 gap-2 transition-all duration-300 ease-in-out max-sm:fixed max-sm:flex max-sm:flex-col max-sm:space-y-1 max-sm:overflow-hidden max-sm:rounded-b-md max-sm:border max-sm:bg-background max-sm:px-8 max-sm:py-4 max-sm:shadow-lg sm:flex sm:h-full sm:gap-2 md:gap-4
-    {open ? 'right-0 max-sm:w-full' : '-right-full max-sm:invisible max-sm:w-fit'}"
+{#snippet actions(close: boolean)}
+	<Button
+		variant="ghost"
+		size="icon"
+		class="[&_svg]:size-4 [&_svg]:fill-current"
+		href="https://github.com/RMalik777/Tailwind-Color"
+		target="_blank"
+		rel="noopener noreferrer"
+		aria-label="Source code on GitHub"
+		onclick={() => close && (open = false)}
 	>
-		{#each link as item (item.url)}
-			{@const isActive =
-				item.url === "/" ? page.url.pathname === item.url : page.url.pathname.startsWith(item.url)}
-			<a
-				href={resolve(item.url)}
-				onclick={() => (open = false)}
-				aria-current={isActive ? "page" : undefined}
-				class="relative overflow-hidden rounded-sm p-2 text-base font-semibold tracking-tight transition-all duration-200 ease-out after:absolute after:inset-0 after:h-full after:w-full after:rounded-sm after:transition-all after:duration-200 after:ease-out after:content-[''] hover:bg-violet-500/10 hover:text-violet-500 focus-visible:bg-violet-500/10 focus-visible:text-violet-500 aria-[current=page]:after:bg-linear-90 aria-[current=page]:after:from-violet-500/10 aria-[current=page]:after:to-purple-500/10 aria-[current=page]:after:text-violet-500 aria-[current=page]:after:transition-name-[indicator] max-sm:text-right sm:px-4 sm:py-1 sm:text-lg dark:hover:bg-violet-500/20 dark:hover:text-violet-400 aria-[current=page]:dark:after:bg-violet-500/20 aria-[current=page]:dark:after:text-violet-400"
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html siGithub.svg}
+	</Button>
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger class={buttonVariants({ variant: "ghost", size: "icon" })}>
+			<SunIcon class="size-4 scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90" />
+			<MoonIcon
+				class="absolute size-4 scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0"
+			/>
+			<span class="sr-only">Toggle theme</span>
+		</DropdownMenu.Trigger>
+		<DropdownMenu.Content align="end">
+			<DropdownMenu.Item
+				onclick={() => {
+					setMode("light");
+					if (close) open = false;
+				}}>Light</DropdownMenu.Item
 			>
-				{item.name}
-			</a>
-		{/each}
-		<div class="mt-2 flex items-center justify-end gap-2 border-t pt-4 sm:hidden">
-			<Button
-				variant="ghost"
-				size="icon"
-				class="dark:fill-white"
-				href="https://github.com/RMalik777/Tailwind-Color"
-				target="_blank"
-				rel="noopener noreferrer"
-				onclick={() => (open = false)}
+			<DropdownMenu.Item
+				onclick={() => {
+					setMode("dark");
+					if (close) open = false;
+				}}>Dark</DropdownMenu.Item
 			>
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html siGithub.svg}
-			</Button>
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger class={buttonVariants({ variant: "outline", size: "icon" })}>
-					<SunIcon
-						class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90"
-					/>
-					<MoonIcon
-						class="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0"
-					/>
-					<span class="sr-only">Toggle theme</span>
-				</DropdownMenu.Trigger>
-				<DropdownMenu.Content align="end">
-					<DropdownMenu.Item
-						onclick={() => {
-							setMode("light");
-							open = false;
-						}}>Light</DropdownMenu.Item
-					>
-					<DropdownMenu.Item
-						onclick={() => {
-							setMode("dark");
-							open = false;
-						}}>Dark</DropdownMenu.Item
-					>
-					<DropdownMenu.Item
-						onclick={() => {
-							resetMode();
-							open = false;
-						}}>System</DropdownMenu.Item
-					>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
-		</div>
-	</div>
-	<p class="flex min-w-0 gap-1.5 text-base font-semibold tracking-tight sm:hidden">
-		<span class="shrink-0">Tailwind Color</span>
+			<DropdownMenu.Item
+				onclick={() => {
+					resetMode();
+					if (close) open = false;
+				}}>System</DropdownMenu.Item
+			>
+		</DropdownMenu.Content>
+	</DropdownMenu.Root>
+{/snippet}
+
+<svelte:window onresize={() => (open = false)} />
+<header class="fixed inset-x-0 top-0 z-50 border-b bg-background">
+	<nav class="flex h-14 items-center gap-6 px-4 sm:px-6 lg:px-8">
+		<a
+			href={resolve("/")}
+			class="flex min-w-0 shrink-0 items-center gap-2.5 rounded-md font-semibold tracking-tight"
+		>
+			<span
+				class="grid size-5 shrink-0 grid-cols-2 overflow-hidden rounded-[5px]"
+				aria-hidden="true"
+			>
+				{#each mark as color (color)}
+					<span style="background-color: {color}"></span>
+				{/each}
+			</span>
+			<span>Tailwind Color</span>
+		</a>
 		{#if current && current.url !== "/"}
-			<span class="truncate text-muted-foreground">/ {current.name}</span>
+			<span class="-ml-3 truncate text-muted-foreground sm:hidden">/ {current.name}</span>
 		{/if}
-	</p>
-	<div class="hidden items-center justify-end space-x-1 sm:flex">
+
+		<ul class="hidden h-full items-stretch gap-1 sm:flex">
+			{#each link as item (item.url)}
+				<li class="flex">
+					<a
+						href={resolve(item.url)}
+						aria-current={isActive(item.url) ? "page" : undefined}
+						class="relative flex items-center px-3 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:text-foreground aria-[current=page]:font-medium aria-[current=page]:text-foreground aria-[current=page]:after:absolute aria-[current=page]:after:inset-x-3 aria-[current=page]:after:-bottom-px aria-[current=page]:after:h-0.5 aria-[current=page]:after:rounded-full aria-[current=page]:after:bg-primary"
+					>
+						{item.name}
+					</a>
+				</li>
+			{/each}
+		</ul>
+
+		<div class="ml-auto hidden items-center gap-1 sm:flex">
+			{@render actions(false)}
+		</div>
 		<Button
 			variant="ghost"
 			size="icon"
-			class="dark:fill-white"
-			href="https://github.com/RMalik777/Tailwind-Color"
-			target="_blank"
-			rel="noopener noreferrer"
+			class="ml-auto sm:hidden"
+			aria-expanded={open}
+			onclick={() => (open = !open)}
 		>
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			{@html siGithub.svg}
+			{#if open}
+				<XIcon class="size-5" />
+			{:else}
+				<MenuIcon class="size-5" />
+			{/if}
+			<span class="sr-only">Toggle navigation</span>
 		</Button>
-		<DropdownMenu.Root>
-			<DropdownMenu.Trigger class={buttonVariants({ variant: "outline", size: "icon" })}>
-				<SunIcon
-					class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90"
-				/>
-				<MoonIcon
-					class="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0"
-				/>
-				<span class="sr-only">Toggle theme</span>
-			</DropdownMenu.Trigger>
-			<DropdownMenu.Content align="end">
-				<DropdownMenu.Item onclick={() => setMode("light")}>Light</DropdownMenu.Item>
-				<DropdownMenu.Item onclick={() => setMode("dark")}>Dark</DropdownMenu.Item>
-				<DropdownMenu.Item onclick={() => resetMode()}>System</DropdownMenu.Item>
-			</DropdownMenu.Content>
-		</DropdownMenu.Root>
+	</nav>
+
+	<div
+		class="grid transition-[grid-template-rows] duration-300 ease-out sm:hidden {open
+			? 'grid-rows-[1fr]'
+			: 'invisible grid-rows-[0fr]'}"
+	>
+		<div class="overflow-hidden">
+			<ul class="flex flex-col border-t px-2 py-2">
+				{#each link as item (item.url)}
+					<li>
+						<a
+							href={resolve(item.url)}
+							onclick={() => (open = false)}
+							aria-current={isActive(item.url) ? "page" : undefined}
+							class="flex items-center justify-between rounded-md px-2 py-2.5 text-base text-muted-foreground hover:bg-muted hover:text-foreground aria-[current=page]:font-medium aria-[current=page]:text-foreground"
+						>
+							{item.name}
+							{#if isActive(item.url)}
+								<span class="size-1.5 rounded-full bg-primary"></span>
+							{/if}
+						</a>
+					</li>
+				{/each}
+			</ul>
+			<div class="flex items-center justify-end gap-1 border-t px-2 py-2">
+				{@render actions(true)}
+			</div>
+		</div>
 	</div>
-</nav>
+</header>

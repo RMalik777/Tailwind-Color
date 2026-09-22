@@ -48,7 +48,7 @@
 
 <ModeWatcher />
 <Nav />
-<main class="flex min-h-svh px-2 pt-14 sm:px-4 md:px-6 lg:px-8 xl:px-10">
+<main class="flex min-h-svh px-4 pt-14 sm:px-6 lg:px-8">
 	<Tooltip.Provider delayDuration={150} skipDelayDuration={200} disableHoverableContent>
 		{@render children?.()}
 	</Tooltip.Provider>

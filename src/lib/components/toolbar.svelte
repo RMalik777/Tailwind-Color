@@ -28,8 +28,9 @@
 <div
 	bind:offsetHeight={height}
 	class={cn(
-		scroll.y > 50 ? "md:shadow-xs" : "md:border-transparent md:p-0 md:pt-2 md:shadow-none",
-		"fixed inset-x-4 bottom-4 z-10 flex items-center justify-start gap-2 rounded-lg border bg-background p-2 shadow-lg transition-all duration-200 transition-name-[toolbar] *:grow md:sticky md:inset-x-auto md:top-14 md:bottom-auto md:w-full md:max-w-svw md:gap-4 md:bg-background/95 md:backdrop-blur-xl md:*:not-first:grow-0",
+		scroll.y > 8 ? "md:border-border" : "md:border-transparent",
+		"fixed inset-x-3 bottom-3 z-10 flex items-center gap-2 rounded-xl border bg-background p-2 shadow-lg transition-[border-color] duration-200 *:grow",
+		"md:sticky md:inset-x-auto md:top-14 md:bottom-auto md:-mx-6 md:gap-6 md:rounded-none md:border-x-0 md:border-t-0 md:px-6 md:py-3 md:shadow-none md:*:not-first:grow-0 lg:-mx-8 lg:px-8",
 		className,
 	)}
 >

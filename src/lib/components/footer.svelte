@@ -11,7 +11,7 @@
 			],
 		},
 		{
-			name: "Color Data Source",
+			name: "Color data source",
 			items: [
 				{
 					name: "Tailwind CSS 4",
@@ -41,7 +41,7 @@
 			],
 		},
 		{
-			name: "Other Works",
+			name: "Other works",
 			items: [
 				{
 					name: "Font Calculator",
@@ -54,42 +54,52 @@
 </script>
 
 <footer
-	class="mt-12 flex w-full flex-col border-t border-border pb-[calc(var(--toolbar-space,0px)+1.5rem)] tracking-tight md:pb-6"
+	class="mt-16 border-t px-4 pt-10 pb-[calc(var(--toolbar-space,0px)+1.5rem)] text-sm sm:px-6 md:pb-8 lg:px-8"
 >
-	<div
-		class="mx-2 flex flex-col items-start justify-start gap-6 pt-8 sm:mx-4 sm:flex-row sm:gap-10 md:mx-6 md:gap-12 lg:mx-8 lg:gap-16 xl:mx-10 xl:gap-20"
-	>
-		{#each section as item (item.name)}
-			<section class="flex flex-col gap-2">
-				<h2 class="text-lg font-semibold">{item.name}</h2>
-				<ul class="flex flex-col gap-1">
-					{#each item.items as subItem (subItem.url)}
-						<li>
-							<a
-								href={subItem.url}
-								target={subItem.blank ? "_blank" : ""}
-								rel={subItem.blank ? "noopener noreferrer" : ""}
-								class="text-muted-foreground transition-all duration-200 hover:text-violet-600 hover:underline focus-visible:text-violet-600 focus-visible:underline dark:hover:text-violet-400 dark:focus-visible:text-violet-400"
-								>{subItem.name}</a
-							>
-						</li>
-					{/each}
-				</ul>
-			</section>
-		{/each}
+	<div class="flex flex-col gap-8 md:flex-row md:justify-between">
+		<div class="space-y-1">
+			<p class="font-semibold tracking-tight">Tailwind Color</p>
+			<p class="max-w-xs text-muted-foreground">
+				Every Tailwind CSS color from v0 to v4, ready to compare and copy.
+			</p>
+		</div>
+		<div class="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-12">
+			{#each section as item (item.name)}
+				<section class="space-y-2.5">
+					<h2 class="font-medium">{item.name}</h2>
+					<ul class="space-y-1.5">
+						{#each item.items as subItem (subItem.url)}
+							<li>
+								<a
+									href={subItem.url}
+									target={subItem.blank ? "_blank" : ""}
+									rel={subItem.blank ? "noopener noreferrer" : ""}
+									class="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:text-foreground"
+									>{subItem.name}</a
+								>
+							</li>
+						{/each}
+					</ul>
+				</section>
+			{/each}
+		</div>
 	</div>
-	<a
-		href="http://raflimalik.com"
-		target="_blank"
-		rel="noopener noreferrer"
-		class="mt-10 self-center text-sm text-muted-foreground duration-150 hover:text-foreground hover:underline focus-visible:text-foreground focus-visible:underline"
+	<div
+		class="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t pt-6 text-muted-foreground"
 	>
-		&copy; {new Date().getFullYear()} Rafli Malik
-	</a>
-	<a
-		href="https://github.com/RMalik777/Tailwind-Color"
-		target="_blank"
-		class="self-center text-sm text-muted-foreground duration-150 hover:text-foreground hover:underline focus-visible:text-foreground focus-visible:underline"
-		>Source Code</a
-	>
+		<a
+			href="http://raflimalik.com"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="underline-offset-4 hover:text-foreground hover:underline focus-visible:text-foreground"
+		>
+			&copy; {new Date().getFullYear()} Rafli Malik
+		</a>
+		<a
+			href="https://github.com/RMalik777/Tailwind-Color"
+			target="_blank"
+			class="underline-offset-4 hover:text-foreground hover:underline focus-visible:text-foreground"
+			>Source code</a
+		>
+	</div>
 </footer>
