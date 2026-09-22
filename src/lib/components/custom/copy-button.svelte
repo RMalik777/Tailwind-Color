@@ -21,7 +21,7 @@
 	} & ButtonProps = $props();
 
 	let clicked = $state(false);
-	let timeoutRef = $state<number | null>(null);
+	let timeoutRef = $state<ReturnType<typeof setTimeout> | null>(null);
 
 	const iconClass = "absolute duration-150 ease-out";
 	const hiddenClass = "opacity-0 blur-xs";
