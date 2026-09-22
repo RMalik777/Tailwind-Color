@@ -10,17 +10,16 @@
 
 	import { Badge } from "$lib/components/ui/badge/index.js";
 	import { Button } from "$lib/components/ui/button/index.js";
+	import * as Card from "$lib/components/ui/card/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
-	import * as Select from "$lib/components/ui/select/index.js";
+	import { Progress } from "$lib/components/ui/progress/index.js";
 	import * as Table from "$lib/components/ui/table/index.js";
 	import * as Tabs from "$lib/components/ui/tabs/index.js";
 	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
-	import * as Card from "$lib/components/ui/card/index.js";
-
-	import Toolbar from "$lib/components/toolbar.svelte";
 
 	import ColorPicker from "$lib/components/custom/color-picker.svelte";
 	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+	import VersionSelect from "$lib/components/custom/version-select.svelte";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import BadgeCheck from "@lucide/svelte/icons/badge-check";
@@ -31,10 +30,9 @@
 	import Minus from "@lucide/svelte/icons/minus";
 
 	import { getColorsByVersion } from "$lib/data/color";
-	import { versionOptions } from "$lib/const/option";
+	import { findFamily, findShade } from "$lib/functions/color";
 	import { ColorHistory } from "$lib/functions/color-history.svelte";
 	import { contrastValue, hexToLinearRgb, relativeLuminance } from "$lib/functions/contrast";
-	import { findFamily, findShade } from "$lib/functions/color";
 	import type { ColorFamily, ColorShade, Version } from "$lib/types/color";
 
 	type Side = {
@@ -144,20 +142,18 @@
 </svelte:head>
 
 {#snippet colorPicker(side: Side)}
-	<Card.Root>
+	<Card.Root class="gap-4 shadow-none">
 		<Card.Header>
 			<Card.Title>{side.label}</Card.Title>
-			<Card.Description class="font-mono uppercase"
-				>{side.selected?.hex.long ?? "—"}</Card.Description
-			>
+			<Card.Description class="font-mono">{side.selected?.hex.long ?? "—"}</Card.Description>
 		</Card.Header>
 		<Card.Content class="space-y-4">
 			<div
-				class="flex h-16 items-end rounded-md border border-foreground/15 p-2 transition duration-200 ease-out sm:h-20"
+				class="flex h-20 items-end rounded-lg p-2 inset-ring inset-ring-black/10 transition duration-200 ease-out sm:h-24 dark:inset-ring-white/10"
 				style="background-color: {side.selected?.hex.long ?? 'transparent'};"
 			>
 				<span
-					class="rounded-sm border border-border bg-background/90 px-1.5 py-0.5 font-mono text-[11px] font-medium text-foreground capitalize backdrop-blur-sm"
+					class="rounded-sm border border-border bg-background/90 px-1.5 py-0.5 font-mono text-xs font-medium text-foreground capitalize backdrop-blur-sm"
 				>
 					{side.selected?.name ?? "No color selected"}
 				</span>
@@ -175,7 +171,7 @@
 		</Card.Content>
 		<Card.Footer>
 			<div class="space-y-1.5">
-				<p class="text-xs font-medium tracking-wide text-muted-foreground uppercase">Recent</p>
+				<p class="text-xs text-muted-foreground">Recent</p>
 				{#if side.history.items.length === 0}
 					<p class="text-xs text-muted-foreground">Colors you pick show up here.</p>
 				{:else}
@@ -191,7 +187,7 @@
 									<Tooltip.Trigger
 										aria-label="Use {item.name}"
 										aria-current={active}
-										class="block size-6 rounded-sm border-2 border-border transition duration-200 ease-out aria-current:border-foreground"
+										class="block size-6 rounded-md inset-ring inset-ring-black/10 ring-offset-2 ring-offset-card transition duration-200 ease-out aria-current:ring-2 aria-current:ring-foreground dark:inset-ring-white/10"
 										style="background-color: {item.css};"
 										onclick={() => {
 											side.color.current = item.color;
@@ -211,30 +207,19 @@
 	</Card.Root>
 {/snippet}
 
-<div class="flex w-full grow flex-col gap-3 pb-2">
-	<Toolbar>
-		<h1
-			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
-		>
-			Contrast
-		</h1>
-		<div class="flex flex-col gap-2 *:w-full sm:flex-row sm:items-center">
-			<Label for="version" class="transition-name-[version-label]">Version</Label>
-			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger size="sm" id="version" class="grow transition-name-[version-select]">
-					{versionOptions.find((option) => option.value === version.current)?.name}
-				</Select.Trigger>
-				<Select.Content preventScroll={false}>
-					<Select.Group>
-						<Select.Label>Version</Select.Label>
-						{#each versionOptions as option (option.value)}
-							<Select.Item value={option.value}>{option.name}</Select.Item>
-						{/each}
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
+<div class="flex w-full grow flex-col gap-6 pt-6 pb-6 md:pt-8">
+	<header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+		<div class="space-y-1">
+			<h1 class="text-2xl font-semibold tracking-tight">Contrast</h1>
+			<p class="text-sm text-muted-foreground">
+				Check whether text stays readable on a background, with WCAG 2 and APCA.
+			</p>
 		</div>
-	</Toolbar>
+		<div class="space-y-1.5 sm:w-40">
+			<Label for="version">Version</Label>
+			<VersionSelect id="version" selected={version} size="sm" />
+		</div>
+	</header>
 
 	<div class="grid items-stretch gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
 		{@render colorPicker({
@@ -278,7 +263,7 @@
 
 		<Tabs.Content value="wcag">
 			<div
-				class="grid gap-4 rounded-lg border p-4 sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] sm:items-center sm:gap-6"
+				class="grid gap-4 rounded-xl border p-4 sm:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] sm:items-center sm:gap-6 sm:p-6"
 			>
 				<div class="flex flex-col items-center gap-2 text-center">
 					<p
@@ -295,6 +280,7 @@
 							: wcagPassed === 0
 								? "destructive"
 								: "outline"}
+						class="tabular-nums"
 					>
 						{wcagPassed} of {wcagChecks.length} checks pass
 					</Badge>
@@ -314,10 +300,13 @@
 									<BadgeX class="size-5 shrink-0" />
 								{/if}
 								<div class="min-w-0">
-									<p class="text-sm leading-tight font-medium">{check.size} · {check.level}</p>
+									<p class="text-sm leading-tight font-medium">
+										{check.level}
+										{check.size.toLowerCase()}
+									</p>
 									<p class="font-mono text-xs opacity-70">needs {check.ratio} : 1</p>
 								</div>
-								<span class="ml-auto text-xs font-semibold tracking-wide uppercase">
+								<span class="ml-auto text-xs font-semibold">
 									{passed ? "Pass" : "Fail"}
 								</span>
 							</div>
@@ -331,7 +320,7 @@
 		</Tabs.Content>
 
 		<Tabs.Content value="apca">
-			<div class="grid gap-4 rounded-lg border p-4 sm:grid-cols-2 sm:gap-6">
+			<div class="grid gap-4 rounded-xl border p-4 sm:grid-cols-2 sm:gap-6 sm:p-6">
 				<div class="flex flex-col gap-4">
 					<div class="flex flex-col items-center gap-2 text-center">
 						<p
@@ -355,12 +344,12 @@
 					</div>
 
 					<div class="space-y-1">
-						<div class="relative h-2.5 w-full overflow-hidden rounded-full bg-muted">
-							<div
-								class="h-full rounded-full bg-foreground transition-all duration-300 ease-out"
-								style="width: {Math.min((absoluteLc / apcaScaleMax) * 100, 100)}%;"
-							></div>
-						</div>
+						<Progress
+							value={Math.min(absoluteLc, apcaScaleMax)}
+							max={apcaScaleMax}
+							aria-label="APCA contrast"
+							class="h-2.5 *:data-[slot=progress-indicator]:rounded-full *:data-[slot=progress-indicator]:bg-foreground *:data-[slot=progress-indicator]:duration-300 *:data-[slot=progress-indicator]:ease-out"
+						/>
 						<div class="flex justify-between font-mono text-[10px] text-muted-foreground">
 							<span>0</span><span>15</span><span>30</span><span>45</span><span>60</span><span
 								>75</span
@@ -381,8 +370,7 @@
 								{:else}
 									<Minus class="size-3.5 shrink-0" />
 								{/if}
-								<span class="w-14 shrink-0 font-mono tabular-nums">L<sup>c</sup> {level.value}</span
-								>
+								<span class="w-14 shrink-0 font-mono">L<sup>c</sup> {level.value}</span>
 								<span class="truncate">{level.name}</span>
 							</div>
 						{/each}
@@ -408,7 +396,7 @@
 							{#each font as { name, value } (name)}
 								{#if name !== 0}
 									<Table.Row>
-										<Table.Cell class="py-1.5 font-medium">{name}</Table.Cell>
+										<Table.Cell class="py-1.5 font-medium tabular-nums">{name}</Table.Cell>
 										<Table.Cell class="py-1.5 font-mono">
 											{#if value === "999"}
 												<Badge variant="destructive" class="font-sans">
@@ -434,8 +422,8 @@
 		</Tabs.Content>
 	</Tabs.Root>
 
-	<div class="overflow-hidden rounded-lg border">
-		<div class="flex flex-wrap items-center justify-between gap-2 border-b bg-muted/40 px-3 py-2">
+	<div class="overflow-hidden rounded-xl border">
+		<div class="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-2.5">
 			<p class="text-sm font-medium">Preview</p>
 			<p class="font-mono text-xs text-muted-foreground">
 				<span class="capitalize">{textSelectedColor?.name ?? "—"}</span>
@@ -450,7 +438,7 @@
 				?.hex.long ?? '#000000'};"
 		>
 			<div class="space-y-1">
-				<p class="text-xs font-medium tracking-widest uppercase opacity-60">24px · Heading</p>
+				<p class="text-xs font-medium opacity-60">Heading, 24px</p>
 				<p class="max-w-[70ch] text-2xl">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-normal">amet consectetur adipisicing elit.</span>
@@ -459,7 +447,7 @@
 				</p>
 			</div>
 			<div class="space-y-1">
-				<p class="text-xs font-medium tracking-widest uppercase opacity-60">16px · Body</p>
+				<p class="text-xs font-medium opacity-60">Body, 16px</p>
 				<p class="max-w-[70ch] text-base">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-light">amet consectetur adipisicing elit.</span>
@@ -470,7 +458,7 @@
 				</p>
 			</div>
 			<div class="space-y-1">
-				<p class="text-xs font-medium tracking-widest uppercase opacity-60">12px · Caption</p>
+				<p class="text-xs font-medium opacity-60">Caption, 12px</p>
 				<p class="max-w-[70ch] text-xs">
 					<span class="font-extralight">Lorem ipsum dolor sit</span>
 					<span class="font-light">amet consectetur adipisicing elit.</span>
@@ -491,7 +479,7 @@
 					href="https://git.apcacontrast.com/documentation/WhyAPCA"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
+					class="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:text-foreground"
 				>
 					Why APCA?
 				</a>
@@ -501,7 +489,7 @@
 					href="https://git.apcacontrast.com/documentation/APCAeasyIntro.html"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
+					class="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:text-foreground"
 				>
 					The Easy Intro to the APCA Contrast Method
 				</a>
@@ -511,7 +499,7 @@
 					href="https://git.myndex.com/"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
+					class="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:text-foreground"
 				>
 					All Myndex Research content, including APCA
 				</a>
@@ -521,7 +509,7 @@
 					href="https://github.com/Myndex/SAPC-APCA/discussions"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
+					class="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:text-foreground"
 				>
 					SAPC-APCA discussions
 				</a>
