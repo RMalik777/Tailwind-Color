@@ -149,7 +149,7 @@
 		</Card.Header>
 		<Card.Content class="space-y-4">
 			<div
-				class="flex h-20 items-end rounded-lg p-2 inset-ring inset-ring-black/10 transition duration-200 ease-out sm:h-24 dark:inset-ring-white/10"
+				class="flex h-20 items-end rounded-lg border border-ring p-2 transition duration-200 ease-out sm:h-24"
 				style="background-color: {side.selected?.hex.long ?? 'transparent'};"
 			>
 				<span
@@ -187,7 +187,7 @@
 									<Tooltip.Trigger
 										aria-label="Use {item.name}"
 										aria-current={active}
-										class="block size-6 rounded-md inset-ring inset-ring-black/10 ring-offset-2 ring-offset-card transition duration-200 ease-out aria-current:ring-2 aria-current:ring-foreground dark:inset-ring-white/10"
+										class="block size-6 rounded-md border border-ring ring-offset-2 ring-offset-card transition duration-200 ease-out aria-current:ring-2 aria-current:ring-foreground"
 										style="background-color: {item.css};"
 										onclick={() => {
 											side.color.current = item.color;

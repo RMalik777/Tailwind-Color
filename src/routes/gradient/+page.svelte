@@ -330,7 +330,7 @@
 				</Field.FieldGroup>
 
 				<div
-					class="min-h-56 w-full rounded-xl inset-ring inset-ring-black/10 transition duration-150 ease-linear md:min-h-96 dark:inset-ring-white/10"
+					class="min-h-56 w-full rounded-xl border border-ring bg-origin-border transition duration-150 ease-linear md:min-h-96"
 					style={gradientStyle(
 						leftSelectedColor,
 						rightSelectedColor,

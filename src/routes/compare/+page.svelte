@@ -120,7 +120,7 @@
 	</div>
 
 	<div
-		class="flex min-h-64 grow flex-row overflow-hidden rounded-xl inset-ring inset-ring-black/10 md:min-h-80 dark:inset-ring-white/10"
+		class="flex min-h-64 grow flex-row overflow-hidden rounded-xl border border-ring md:min-h-80"
 	>
 		{@render half(leftSelectedColor, leftVersion.current)}
 		{@render half(rightSelectedColor, rightVersion.current)}

@@ -53,7 +53,7 @@
 					{@const viewAs = view.current}
 					<li animate:flip={{ duration: 200, easing: cubicOut }} class="group min-w-0 md:flex-1">
 						<div
-							class="flex aspect-square w-full items-start justify-end rounded-md p-0.5 inset-ring inset-ring-black/10 transition-colors duration-150 ease-out xl:aspect-4/3 dark:inset-ring-white/10"
+							class="flex aspect-square w-full items-start justify-end rounded-md border border-ring p-0.5 transition-colors duration-150 ease-out xl:aspect-4/3"
 							style="
               background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};
               view-transition-name: color-{color.color}-{shade.shade};"
