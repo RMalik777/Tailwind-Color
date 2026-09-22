@@ -48,6 +48,29 @@ export type ColorSelection = {
 	shade: string;
 };
 
+/** One gradient on the compare view of the gradient page. */
+export type Gradient = {
+	id: number;
+	version: Version;
+	/** Family name of the start color, e.g. `red`. */
+	fromColor: string;
+	/** Shade of the start color as a string, e.g. `"500"`. */
+	fromShade: string;
+	/** Family name of the end color, e.g. `blue`. */
+	toColor: string;
+	/** Shade of the end color as a string, e.g. `"500"`. */
+	toShade: string;
+	/** Color space the gradient interpolates in, e.g. `oklab`. */
+	interpolation: string;
+	/** Angle in degrees. */
+	degree: number;
+	/** Start and end position in percent. */
+	stops: number[];
+};
+
+/** Setting of a gradient that can follow Gradient 1. `from` and `to` cover both the color and its shade. */
+export type GradientSyncKey = "version" | "from" | "to" | "interpolation" | "degree" | "stops";
+
 /** An entry of a select, `name` is the label and `value` is what gets stored. */
 export type Option<T extends string = string> = {
 	name: string;
