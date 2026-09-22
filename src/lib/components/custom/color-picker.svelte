@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { PersistedState } from "runed";
-
 	import * as Select from "$lib/components/ui/select/index";
 	import type { Palette } from "$lib/types/color";
 
@@ -9,11 +7,13 @@
 		selected,
 		id,
 		size = "default",
+		disabled = false,
 	}: {
 		options: Palette;
-		selected: PersistedState<string>;
+		selected: { current: string };
 		id?: string;
 		size?: "sm" | "default";
+		disabled?: boolean;
 	} = $props();
 
 	const selectedOption = $derived(options.find((option) => option.color === selected.current));
@@ -23,21 +23,19 @@
 	}
 </script>
 
-<Select.Root type="single" bind:value={selected.current}>
+<Select.Root type="single" bind:value={selected.current} {disabled}>
 	<Select.Trigger {id} {size} class="w-full capitalize" placeholder="Select Color">
-		{#if selectedOption}
-			<div class="flex items-center gap-2">
+		<div class="flex items-center gap-2">
+			{#if selected.current && selectedOption}
 				<span
 					class="size-3 shrink-0 rounded-xs border border-ring transition-colors ease-out"
 					style="background-color: {swatch(selectedOption.range)};"
 				></span>
-				{selectedOption.color}
-			</div>
-		{:else}
-			Select Color
-		{/if}
+			{/if}
+			<Select.Value placeholder="Select color" />
+		</div>
 	</Select.Trigger>
-	<Select.Content>
+	<Select.Content class="data-[state=closed]:pointer-events-none">
 		<Select.Group>
 			<Select.Label>Color</Select.Label>
 			{#each options as option (option.color)}

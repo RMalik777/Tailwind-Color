@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { untrack } from "svelte";
-	import type { PersistedState } from "runed";
 
 	import * as Select from "$lib/components/ui/select/index";
 	import { findShade, resolveShade } from "$lib/functions/color";
@@ -11,11 +10,13 @@
 		selected,
 		id,
 		size = "default",
+		disabled = false,
 	}: {
 		options: ColorFamily | undefined;
-		selected: PersistedState<string>;
+		selected: { current: string };
 		id?: string;
 		size?: "sm" | "default";
+		disabled?: boolean;
 	} = $props();
 
 	const range = $derived(options?.range ?? []);
@@ -48,26 +49,24 @@
 		select(value);
 		autoShade = undefined;
 	}}
-	disabled={range.length < 2}
+	disabled={disabled || range.length < 2}
 >
 	<Select.Trigger {id} {size} class="w-full capitalize" placeholder="Select Shade">
-		{#if selectedOption}
-			<div class="flex items-center gap-2">
+		<div class="flex items-center gap-2">
+			{#if selected.current && selectedOption}
 				<span
 					class="size-3 shrink-0 rounded-xs border border-ring transition-colors ease-out"
 					style="background-color: {selectedOption.oklch?.long};"
 				></span>
-				{selectedOption.name.replace(options?.color + "-", "")}
-			</div>
-		{:else}
-			Select Shade
-		{/if}
+			{/if}
+			<Select.Value class="tracking-tight tabular-nums" placeholder="Select a shade" />
+		</div>
 	</Select.Trigger>
 	<Select.Content>
 		<Select.Group>
 			<Select.Label>Shade</Select.Label>
 			{#each range as option (option.shade)}
-				<Select.Item value={option.shade.toString()} class="capitalize">
+				<Select.Item value={option.shade.toString()} class="tracking-tight capitalize tabular-nums">
 					<span
 						class="size-3 shrink-0 rounded-xs border border-ring"
 						style="background-color: {option.oklch.long};"
