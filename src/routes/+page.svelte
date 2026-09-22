@@ -3,13 +3,14 @@
 	import { cubicOut } from "svelte/easing";
 
 	import { Label } from "$lib/components/ui/label/index.js";
-	import * as Select from "$lib/components/ui/select/index.js";
 	import Toolbar from "$lib/components/toolbar.svelte";
 	import CopyButton from "$lib/components/custom/copy-button.svelte";
+	import OptionToggle from "$lib/components/custom/option-toggle.svelte";
+	import VersionSelect from "$lib/components/custom/version-select.svelte";
 
 	import { getColorsByVersion } from "$lib/data/color";
 	import { isLightColor } from "$lib/functions/contrast";
-	import { versionOptions, colorOptions } from "$lib/const/option";
+	import { colorOptions } from "$lib/const/option";
 	import type { ColorFormat, Version } from "$lib/types/color";
 
 	import { PersistedState } from "runed";
@@ -28,71 +29,31 @@
 	/>
 </svelte:head>
 
-<div class="flex w-full flex-col gap-4">
+<div class="flex w-full flex-col gap-8 pt-5 pb-4 md:pt-0">
 	<Toolbar>
-		<h1
-			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
-		>
-			Color Palette
-		</h1>
-		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
-			<Label for="version" class="transition-name-[version-label]">Version</Label>
-			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger
-					id="version"
-					class="grow bg-background transition-name-[version-select] max-md:w-full"
-				>
-					{versionOptions.find((option) => option.value === version.current)?.name}
-				</Select.Trigger>
-				<Select.Content preventScroll={false}>
-					<Select.Group>
-						<Select.Label>Version</Select.Label>
-						{#each versionOptions as option (option.value)}
-							<Select.Item value={option.value}>{option.name}</Select.Item>
-						{/each}
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
+		<h1 class="hidden text-lg font-semibold tracking-tight md:block md:grow">Color palette</h1>
+		<div class="flex items-center gap-2 max-md:grow-0">
+			<Label for="version" class="sr-only">Version</Label>
+			<VersionSelect id="version" selected={version} class="max-md:w-28" />
 		</div>
-		<div class="flex flex-col items-center gap-2 *:max-md:w-full sm:flex-row">
-			<Label for="view" class="transition-name-[view-label]">Color Format</Label>
-			<Select.Root type="single" bind:value={view.current}>
-				<Select.Trigger
-					id="view"
-					class="grow bg-background transition-name-[view-select] max-md:w-full"
-				>
-					{colorOptions.find((option) => option.value === view.current)?.name}
-				</Select.Trigger>
-				<Select.Content preventScroll={false}>
-					<Select.Group>
-						<Select.Label>Display</Select.Label>
-						{#each colorOptions as option (option.value)}
-							<Select.Item value={option.value}>{option.name}</Select.Item>
-						{/each}
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
-		</div>
+		<OptionToggle options={colorOptions} selected={view} label="Color format" />
 	</Toolbar>
 
 	{#each colors as color (color.color)}
 		<section
 			animate:flip={{ duration: 200, easing: cubicOut }}
 			id={color.color}
-			class="space-y-1 rounded-lg border border-border p-2"
+			class="grid scroll-mt-32 gap-2 lg:grid-cols-[6rem_minmax(0,1fr)] lg:gap-4"
 		>
-			<h2 class="text-xl font-semibold tracking-tight capitalize">
+			<h2 class="text-sm font-semibold capitalize lg:pt-1">
 				{color.color}
 			</h2>
-			<div class="grid grid-cols-3 gap-2 sm:grid-cols-4 md:flex md:flex-row">
+			<ol class="grid grid-cols-4 gap-x-1.5 gap-y-3 sm:grid-cols-6 sm:gap-x-2 md:flex md:gap-1.5">
 				{#each color.range as shade (shade.name)}
 					{@const viewAs = view.current}
-					<div
-						animate:flip={{ duration: 200, easing: cubicOut }}
-						class="group w-full overflow-hidden rounded-sm border border-border"
-					>
+					<li animate:flip={{ duration: 200, easing: cubicOut }} class="group min-w-0 md:flex-1">
 						<div
-							class="flex aspect-square h-auto w-full items-start justify-end p-0.5 transition-colors duration-150 ease-out"
+							class="flex aspect-square w-full items-start justify-end rounded-md p-0.5 inset-ring inset-ring-black/10 transition-colors duration-150 ease-out xl:aspect-4/3 dark:inset-ring-white/10"
 							style="
               background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};
               view-transition-name: color-{color.color}-{shade.shade};"
@@ -106,18 +67,22 @@
 									: 'text-white hover:bg-neutral-50/20 hover:text-white focus-visible:bg-neutral-50/10'}"
 							></CopyButton>
 						</div>
-						<section class="px-1.5 py-1 font-mono text-sm tracking-tight md:text-xs lg:text-sm">
-							<h3 class="hidden font-bold sm:block md:hidden lg:block">{shade.name}</h3>
-							<h3 class="block font-bold sm:hidden md:block lg:hidden">{shade.shade}</h3>
-							<p class="tracking-tighter" title={shade[viewAs]?.long}>
+						<div class="mt-1.5 px-0.5">
+							<h3 class="text-sm font-semibold tabular-nums">
+								{shade.name.replace(color.color + "-", "")}
+							</h3>
+							<p
+								class="font-mono text-xs leading-4 tracking-tight text-muted-foreground"
+								title={shade[viewAs]?.long}
+							>
 								{#each shade[viewAs]?.short.split(" ") ?? [] as part, i (i)}
-									<span class="block">{part}</span>
+									<span class="block truncate">{part}</span>
 								{/each}
 							</p>
-						</section>
-					</div>
+						</div>
+					</li>
 				{/each}
-			</div>
+			</ol>
 		</section>
 	{/each}
 </div>

@@ -2,17 +2,21 @@
 	import { flip } from "svelte/animate";
 	import { quintOut } from "svelte/easing";
 
-	import { Checkbox } from "$lib/components/ui/checkbox/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
-	import * as Select from "$lib/components/ui/select/index.js";
+	import { Toggle } from "$lib/components/ui/toggle/index.js";
 	import Toolbar from "$lib/components/toolbar.svelte";
+	import OptionToggle from "$lib/components/custom/option-toggle.svelte";
+	import VersionSelect from "$lib/components/custom/version-select.svelte";
+
+	import Grid2x2Icon from "@lucide/svelte/icons/grid-2x2";
+	import SquareIcon from "@lucide/svelte/icons/square";
 
 	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
 
 	import { getColorsByVersion } from "$lib/data/color";
 	import { isLightColor } from "$lib/functions/contrast";
-	import { colorOptions, versionOptions } from "$lib/const/option";
+	import { colorOptions } from "$lib/const/option";
 	import type { ColorFormat, Version } from "$lib/types/color";
 
 	const border = new PersistedState("border", false);
@@ -21,6 +25,9 @@
 	const view = new PersistedState<ColorFormat>("view", "oklch");
 
 	const colors = $derived(getColorsByVersion(version.current, true));
+
+	const toggleOn =
+		"data-[state=on]:border-primary/40 data-[state=on]:bg-primary/10 data-[state=on]:text-primary";
 </script>
 
 <svelte:head>
@@ -28,65 +35,25 @@
 	<meta name="description" content="See all Tailwind CSS colors in one place." />
 </svelte:head>
 
-<div class="flex w-full grow flex-col gap-1 pb-(--toolbar-space) md:pb-1">
-	<Toolbar className="max-sm:grid max-sm:grid-cols-2 max-sm:gap-2">
-		<h1
-			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
-		>
-			Gallery
-		</h1>
-		<div class="flex flex-col gap-2 *:w-full sm:flex-row sm:items-center">
-			<Label for="version" class="transition-name-[version-label]">Version</Label>
-			<Select.Root type="single" bind:value={version.current}>
-				<Select.Trigger size="sm" id="version" class="grow transition-name-[version-select]">
-					{versionOptions.find((option) => option.value === version.current)?.name}
-				</Select.Trigger>
-				<Select.Content preventScroll={false}>
-					<Select.Group>
-						<Select.Label>Version</Select.Label>
-						{#each versionOptions as option (option.value)}
-							<Select.Item value={option.value}>{option.name}</Select.Item>
-						{/each}
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
+<div class="flex w-full grow flex-col gap-3 pt-4 pb-(--toolbar-space) md:pt-0 md:pb-4">
+	<Toolbar className="max-md:flex-wrap">
+		<div class="hidden md:block md:grow">
+			<h1 class="text-lg font-semibold tracking-tight">Gallery</h1>
+			<p class="text-xs text-muted-foreground">Click a swatch to copy its value.</p>
 		</div>
-		<div class="flex flex-col gap-2 *:w-full sm:flex-row sm:items-center">
-			<Label for="view" class="whitespace-nowrap transition-name-[view-label]">Color Format</Label>
-			<Select.Root type="single" bind:value={view.current}>
-				<Select.Trigger size="sm" id="view" class="grow transition-name-[view-select] ">
-					{colorOptions.find((option) => option.value === view.current)?.name}
-				</Select.Trigger>
-				<Select.Content preventScroll={false}>
-					<Select.Group>
-						<Select.Label>Display</Select.Label>
-						{#each colorOptions as option (option.value)}
-							<Select.Item value={option.value}>{option.name}</Select.Item>
-						{/each}
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
+		<div class="flex items-center max-md:grow-0">
+			<Label for="version" class="sr-only">Version</Label>
+			<VersionSelect id="version" selected={version} class="max-md:w-28" />
 		</div>
-		<Label
-			class="flex h-8 items-center gap-2 rounded-md border p-2 hover:bg-accent/50 has-aria-checked:border-violet-600 has-aria-checked:bg-violet-50 dark:has-aria-checked:border-violet-900 dark:has-aria-checked:bg-violet-950"
-		>
-			<Checkbox
-				id="toggle-2"
-				bind:checked={border.current}
-				class="rounded-[3px] data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600 data-[state=checked]:text-white dark:data-[state=checked]:border-violet-700 dark:data-[state=checked]:bg-violet-700"
-			/>
-			<p class="text-sm leading-none font-medium">Border</p>
-		</Label>
-		<Label
-			class="flex h-8 items-center gap-2 rounded-md border p-2 hover:bg-accent/50 has-aria-checked:border-violet-600 has-aria-checked:bg-violet-50 dark:has-aria-checked:border-violet-900 dark:has-aria-checked:bg-violet-950"
-		>
-			<Checkbox
-				id="toggle-3"
-				bind:checked={gap.current}
-				class="rounded-[3px] data-[state=checked]:border-violet-600 data-[state=checked]:bg-violet-600 data-[state=checked]:text-white dark:data-[state=checked]:border-violet-700 dark:data-[state=checked]:bg-violet-700"
-			/>
-			<p class="text-sm leading-none font-medium">Gap</p>
-		</Label>
+		<OptionToggle options={colorOptions} selected={view} label="Color format" />
+		<div class="flex gap-2 max-md:basis-full">
+			<Toggle variant="outline" size="sm" bind:pressed={border.current} class="h-8 grow {toggleOn}">
+				<SquareIcon />Border
+			</Toggle>
+			<Toggle variant="outline" size="sm" bind:pressed={gap.current} class="h-8 grow {toggleOn}">
+				<Grid2x2Icon />Gap
+			</Toggle>
+		</div>
 	</Toolbar>
 
 	<div
@@ -103,7 +70,7 @@
 				<div class="relative h-6 w-full">
 					<p
 						title={uppercaseColor}
-						class="absolute top-0 right-0 w-full truncate text-center text-xs text-muted-foreground capitalize"
+						class="absolute top-0 right-0 w-full truncate text-center text-xs font-medium text-muted-foreground capitalize"
 					>
 						{uppercaseColor}
 					</p>
@@ -118,8 +85,8 @@
 						<button
 							animate:flip={{ duration: 200, delay: 200, easing: quintOut }}
 							class="group flex h-full w-full items-center justify-center transition-all duration-150 ease-out
-              {gap.current ? 'rounded-xs' : 'rounded-none'} 
-              {border.current ? 'border' : ''}"
+              {gap.current ? 'rounded-sm' : 'rounded-none'}
+              {border.current ? 'border border-ring' : ''}"
 							style="
                 background-color: {version.current === 'V4' ? shade.oklch.long : shade.hex.long};
                 view-transition-name: color-{color.color}-{shade.shade};"
@@ -140,5 +107,5 @@
 			</div>
 		{/each}
 	</div>
-	<p class="text-sm text-muted-foreground">Click to copy</p>
+	<p class="text-xs text-muted-foreground md:hidden">Tap a swatch to copy its value.</p>
 </div>

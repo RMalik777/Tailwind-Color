@@ -1,19 +1,18 @@
 <script lang="ts">
-	import { Label } from "$lib/components/ui/label/index.js";
-	import * as Select from "$lib/components/ui/select/index.js";
 	import { Button } from "$lib/components/ui/button/index.js";
-	import Toolbar from "$lib/components/toolbar.svelte";
+	import * as Field from "$lib/components/ui/field/index.js";
 
 	import ColorPicker from "$lib/components/custom/color-picker.svelte";
 	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+	import VersionSelect from "$lib/components/custom/version-select.svelte";
 
-	import { PersistedState } from "runed";
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
+	import { PersistedState } from "runed";
 
 	import { getColorsByVersion } from "$lib/data/color";
-	import { versionOptions } from "$lib/const/option";
 	import { findFamily, findShade } from "$lib/functions/color";
-	import type { ColorShade, Version } from "$lib/types/color";
+	import { isLightColor } from "$lib/functions/contrast";
+	import type { ColorFamily, ColorShade, Palette, Version } from "$lib/types/color";
 
 	const leftVersion = new PersistedState<Version>("leftVersion", "V3");
 	const leftColorOptions = $derived(getColorsByVersion(leftVersion.current));
@@ -32,15 +31,48 @@
 
 {#snippet half(shade: ColorShade | undefined, version: Version)}
 	<div
-		class="flex w-full items-end p-2 transition duration-200 ease-out"
+		class="flex min-w-0 flex-1 flex-col justify-end gap-0.5 p-3 transition duration-200 ease-out sm:p-4
+		{shade && isLightColor(shade.hex.long) ? 'text-black' : 'text-white'}"
 		style="background-color: {version === 'V4' ? shade?.oklch.long : shade?.hex.long}"
 	>
-		<span
-			class="rounded-sm border border-border bg-background/90 px-1.5 py-0.5 font-mono text-[11px] font-medium text-foreground backdrop-blur-sm"
-		>
-			{shade?.name ?? "—"} · {version}
-		</span>
+		{#if shade}
+			<p class="truncate text-sm font-semibold sm:text-base">
+				{shade.name}
+				<span class="font-normal opacity-70">in {version.replace("V", "v")}</span>
+			</p>
+			<p class="truncate font-mono text-xs opacity-80">{shade.hex.long}</p>
+			<p class="hidden truncate font-mono text-xs opacity-80 sm:block">{shade.oklch.long}</p>
+		{:else}
+			<p class="text-sm text-foreground">Pick a color</p>
+		{/if}
 	</div>
+{/snippet}
+
+{#snippet controls(
+	side: string,
+	version: PersistedState<Version>,
+	options: Palette,
+	color: PersistedState<string>,
+	family: ColorFamily | undefined,
+	shade: PersistedState<string>,
+)}
+	<Field.Set class="w-full">
+		<Field.Legend>{side === "left" ? "First" : "Second"} color</Field.Legend>
+		<Field.Group class="grid min-w-0 flex-1 gap-2 md:grid-cols-3 md:gap-3">
+			<Field.Field>
+				<Field.Label for="{side}Version">Version</Field.Label>
+				<VersionSelect id="{side}Version" selected={version} size="sm" />
+			</Field.Field>
+			<Field.Field>
+				<Field.Label for="{side}Color">Color</Field.Label>
+				<ColorPicker id="{side}Color" {options} selected={color} size="sm" />
+			</Field.Field>
+			<Field.Field>
+				<Field.Label for="{side}Shade">Shade</Field.Label>
+				<ShadePicker id="{side}Shade" options={family} selected={shade} size="sm" />
+			</Field.Field>
+		</Field.Group>
+	</Field.Set>
 {/snippet}
 
 <svelte:head>
@@ -48,102 +80,47 @@
 	<meta name="description" content="Compare Tailwind CSS colors across different versions" />
 </svelte:head>
 
-<section class="flex w-full grow flex-col justify-between gap-2 pb-(--toolbar-space) md:pb-2">
-	<Toolbar className="flex-col items-stretch">
-		<h1
-			class="hidden text-xl font-medium tracking-tight transition-name-[page-title] sm:pl-1 md:block md:grow"
+<section class="flex w-full grow flex-col gap-5 pt-6 pb-6 md:pt-8">
+	<header class="space-y-1">
+		<h1 class="text-2xl font-semibold tracking-tight">Compare</h1>
+		<p class="text-sm text-muted-foreground">
+			Put two shades side by side, from the same or different Tailwind versions.
+		</p>
+	</header>
+
+	<div class="flex items-start gap-3 md:items-end md:gap-6">
+		{@render controls("left", leftVersion, leftColorOptions, leftColor, leftChoice, leftShade)}
+		<Button
+			variant="outline"
+			size="icon"
+			class="mt-6 shrink-0 md:mt-0"
+			aria-label="Swap left and right colors"
+			onclick={() => {
+				const tempVer = leftVersion.current;
+				const tempColor = leftColor.current;
+				const tempShade = leftShade.current;
+				leftVersion.current = rightVersion.current;
+				leftColor.current = rightColor.current;
+				leftShade.current = rightShade.current;
+				rightVersion.current = tempVer;
+				rightColor.current = tempColor;
+				rightShade.current = tempShade;
+			}}
 		>
-			Compare
-		</h1>
-		<div class="control flex flex-row items-center gap-2 sm:items-end md:gap-4">
-			<div class="grid w-full grid-cols-1 items-end gap-2 sm:grid-cols-3 md:gap-4">
-				<div class="space-y-1">
-					<Label for="leftVersion">Version</Label>
-					<Select.Root type="single" bind:value={leftVersion.current}>
-						<Select.Trigger id="leftVersion" class="w-full" placeholder="Select Version" size="sm">
-							{versionOptions.find((option) => option.value === leftVersion.current)?.name ??
-								"Select Version"}
-						</Select.Trigger>
-						<Select.Content preventScroll={false}>
-							<Select.Group>
-								<Select.Label>Version</Select.Label>
-								{#each versionOptions as option (option.value)}
-									<Select.Item value={option.value}>{option.name}</Select.Item>
-								{/each}
-							</Select.Group>
-						</Select.Content>
-					</Select.Root>
-				</div>
-				<div class="space-y-1">
-					<Label for="leftColor">Color</Label>
-					<ColorPicker id="leftColor" options={leftColorOptions} selected={leftColor} size="sm" />
-				</div>
-				<div class="space-y-1">
-					<Label for="leftShade">Shade</Label>
-					<ShadePicker id="leftShade" options={leftChoice} selected={leftShade} size="sm" />
-				</div>
-			</div>
-			<Button
-				variant="outline"
-				size="icon"
-				class=""
-				onclick={() => {
-					const tempVer = leftVersion.current;
-					const tempColor = leftColor.current;
-					const tempShade = leftShade.current;
-					leftVersion.current = rightVersion.current;
-					leftColor.current = rightColor.current;
-					leftShade.current = rightShade.current;
-					rightVersion.current = tempVer;
-					rightColor.current = tempColor;
-					rightShade.current = tempShade;
-				}}
-			>
-				<ArrowLeftRight class="w-fit min-w-fit" />
-				<span class="sr-only">Swap left and right colors</span>
-			</Button>
-			<div class="grid w-full grid-cols-1 items-end gap-2 sm:grid-cols-3 md:gap-4">
-				<div class="space-y-1">
-					<Label for="rightVersion" class="transition-name-[version-label]">Version</Label>
-					<Select.Root type="single" bind:value={rightVersion.current}>
-						<Select.Trigger
-							id="rightVersion"
-							class="w-full transition-name-[version-select]"
-							placeholder="Select Version"
-							size="sm"
-						>
-							{versionOptions.find((option) => option.value === rightVersion.current)?.name ??
-								"Select Version"}
-						</Select.Trigger>
-						<Select.Content preventScroll={false}>
-							<Select.Group>
-								<Select.Label>Version</Select.Label>
-								{#each versionOptions as option (option.value)}
-									<Select.Item value={option.value}>{option.name}</Select.Item>
-								{/each}
-							</Select.Group>
-						</Select.Content>
-					</Select.Root>
-				</div>
-				<div class="space-y-1">
-					<Label for="rightColor">Color</Label>
-					<ColorPicker
-						id="rightColor"
-						options={rightColorOptions}
-						selected={rightColor}
-						size="sm"
-					/>
-				</div>
-				<div class="space-y-1">
-					<Label for="rightShade">Shade</Label>
-					<ShadePicker id="rightShade" options={rightChoice} selected={rightShade} size="sm" />
-				</div>
-			</div>
-		</div>
-	</Toolbar>
+			<ArrowLeftRight />
+		</Button>
+		{@render controls(
+			"right",
+			rightVersion,
+			rightColorOptions,
+			rightColor,
+			rightChoice,
+			rightShade,
+		)}
+	</div>
 
 	<div
-		class="flex min-h-48 grow flex-row overflow-hidden rounded-lg border border-border transition-name-[color-preview]"
+		class="flex min-h-64 grow flex-row overflow-hidden rounded-xl inset-ring inset-ring-black/10 md:min-h-80 dark:inset-ring-white/10"
 	>
 		{@render half(leftSelectedColor, leftVersion.current)}
 		{@render half(rightSelectedColor, rightVersion.current)}
