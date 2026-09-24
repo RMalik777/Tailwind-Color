@@ -1,6 +1,6 @@
 import { bench, describe } from "vitest";
 import { processColorFromHex, processColorFromOklch } from "../src/lib/functions/color";
-import { tailwindColors3, tailwindColors4 } from "../src/lib/data/color-tailwind";
+import { tailwindColors3, tailwindColors4 } from "../src/lib/data/raw-tailwind-color";
 
 describe("Color Processing Benchmarks", () => {
 	bench("processColorFromHex - single color", () => {
