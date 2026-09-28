@@ -19,6 +19,7 @@
 
 	import ColorPicker from "$lib/components/custom/color-picker.svelte";
 	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+	import ShareButton from "$lib/components/custom/share-button.svelte";
 	import VersionSelect from "$lib/components/custom/version-select.svelte";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
@@ -33,6 +34,7 @@
 	import { findFamily, findShade } from "$lib/functions/color";
 	import { ColorHistory } from "$lib/functions/color-history.svelte";
 	import { contrastValue, hexToLinearRgb, relativeLuminance } from "$lib/functions/contrast";
+	import { colorParam, parseColorParam, parseVersion, readSharedLink } from "$lib/functions/share";
 	import type { ColorFamily, ColorShade, Version } from "$lib/types/color";
 
 	type Side = {
@@ -79,6 +81,33 @@
 	const textChoice = $derived(findFamily(color, textColor.current));
 	const textSelectedColor = $derived(findShade(textChoice?.range, textShade.current));
 	const textHistory = new ColorHistory();
+
+	const shareParams = $derived(
+		new URLSearchParams({
+			version: version.current,
+			bg: colorParam(bgColor.current, bgShade.current),
+			text: colorParam(textColor.current, textShade.current),
+			method: contrastType.current,
+		}),
+	);
+
+	// A shared link overrides the saved settings.
+	readSharedLink("/contrast", (params) => {
+		const sharedVersion = parseVersion(params.get("version"));
+		if (sharedVersion) version.current = sharedVersion;
+		const sharedBg = parseColorParam(params.get("bg"));
+		if (sharedBg) {
+			bgColor.current = sharedBg.color;
+			bgShade.current = sharedBg.shade;
+		}
+		const sharedText = parseColorParam(params.get("text"));
+		if (sharedText) {
+			textColor.current = sharedText.color;
+			textShade.current = sharedText.shade;
+		}
+		const sharedMethod = params.get("method");
+		if (sharedMethod === "wcag" || sharedMethod === "apca") contrastType.current = sharedMethod;
+	});
 
 	const contrastRatio = $derived.by(() => {
 		if (!bgSelectedColor || !textSelectedColor) return 0;
@@ -215,9 +244,12 @@
 				Check whether text stays readable on a background, with WCAG 2 and APCA.
 			</p>
 		</div>
-		<div class="space-y-1.5 sm:w-40">
-			<Label for="version">Version</Label>
-			<VersionSelect id="version" selected={version} size="sm" />
+		<div class="flex items-end gap-2">
+			<div class="grow space-y-1.5 sm:w-40">
+				<Label for="version">Version</Label>
+				<VersionSelect id="version" selected={version} size="sm" />
+			</div>
+			<ShareButton params={shareParams} />
 		</div>
 	</header>
 

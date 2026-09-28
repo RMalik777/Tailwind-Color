@@ -11,6 +11,7 @@
 
 	import ColorPicker from "$lib/components/custom/color-picker.svelte";
 	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+	import ShareButton from "$lib/components/custom/share-button.svelte";
 	import VersionSelect from "$lib/components/custom/version-select.svelte";
 
 	import ArrowUpDown from "@lucide/svelte/icons/arrow-up-down";
@@ -23,6 +24,17 @@
 	import { getColorsByVersion } from "$lib/data/color";
 	import { findFamily, findShade } from "$lib/functions/color";
 	import { defaultInterpolation, gradientStyle } from "$lib/functions/gradient";
+	import {
+		colorParam,
+		gradientParam,
+		parseColorParam,
+		parseGradientParam,
+		parseInterpolation,
+		parseNumber,
+		parseStops,
+		parseVersion,
+		readSharedLink,
+	} from "$lib/functions/share";
 	import type { Gradient, GradientSyncKey, Version } from "$lib/types/color";
 
 	const interpolation = new PersistedState("interpolation", "oklch");
@@ -101,6 +113,64 @@
 
 	const syncedCount = $derived(syncOptions.filter((option) => synced.current[option.key]).length);
 
+	const shareParams = $derived.by(() => {
+		if (view.current === "compare") {
+			const sync = syncOptions.filter((option) => synced.current[option.key]);
+			return new URLSearchParams([
+				["view", "compare"],
+				...gradients.current.map((gradient) => ["g", gradientParam(gradient)]),
+				["sync", sync.map((option) => option.key).join(".")],
+			]);
+		}
+		return new URLSearchParams({
+			view: "preview",
+			version: version.current,
+			from: colorParam(leftColor.current, leftShade.current),
+			to: colorParam(rightColor.current, rightShade.current),
+			interpolation: interpolation.current,
+			angle: String(degree.current),
+			stops: value.current.join("-"),
+		});
+	});
+
+	// A shared link overrides the saved settings. It only carries the settings of the view it was
+	// shared from, so the other view keeps what was saved.
+	readSharedLink("/gradient", (params) => {
+		const sharedView = params.get("view");
+		if (sharedView === "preview" || sharedView === "compare") view.current = sharedView;
+		const sharedVersion = parseVersion(params.get("version"));
+		if (sharedVersion) version.current = sharedVersion;
+		const sharedFrom = parseColorParam(params.get("from"));
+		if (sharedFrom) {
+			leftColor.current = sharedFrom.color;
+			leftShade.current = sharedFrom.shade;
+		}
+		const sharedTo = parseColorParam(params.get("to"));
+		if (sharedTo) {
+			rightColor.current = sharedTo.color;
+			rightShade.current = sharedTo.shade;
+		}
+		const sharedInterpolation = parseInterpolation(params.get("interpolation"));
+		if (sharedInterpolation) interpolation.current = sharedInterpolation;
+		const sharedDegree = parseNumber(params.get("angle"));
+		if (sharedDegree !== undefined) degree.current = sharedDegree;
+		const sharedStops = parseStops(params.get("stops"));
+		if (sharedStops) value.current = sharedStops;
+		const sharedGradients = params
+			.getAll("g")
+			.slice(0, MAX_GRADIENTS)
+			.map((param, i) => parseGradientParam(param, i + 1))
+			.filter((gradient) => gradient !== undefined);
+		if (sharedGradients.length >= MIN_GRADIENTS) gradients.current = sharedGradients;
+		const sharedSync = params.get("sync");
+		if (sharedSync !== null) {
+			const keys = sharedSync.split(".");
+			synced.current = Object.fromEntries(
+				syncOptions.map((option) => [option.key, keys.includes(option.key)]),
+			) as Record<GradientSyncKey, boolean>;
+		}
+	});
+
 	/**
 	 * Sets one field of a gradient. While the field is synced, only Gradient 1 can change it, and the change applies to every gradient.
 	 * @param id - Gradient to change
@@ -156,12 +226,15 @@
 </svelte:head>
 
 <section class="flex w-full grow flex-col gap-5 pt-6 pb-6 md:pt-8">
-	<header class="space-y-1">
-		<h1 class="text-2xl font-semibold tracking-tight">Gradient</h1>
-		<p class="text-sm text-muted-foreground">
-			Blend two shades and see how each interpolation mode changes the result, or compare gradients
-			across versions.
-		</p>
+	<header class="flex items-start justify-between gap-4">
+		<div class="space-y-1">
+			<h1 class="text-2xl font-semibold tracking-tight">Gradient</h1>
+			<p class="text-sm text-muted-foreground">
+				Blend two shades and see how each interpolation mode changes the result, or compare
+				gradients across versions.
+			</p>
+		</div>
+		<ShareButton params={shareParams} />
 	</header>
 
 	<Tabs.Root class="grow gap-4" bind:value={view.current}>

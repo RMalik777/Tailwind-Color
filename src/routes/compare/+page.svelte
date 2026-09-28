@@ -4,6 +4,7 @@
 
 	import ColorPicker from "$lib/components/custom/color-picker.svelte";
 	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
+	import ShareButton from "$lib/components/custom/share-button.svelte";
 	import VersionSelect from "$lib/components/custom/version-select.svelte";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
@@ -12,6 +13,7 @@
 	import { getColorsByVersion } from "$lib/data/color";
 	import { findFamily, findShade } from "$lib/functions/color";
 	import { isLightColor } from "$lib/functions/contrast";
+	import { colorParam, parseColorParam, parseVersion, readSharedLink } from "$lib/functions/share";
 	import type { ColorFamily, ColorShade, Palette, Version } from "$lib/types/color";
 
 	const leftVersion = new PersistedState<Version>("leftVersion", "V3");
@@ -27,6 +29,33 @@
 	const rightChoice = $derived(findFamily(rightColorOptions, rightColor.current));
 	const rightShade = new PersistedState("rightShade", "500");
 	const rightSelectedColor = $derived(findShade(rightChoice?.range, rightShade.current));
+
+	const shareParams = $derived(
+		new URLSearchParams({
+			leftVersion: leftVersion.current,
+			left: colorParam(leftColor.current, leftShade.current),
+			rightVersion: rightVersion.current,
+			right: colorParam(rightColor.current, rightShade.current),
+		}),
+	);
+
+	// A shared link overrides the saved settings.
+	readSharedLink("/compare", (params) => {
+		const sharedLeftVersion = parseVersion(params.get("leftVersion"));
+		if (sharedLeftVersion) leftVersion.current = sharedLeftVersion;
+		const sharedLeft = parseColorParam(params.get("left"));
+		if (sharedLeft) {
+			leftColor.current = sharedLeft.color;
+			leftShade.current = sharedLeft.shade;
+		}
+		const sharedRightVersion = parseVersion(params.get("rightVersion"));
+		if (sharedRightVersion) rightVersion.current = sharedRightVersion;
+		const sharedRight = parseColorParam(params.get("right"));
+		if (sharedRight) {
+			rightColor.current = sharedRight.color;
+			rightShade.current = sharedRight.shade;
+		}
+	});
 </script>
 
 {#snippet half(shade: ColorShade | undefined, version: Version)}
@@ -81,11 +110,14 @@
 </svelte:head>
 
 <section class="flex w-full grow flex-col gap-5 pt-6 pb-6 md:pt-8">
-	<header class="space-y-1">
-		<h1 class="text-2xl font-semibold tracking-tight">Compare</h1>
-		<p class="text-sm text-muted-foreground">
-			Put two shades side by side, from the same or different Tailwind versions.
-		</p>
+	<header class="flex items-start justify-between gap-4">
+		<div class="space-y-1">
+			<h1 class="text-2xl font-semibold tracking-tight">Compare</h1>
+			<p class="text-sm text-muted-foreground">
+				Put two shades side by side, from the same or different Tailwind versions.
+			</p>
+		</div>
+		<ShareButton params={shareParams} />
 	</header>
 
 	<div class="flex items-start gap-3 md:items-end md:gap-6">
