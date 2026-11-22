@@ -41,7 +41,7 @@ Each page keeps its settings in the `localStorage` of the browser. When you open
 
 ### Tech stack
 
-- [SvelteKit 2](https://svelte.dev/docs/kit) and [Svelte 5](https://svelte.dev)
+- [SvelteKit 3](https://svelte.dev/docs/kit) and [Svelte 5](https://svelte.dev)
 - [Tailwind CSS 4](https://tailwindcss.com)
 - [shadcn-svelte](https://shadcn-svelte.com) and [Bits UI](https://bits-ui.com) for UI components
 - [culori](https://culorijs.org) for color conversion
@@ -61,7 +61,7 @@ The app changes each value to OKLCH, HEX, HSL, and RGB.
 
 ## Requirements
 
-- [Node.js](https://nodejs.org) 20.19 or a more recent version
+- [Node.js](https://nodejs.org) 22.17 or a more recent version
 - [pnpm](https://pnpm.io) 12 (the version is in the `packageManager` field of `package.json`)
 - [Git](https://git-scm.com)
 
@@ -106,6 +106,7 @@ To open the browser automatically, run `pnpm dev --open`.
 | `pnpm dev`         | Starts the development server with hot reload.               |
 | `pnpm build`       | Makes a production build.                                    |
 | `pnpm preview`     | Serves the production build on your computer.                |
+| `pnpm run deploy`  | Makes a production build and deploys it to Cloudflare.       |
 | `pnpm check`       | Does a type check of the Svelte and TypeScript files.        |
 | `pnpm check:watch` | Does the type check again each time that a file changes.     |
 | `pnpm lint`        | Does a check of the format (Prettier) and the code (ESLint). |
@@ -215,24 +216,32 @@ Vitest finds the test files with the pattern `src/**/*.{test,spec}.{js,ts}`. To 
 > [!NOTE]
 > All pages are prerendered to static HTML files. Only `/sitemap.xml` runs on the server when a request occurs.
 
-### Cloudflare Pages
+### Cloudflare Workers
 
-The project uses `@sveltejs/adapter-cloudflare`. Thus, you can deploy it to Cloudflare Pages without a change to the code.
-
-To deploy from Git:
-
-1. In the Cloudflare dashboard, make a new Pages project.
-2. Connect your repository to the project.
-3. Set the build command to `pnpm build`.
-4. Set the build output directory to `.svelte-kit/cloudflare`.
-5. Deploy the project.
+The project uses `@sveltejs/adapter-cloudflare`. Thus, you can deploy it to Cloudflare Workers without a change to the code. The Worker settings are in `wrangler.jsonc`. The adapter adds the Worker entry and the static assets when it builds the site.
 
 To deploy from your computer:
 
-```bash
-pnpm build
-pnpm dlx wrangler pages deploy .svelte-kit/cloudflare --project-name <your-project-name>
-```
+1. Log in to Cloudflare:
+
+   ```bash
+   pnpm exec wrangler login
+   ```
+
+2. Build and deploy the site:
+
+   ```bash
+   pnpm run deploy
+   ```
+
+To deploy from Git:
+
+1. In the Cloudflare dashboard, make a new Workers project and connect your repository to it.
+2. Set the build command to `pnpm build`.
+3. Set the deploy command to `pnpm exec wrangler deploy`.
+4. Deploy the project.
+
+To use a custom domain, add it to the Worker in the Cloudflare dashboard. If the domain is on a Pages project, remove it from that project first.
 
 ### Other hosts
 
@@ -245,7 +254,7 @@ For a different host, change the adapter to `@sveltejs/adapter-static`.
    pnpm add -D @sveltejs/adapter-static
    ```
 
-2. In `svelte.config.js`, change the import:
+2. In `vite.config.ts`, change the import:
 
    ```js
    import adapter from "@sveltejs/adapter-static";
@@ -265,7 +274,7 @@ For a different host, change the adapter to `@sveltejs/adapter-static`.
 
 5. Upload the `build` folder to your static host (for example, Netlify, Vercel, GitHub Pages, or an nginx server).
 
-If the site is on a subpath (for example, `https://example.com/tailwind-color`), set `kit.paths.base` in `svelte.config.js`. For more information, refer to the [SvelteKit adapter documentation](https://svelte.dev/docs/kit/adapters).
+If the site is on a subpath (for example, `https://example.com/tailwind-color`), set `paths.base` in the `sveltekit()` options in `vite.config.ts`. For more information, refer to the [SvelteKit adapter documentation](https://svelte.dev/docs/kit/adapters).
 
 ## Fork and customize
 

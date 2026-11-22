@@ -1,9 +1,9 @@
 <script lang="ts" generics="T extends string">
 	import type { PersistedState } from "runed";
 
-	import * as ToggleGroup from "$lib/components/ui/toggle-group/index.js";
-	import type { Option } from "$lib/types/color";
-	import { cn } from "$lib/utils";
+	import * as ToggleGroup from "#lib/components/ui/toggle-group/index.js";
+	import type { Option } from "#lib/types/color.ts";
+	import { cn } from "#lib/utils.ts";
 
 	const {
 		options,

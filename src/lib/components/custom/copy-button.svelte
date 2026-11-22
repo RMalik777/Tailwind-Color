@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button, type ButtonProps } from "$lib/components/ui/button/index";
-	import { cn } from "$lib/utils";
+	import { Button, type ButtonProps } from "#lib/components/ui/button/index.ts";
+	import { cn } from "#lib/utils.ts";
 
 	import CheckIcon from "@lucide/svelte/icons/check";
 	import CopyIcon from "@lucide/svelte/icons/copy";

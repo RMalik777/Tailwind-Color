@@ -8,19 +8,19 @@
 	// @ts-expect-error - @types/apca-w3 is not updated yet, so fontLookupAPCA is not defined
 	import { calcAPCA, fontLookupAPCA } from "apca-w3";
 
-	import { Badge } from "$lib/components/ui/badge/index.js";
-	import { Button } from "$lib/components/ui/button/index.js";
-	import * as Card from "$lib/components/ui/card/index.js";
-	import { Label } from "$lib/components/ui/label/index.js";
-	import { Progress } from "$lib/components/ui/progress/index.js";
-	import * as Table from "$lib/components/ui/table/index.js";
-	import * as Tabs from "$lib/components/ui/tabs/index.js";
-	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+	import { Badge } from "#lib/components/ui/badge/index.js";
+	import { Button } from "#lib/components/ui/button/index.js";
+	import * as Card from "#lib/components/ui/card/index.js";
+	import { Label } from "#lib/components/ui/label/index.js";
+	import { Progress } from "#lib/components/ui/progress/index.js";
+	import * as Table from "#lib/components/ui/table/index.js";
+	import * as Tabs from "#lib/components/ui/tabs/index.js";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.js";
 
-	import ColorPicker from "$lib/components/custom/color-picker.svelte";
-	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
-	import ShareButton from "$lib/components/custom/share-button.svelte";
-	import VersionSelect from "$lib/components/custom/version-select.svelte";
+	import ColorPicker from "#lib/components/custom/color-picker.svelte";
+	import ShadePicker from "#lib/components/custom/shade-picker.svelte";
+	import ShareButton from "#lib/components/custom/share-button.svelte";
+	import VersionSelect from "#lib/components/custom/version-select.svelte";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import BadgeCheck from "@lucide/svelte/icons/badge-check";
@@ -30,12 +30,17 @@
 	import EyeOff from "@lucide/svelte/icons/eye-off";
 	import Minus from "@lucide/svelte/icons/minus";
 
-	import { getColorsByVersion } from "$lib/data/color";
-	import { findFamily, findShade } from "$lib/functions/color";
-	import { ColorHistory } from "$lib/functions/color-history.svelte";
-	import { contrastValue, hexToLinearRgb, relativeLuminance } from "$lib/functions/contrast";
-	import { colorParam, parseColorParam, parseVersion, readSharedLink } from "$lib/functions/share";
-	import type { ColorFamily, ColorShade, Version } from "$lib/types/color";
+	import { getColorsByVersion } from "#lib/data/color.ts";
+	import { findFamily, findShade } from "#lib/functions/color.ts";
+	import { ColorHistory } from "#lib/functions/color-history.svelte.ts";
+	import { contrastValue, hexToLinearRgb, relativeLuminance } from "#lib/functions/contrast.ts";
+	import {
+		colorParam,
+		parseColorParam,
+		parseVersion,
+		readSharedLink,
+	} from "#lib/functions/share.ts";
+	import type { ColorFamily, ColorShade, Version } from "#lib/types/color.ts";
 
 	type Side = {
 		id: string;
@@ -301,9 +306,9 @@
 					<p
 						class="font-mono text-5xl font-black tracking-tight tabular-nums transition duration-200 ease-out lg:text-6xl"
 					>
-						{contrastRatio.toFixed(2)}<span class="text-2xl font-normal text-muted-foreground"
-							>:1</span
-						>
+						{contrastRatio.toFixed(2)}<span class="text-2xl font-normal text-muted-foreground">
+							:1
+						</span>
 					</p>
 					<p class="text-xs text-muted-foreground">Contrast ratio, from 1:1 to 21:1</p>
 					<Badge
@@ -383,9 +388,9 @@
 							class="h-2.5 *:data-[slot=progress-indicator]:rounded-full *:data-[slot=progress-indicator]:bg-foreground *:data-[slot=progress-indicator]:duration-300 *:data-[slot=progress-indicator]:ease-out"
 						/>
 						<div class="flex justify-between font-mono text-[10px] text-muted-foreground">
-							<span>0</span><span>15</span><span>30</span><span>45</span><span>60</span><span
-								>75</span
-							><span>90</span><span>105</span>
+							<span>0</span><span>15</span><span>30</span><span>45</span><span>60</span><span>
+								75
+							</span><span>90</span><span>105</span>
 						</div>
 					</div>
 
@@ -420,8 +425,9 @@
 						<Table.Header>
 							<Table.Row>
 								<Table.Head>Weight</Table.Head>
-								<Table.Head>Minimum size <span class="text-muted-foreground">(px)</span></Table.Head
-								>
+								<Table.Head>
+									Minimum size <span class="text-muted-foreground">(px)</span>
+								</Table.Head>
 							</Table.Row>
 						</Table.Header>
 						<Table.Body>

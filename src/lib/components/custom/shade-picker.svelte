@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { untrack } from "svelte";
 
-	import * as Select from "$lib/components/ui/select/index";
-	import { findShade, resolveShade } from "$lib/functions/color";
-	import type { ColorFamily } from "$lib/types/color";
+	import * as Select from "#lib/components/ui/select/index.ts";
+	import { findShade, resolveShade } from "#lib/functions/color.ts";
+	import type { ColorFamily } from "#lib/types/color.ts";
 
 	const {
 		options,

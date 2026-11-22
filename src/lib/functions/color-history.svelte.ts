@@ -1,4 +1,4 @@
-import type { ColorSelection } from "$lib/types/color";
+import type { ColorSelection } from "#lib/types/color.ts";
 
 export type ColorHistoryEntry = ColorSelection & {
 	/** Full color name, e.g. `red-500`. */

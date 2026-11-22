@@ -1,4 +1,4 @@
-import type { ColorFormat, Option, Version } from "$lib/types/color";
+import type { ColorFormat, Option, Version } from "#lib/types/color.ts";
 
 export const colorOptions: Option<ColorFormat>[] = [
 	{ name: "OKLCH", value: "oklch" },

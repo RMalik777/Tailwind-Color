@@ -1,7 +1,7 @@
-import { bench, describe } from "vitest";
+import { test } from "vitest";
 import { relativeLuminance, hexToLinearRgb, contrastValue } from "../src/lib/functions/contrast";
 
-describe("Contrast Calculation Benchmarks", () => {
+test("Contrast Calculation Benchmarks", async ({ bench }) => {
 	// Test colors
 	const white = "#FFFFFF";
 	const black = "#000000";
@@ -9,47 +9,47 @@ describe("Contrast Calculation Benchmarks", () => {
 	const blue = "#0000FF";
 	const gray = "#808080";
 
-	bench("hexToLinearRgb - white", () => {
+	await bench("hexToLinearRgb - white", () => {
 		hexToLinearRgb(white);
-	});
+	}).run();
 
-	bench("hexToLinearRgb - black", () => {
+	await bench("hexToLinearRgb - black", () => {
 		hexToLinearRgb(black);
-	});
+	}).run();
 
-	bench("hexToLinearRgb - colored", () => {
+	await bench("hexToLinearRgb - colored", () => {
 		hexToLinearRgb(red);
-	});
+	}).run();
 
-	bench("relativeLuminance calculation", () => {
+	await bench("relativeLuminance calculation", () => {
 		relativeLuminance(255, 255, 255);
-	});
+	}).run();
 
-	bench("contrastValue - white vs black", () => {
+	await bench("contrastValue - white vs black", () => {
 		contrastValue(1.0, 0.0);
-	});
+	}).run();
 
-	bench("contrastValue - similar colors", () => {
+	await bench("contrastValue - similar colors", () => {
 		contrastValue(0.5, 0.45);
-	});
+	}).run();
 
-	bench("full contrast workflow - white vs black", () => {
+	await bench("full contrast workflow - white vs black", () => {
 		const { r: r1, g: g1, b: b1 } = hexToLinearRgb(white);
 		const { r: r2, g: g2, b: b2 } = hexToLinearRgb(black);
 		const l1 = relativeLuminance(r1, g1, b1);
 		const l2 = relativeLuminance(r2, g2, b2);
 		contrastValue(l1, l2);
-	});
+	}).run();
 
-	bench("full contrast workflow - colored", () => {
+	await bench("full contrast workflow - colored", () => {
 		const { r: r1, g: g1, b: b1 } = hexToLinearRgb(red);
 		const { r: r2, g: g2, b: b2 } = hexToLinearRgb(blue);
 		const l1 = relativeLuminance(r1, g1, b1);
 		const l2 = relativeLuminance(r2, g2, b2);
 		contrastValue(l1, l2);
-	});
+	}).run();
 
-	bench("batch contrast calculations", () => {
+	await bench("batch contrast calculations", () => {
 		const colors = [white, black, red, blue, gray];
 		for (let i = 0; i < colors.length; i++) {
 			for (let j = i + 1; j < colors.length; j++) {
@@ -60,5 +60,5 @@ describe("Contrast Calculation Benchmarks", () => {
 				contrastValue(l1, l2);
 			}
 		}
-	});
+	}).run();
 });

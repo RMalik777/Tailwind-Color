@@ -9,9 +9,9 @@
 	import SunIcon from "@lucide/svelte/icons/sun";
 	import XIcon from "@lucide/svelte/icons/x";
 
-	import { link } from "$lib/const/nav";
-	import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+	import { link } from "#lib/const/nav.ts";
+	import { Button, buttonVariants } from "#lib/components/ui/button/index.js";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.js";
 
 	let open = $state(false);
 	const isActive = (url: string) =>
@@ -49,20 +49,26 @@
 				onclick={() => {
 					setMode("light");
 					if (close) open = false;
-				}}>Light</DropdownMenu.Item
+				}}
 			>
+				Light
+			</DropdownMenu.Item>
 			<DropdownMenu.Item
 				onclick={() => {
 					setMode("dark");
 					if (close) open = false;
-				}}>Dark</DropdownMenu.Item
+				}}
 			>
+				Dark
+			</DropdownMenu.Item>
 			<DropdownMenu.Item
 				onclick={() => {
 					resetMode();
 					if (close) open = false;
-				}}>System</DropdownMenu.Item
+				}}
 			>
+				System
+			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/snippet}

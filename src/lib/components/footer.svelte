@@ -75,8 +75,9 @@
 									target={subItem.blank ? "_blank" : ""}
 									rel={subItem.blank ? "noopener noreferrer" : ""}
 									class="text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline focus-visible:text-foreground"
-									>{subItem.name}</a
 								>
+									{subItem.name}
+								</a>
 							</li>
 						{/each}
 					</ul>
@@ -99,7 +100,8 @@
 			href="https://github.com/RMalik777/Tailwind-Color"
 			target="_blank"
 			class="underline-offset-4 hover:text-foreground hover:underline focus-visible:text-foreground"
-			>Source code</a
 		>
+			Source code
+		</a>
 	</div>
 </footer>

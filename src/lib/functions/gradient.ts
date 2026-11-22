@@ -1,4 +1,4 @@
-import type { ColorShade, Version } from "$lib/types/color";
+import type { ColorShade, Version } from "#lib/types/color.ts";
 
 /**
  * Interpolation Tailwind CSS uses for its gradient utilities by default.

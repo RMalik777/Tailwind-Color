@@ -1,15 +1,15 @@
 <script lang="ts">
 	import "../app.css";
-	import { Toaster } from "$lib/components/ui/sonner/index.js";
-	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+	import { Toaster } from "#lib/components/ui/sonner/index.js";
+	import * as Tooltip from "#lib/components/ui/tooltip/index.js";
 	import { ModeWatcher } from "mode-watcher";
 
 	import { onMount, type Snippet } from "svelte";
 	import { onNavigate } from "$app/navigation";
 	import { configure } from "onedollarstats";
 
-	import Footer from "$lib/components/footer.svelte";
-	import Nav from "$lib/components/nav.svelte";
+	import Footer from "#lib/components/footer.svelte";
+	import Nav from "#lib/components/nav.svelte";
 
 	let { children }: { children: Snippet } = $props();
 

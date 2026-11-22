@@ -1,6 +1,6 @@
 <script lang="ts">
-	import * as Select from "$lib/components/ui/select/index";
-	import type { Palette } from "$lib/types/color";
+	import * as Select from "#lib/components/ui/select/index.ts";
+	import type { Palette } from "#lib/types/color.ts";
 
 	const {
 		options,

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { page } from "$app/state";
 
-	import { Button } from "$lib/components/ui/button/index";
+	import { Button } from "#lib/components/ui/button/index.ts";
 	import ArrowLeft from "@lucide/svelte/icons/arrow-left";
 
-	import img404 from "$lib/assets/404-NotFound.png?enhanced";
-	import img500 from "$lib/assets/500-InternalServerError.png?enhanced";
-	import img503 from "$lib/assets/503-ServiceUnavailable.png?enhanced";
+	import img404 from "#lib/assets/404-NotFound.png?enhanced";
+	import img500 from "#lib/assets/500-InternalServerError.png?enhanced";
+	import img503 from "#lib/assets/503-ServiceUnavailable.png?enhanced";
 	const img = $derived.by(() => {
 		if (page.status === 404) return img404;
 		if (page.status === 500) return img500;
@@ -45,8 +45,8 @@
 					rel="noopener noreferrer"
 					class="text-violet-600 underline underline-offset-4 dark:text-violet-400"
 				>
-					Sawaratsuki</a
-				>
+					Sawaratsuki
+				</a>
 			</p>
 		{/if}
 	</div>

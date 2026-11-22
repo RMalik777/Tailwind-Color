@@ -1,20 +1,25 @@
 <script lang="ts">
-	import { Button } from "$lib/components/ui/button/index.js";
-	import * as Field from "$lib/components/ui/field/index.js";
+	import { Button } from "#lib/components/ui/button/index.js";
+	import * as Field from "#lib/components/ui/field/index.js";
 
-	import ColorPicker from "$lib/components/custom/color-picker.svelte";
-	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
-	import ShareButton from "$lib/components/custom/share-button.svelte";
-	import VersionSelect from "$lib/components/custom/version-select.svelte";
+	import ColorPicker from "#lib/components/custom/color-picker.svelte";
+	import ShadePicker from "#lib/components/custom/shade-picker.svelte";
+	import ShareButton from "#lib/components/custom/share-button.svelte";
+	import VersionSelect from "#lib/components/custom/version-select.svelte";
 
 	import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
 	import { PersistedState } from "runed";
 
-	import { getColorsByVersion } from "$lib/data/color";
-	import { findFamily, findShade } from "$lib/functions/color";
-	import { isLightColor } from "$lib/functions/contrast";
-	import { colorParam, parseColorParam, parseVersion, readSharedLink } from "$lib/functions/share";
-	import type { ColorFamily, ColorShade, Palette, Version } from "$lib/types/color";
+	import { getColorsByVersion } from "#lib/data/color.ts";
+	import { findFamily, findShade } from "#lib/functions/color.ts";
+	import { isLightColor } from "#lib/functions/contrast.ts";
+	import {
+		colorParam,
+		parseColorParam,
+		parseVersion,
+		readSharedLink,
+	} from "#lib/functions/share.ts";
+	import type { ColorFamily, ColorShade, Palette, Version } from "#lib/types/color.ts";
 
 	const leftVersion = new PersistedState<Version>("leftVersion", "V3");
 	const leftColorOptions = $derived(getColorsByVersion(leftVersion.current));

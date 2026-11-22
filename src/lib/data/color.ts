@@ -6,8 +6,8 @@ import {
 	tailwindColors0,
 } from "./raw-tailwind-color";
 
-import { processColorFromHex, processColorFromOklch } from "$lib/functions/color";
-import type { Palette, Version } from "$lib/types/color";
+import { processColorFromHex, processColorFromOklch } from "#lib/functions/color.ts";
+import type { Palette, Version } from "#lib/types/color.ts";
 
 export const colorV4 = processColorFromOklch(tailwindColors4);
 export const colorV3 = processColorFromHex(tailwindColors3);

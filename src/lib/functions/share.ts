@@ -1,9 +1,9 @@
 import { tick } from "svelte";
-import { afterNavigate, replaceState } from "$app/navigation";
+import { afterNavigate, goto } from "$app/navigation";
 import { resolve } from "$app/paths";
 
-import { interpolationOptions, versionOptions } from "$lib/const/option";
-import type { ColorSelection, Gradient, Version } from "$lib/types/color";
+import { interpolationOptions, versionOptions } from "#lib/const/option.ts";
+import type { ColorSelection, Gradient, Version } from "#lib/types/color.ts";
 
 /**
  * Applies the settings of a shared link, then clears them from the address bar. The page keeps
@@ -18,13 +18,15 @@ export function readSharedLink(
 	apply: (params: URLSearchParams) => void,
 ) {
 	// Search params can not be read while prerendering, afterNavigate only runs in the browser.
-	afterNavigate(({ to }) => {
+	afterNavigate(({ to, shallow, type }) => {
+		if (shallow && type === "goto") return;
+
 		const params = to?.url.searchParams;
 		if (!params || params.size === 0) return;
 		apply(params);
 		// On the first load the router finishes starting right after this callback, and
-		// replaceState throws before that.
-		void tick().then(() => replaceState(resolve(route), {}));
+		// shallow routing throws before that.
+		void tick().then(() => goto(resolve(route), { shallow: true, replace: true }));
 	});
 }
 

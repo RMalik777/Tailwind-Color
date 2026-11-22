@@ -1,29 +1,29 @@
-import { bench, describe } from "vitest";
+import { test } from "vitest";
 import { processColorFromHex, processColorFromOklch } from "../src/lib/functions/color";
 import { tailwindColors3, tailwindColors4 } from "../src/lib/data/raw-tailwind-color";
 
-describe("Color Processing Benchmarks", () => {
-	bench("processColorFromHex - single color", () => {
+test("Color Processing Benchmarks", async ({ bench }) => {
+	await bench("processColorFromHex - single color", () => {
 		processColorFromHex([tailwindColors3[0]]);
-	});
+	}).run();
 
-	bench("processColorFromHex - 5 colors", () => {
+	await bench("processColorFromHex - 5 colors", () => {
 		processColorFromHex(tailwindColors3.slice(0, 5));
-	});
+	}).run();
 
-	bench("processColorFromHex - all colors", () => {
+	await bench("processColorFromHex - all colors", () => {
 		processColorFromHex(tailwindColors3);
-	});
+	}).run();
 
-	bench("processColorFromOklch - single color", () => {
+	await bench("processColorFromOklch - single color", () => {
 		processColorFromOklch([tailwindColors4[0]]);
-	});
+	}).run();
 
-	bench("processColorFromOklch - 5 colors", () => {
+	await bench("processColorFromOklch - 5 colors", () => {
 		processColorFromOklch(tailwindColors4.slice(0, 5));
-	});
+	}).run();
 
-	bench("processColorFromOklch - all colors", () => {
+	await bench("processColorFromOklch - all colors", () => {
 		processColorFromOklch(tailwindColors4);
-	});
+	}).run();
 });

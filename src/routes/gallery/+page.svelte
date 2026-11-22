@@ -2,11 +2,11 @@
 	import { flip } from "svelte/animate";
 	import { quintOut } from "svelte/easing";
 
-	import { Label } from "$lib/components/ui/label/index.js";
-	import { Toggle } from "$lib/components/ui/toggle/index.js";
-	import Toolbar from "$lib/components/toolbar.svelte";
-	import OptionToggle from "$lib/components/custom/option-toggle.svelte";
-	import VersionSelect from "$lib/components/custom/version-select.svelte";
+	import { Label } from "#lib/components/ui/label/index.js";
+	import { Toggle } from "#lib/components/ui/toggle/index.js";
+	import Toolbar from "#lib/components/toolbar.svelte";
+	import OptionToggle from "#lib/components/custom/option-toggle.svelte";
+	import VersionSelect from "#lib/components/custom/version-select.svelte";
 
 	import Grid2x2Icon from "@lucide/svelte/icons/grid-2x2";
 	import SquareIcon from "@lucide/svelte/icons/square";
@@ -14,10 +14,10 @@
 	import { PersistedState } from "runed";
 	import { toast } from "svelte-sonner";
 
-	import { getColorsByVersion } from "$lib/data/color";
-	import { isLightColor } from "$lib/functions/contrast";
-	import { colorOptions } from "$lib/const/option";
-	import type { ColorFormat, Version } from "$lib/types/color";
+	import { getColorsByVersion } from "#lib/data/color.ts";
+	import { isLightColor } from "#lib/functions/contrast.ts";
+	import { colorOptions } from "#lib/const/option.ts";
+	import type { ColorFormat, Version } from "#lib/types/color.ts";
 
 	const border = new PersistedState("border", false);
 	const gap = new PersistedState("gap", true);

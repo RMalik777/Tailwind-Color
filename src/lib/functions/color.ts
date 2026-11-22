@@ -4,7 +4,7 @@ import type {
 	ColorShade,
 	Palette,
 	RawTailwindColor,
-} from "$lib/types/color";
+} from "#lib/types/color.ts";
 import { converter, formatCss, formatHex, formatHsl, formatRgb, parse, type Color } from "culori";
 
 const toOklch = converter("oklch");

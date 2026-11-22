@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { Badge } from "$lib/components/ui/badge/index.js";
-	import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
-	import * as Card from "$lib/components/ui/card/index.js";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import * as Field from "$lib/components/ui/field/index.js";
-	import * as InputGroup from "$lib/components/ui/input-group/index.js";
-	import * as Select from "$lib/components/ui/select/index.js";
-	import { Slider } from "$lib/components/ui/slider/index.js";
-	import * as Tabs from "$lib/components/ui/tabs/index.js";
+	import { Badge } from "#lib/components/ui/badge/index.js";
+	import { Button, buttonVariants } from "#lib/components/ui/button/index.js";
+	import * as Card from "#lib/components/ui/card/index.js";
+	import * as DropdownMenu from "#lib/components/ui/dropdown-menu/index.js";
+	import * as Field from "#lib/components/ui/field/index.js";
+	import * as InputGroup from "#lib/components/ui/input-group/index.js";
+	import * as Select from "#lib/components/ui/select/index.js";
+	import { Slider } from "#lib/components/ui/slider/index.js";
+	import * as Tabs from "#lib/components/ui/tabs/index.js";
 
-	import ColorPicker from "$lib/components/custom/color-picker.svelte";
-	import ShadePicker from "$lib/components/custom/shade-picker.svelte";
-	import ShareButton from "$lib/components/custom/share-button.svelte";
-	import VersionSelect from "$lib/components/custom/version-select.svelte";
+	import ColorPicker from "#lib/components/custom/color-picker.svelte";
+	import ShadePicker from "#lib/components/custom/shade-picker.svelte";
+	import ShareButton from "#lib/components/custom/share-button.svelte";
+	import VersionSelect from "#lib/components/custom/version-select.svelte";
 
 	import ArrowUpDown from "@lucide/svelte/icons/arrow-up-down";
 	import ChevronDown from "@lucide/svelte/icons/chevron-down";
@@ -20,10 +20,10 @@
 	import Plus from "@lucide/svelte/icons/plus";
 	import { PersistedState } from "runed";
 
-	import { interpolationOptions } from "$lib/const/option";
-	import { getColorsByVersion } from "$lib/data/color";
-	import { findFamily, findShade } from "$lib/functions/color";
-	import { defaultInterpolation, gradientStyle } from "$lib/functions/gradient";
+	import { interpolationOptions } from "#lib/const/option.ts";
+	import { getColorsByVersion } from "#lib/data/color.ts";
+	import { findFamily, findShade } from "#lib/functions/color.ts";
+	import { defaultInterpolation, gradientStyle } from "#lib/functions/gradient.ts";
 	import {
 		colorParam,
 		gradientParam,
@@ -34,8 +34,8 @@
 		parseStops,
 		parseVersion,
 		readSharedLink,
-	} from "$lib/functions/share";
-	import type { Gradient, GradientSyncKey, Version } from "$lib/types/color";
+	} from "#lib/functions/share.ts";
+	import type { Gradient, GradientSyncKey, Version } from "#lib/types/color.ts";
 
 	const interpolation = new PersistedState("interpolation", "oklch");
 	const version = new PersistedState<Version>("version", "V4");
@@ -312,9 +312,9 @@
 							<Field.FieldLegend variant="label">Start color</Field.FieldLegend>
 							<Field.FieldGroup class="grid grid-cols-2">
 								<Field.Field>
-									<Field.FieldLabel for="leftColor" class="text-xs text-muted-foreground"
-										>Color</Field.FieldLabel
-									>
+									<Field.FieldLabel for="leftColor" class="text-xs text-muted-foreground">
+										Color
+									</Field.FieldLabel>
 									<ColorPicker
 										id="leftColor"
 										options={colorOptions}
@@ -323,9 +323,9 @@
 									/>
 								</Field.Field>
 								<Field.Field>
-									<Field.FieldLabel for="leftShade" class="text-xs text-muted-foreground"
-										>Shade</Field.FieldLabel
-									>
+									<Field.FieldLabel for="leftShade" class="text-xs text-muted-foreground">
+										Shade
+									</Field.FieldLabel>
 									<ShadePicker id="leftShade" options={leftChoice} selected={leftShade} size="sm" />
 								</Field.Field>
 							</Field.FieldGroup>
@@ -353,9 +353,9 @@
 							<Field.FieldLegend variant="label">End color</Field.FieldLegend>
 							<Field.FieldGroup class="grid grid-cols-2">
 								<Field.Field>
-									<Field.FieldLabel for="rightColor" class="text-xs text-muted-foreground"
-										>Color</Field.FieldLabel
-									>
+									<Field.FieldLabel for="rightColor" class="text-xs text-muted-foreground">
+										Color
+									</Field.FieldLabel>
 									<ColorPicker
 										id="rightColor"
 										options={colorOptions}
@@ -364,9 +364,9 @@
 									/>
 								</Field.Field>
 								<Field.Field>
-									<Field.FieldLabel for="rightShade" class="text-xs text-muted-foreground"
-										>Shade</Field.FieldLabel
-									>
+									<Field.FieldLabel for="rightShade" class="text-xs text-muted-foreground">
+										Shade
+									</Field.FieldLabel>
 									<ShadePicker
 										id="rightShade"
 										options={rightChoice}

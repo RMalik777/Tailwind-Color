@@ -1,8 +1,8 @@
 <script lang="ts">
-	import * as Select from "$lib/components/ui/select/index.js";
-	import { versionOptions } from "$lib/const/option";
-	import type { Version } from "$lib/types/color";
-	import { cn } from "$lib/utils";
+	import * as Select from "#lib/components/ui/select/index.js";
+	import { versionOptions } from "#lib/const/option.ts";
+	import type { Version } from "#lib/types/color.ts";
+	import { cn } from "#lib/utils.ts";
 
 	const {
 		selected,

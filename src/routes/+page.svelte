@@ -2,16 +2,16 @@
 	import { flip } from "svelte/animate";
 	import { cubicOut } from "svelte/easing";
 
-	import { Label } from "$lib/components/ui/label/index.js";
-	import Toolbar from "$lib/components/toolbar.svelte";
-	import CopyButton from "$lib/components/custom/copy-button.svelte";
-	import OptionToggle from "$lib/components/custom/option-toggle.svelte";
-	import VersionSelect from "$lib/components/custom/version-select.svelte";
+	import { Label } from "#lib/components/ui/label/index.js";
+	import Toolbar from "#lib/components/toolbar.svelte";
+	import CopyButton from "#lib/components/custom/copy-button.svelte";
+	import OptionToggle from "#lib/components/custom/option-toggle.svelte";
+	import VersionSelect from "#lib/components/custom/version-select.svelte";
 
-	import { getColorsByVersion } from "$lib/data/color";
-	import { isLightColor } from "$lib/functions/contrast";
-	import { colorOptions } from "$lib/const/option";
-	import type { ColorFormat, Version } from "$lib/types/color";
+	import { getColorsByVersion } from "#lib/data/color.ts";
+	import { isLightColor } from "#lib/functions/contrast.ts";
+	import { colorOptions } from "#lib/const/option.ts";
+	import type { ColorFormat, Version } from "#lib/types/color.ts";
 
 	import { PersistedState } from "runed";
 

@@ -1,4 +1,4 @@
-import type { RawTailwindColor } from "$lib/types/color";
+import type { RawTailwindColor } from "#lib/types/color.ts";
 
 export const tailwindColors4: RawTailwindColor[] = [
 	{
